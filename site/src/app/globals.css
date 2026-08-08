@@ -1,26 +1,132 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ---------------------------------------------------------------------------
+   Raja Enterprises — design tokens
+   Brand colour #063C5B sampled from Raja-logo-02.png (dominant, 169k px).
+   See docs/REDESIGN-PLAN.md §D.
+--------------------------------------------------------------------------- */
+
+@theme {
+  /* Surface + ink */
+  --color-ink: #0a0c0e;
+  --color-graphite: #16191c;
+  --color-steel-900: #2a3037;
+  --color-steel-700: #454d56;
+  --color-steel-500: #6b747d;
+  --color-steel-300: #9aa4ad;
+  --color-steel-200: #c1ced6;
+  --color-steel-100: #dfe5e9;
+  --color-off-white: #f1f1ee;
+  --color-paper: #fafaf8;
+
+  /* Brand — accent only. Never a gradient, never a large fill. */
+  --color-brand: #063c5b;
+  --color-brand-mid: #446d83;
+
+  --font-display: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  /* Motion — mirrored in src/lib/motion.ts. Keep the two in sync. */
+  --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-quart: cubic-bezier(0.65, 0.05, 0.36, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-synthesis-weight: none;
+  }
+
+  ::selection {
+    background-color: var(--color-brand);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Type scale — plan §D. clamp() so it holds from 360px to 2560px. */
+  .t-display-xl {
+    font-size: clamp(2.75rem, 8.5vw, 9rem);
+    line-height: 0.94;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+  }
+
+  .t-display-l {
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    font-weight: 500;
+  }
+
+  .t-heading {
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    font-weight: 500;
+  }
+
+  .t-body {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    font-weight: 400;
+    max-width: 68ch;
+  }
+
+  .t-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* Inventory quantities. tabular-nums stops width jitter during count-up. */
+  .t-figure {
+    font-size: clamp(1.75rem, 3.6vw, 3.5rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-weight: 400;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .shell {
+    width: 100%;
+    max-width: 88rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 4rem);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion. Built in from the first commit, not bolted on — plan §F.
+   Scroll-linked camera work becomes static frames; count-ups render finals.
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -97,8 +97,8 @@ const spanClass: Record<Category["scale"], string> = {
 
 const heightClass: Record<Category["scale"], string> = {
   flagship: "min-h-[26rem] lg:min-h-[34rem]",
-  major: "min-h-[20rem]",
-  standard: "min-h-[20rem]",
+  major: "min-h-[24rem]",
+  standard: "min-h-[24rem]",
 };
 
 const tierDepth = { front: 0, mid: -40, back: -80 } as const;
@@ -147,7 +147,7 @@ function CategoryCard({
           deliberately do not model (workforce, catering).
           Inset from the bottom so the render sits in the card's upper field
           and never collides with the type. */}
-      <div className="absolute inset-x-0 top-0 bottom-[9.5rem] overflow-hidden">
+      <div className="absolute inset-x-0 top-0 bottom-[8.5rem] overflow-hidden">
         {category.media.kind === "3d" ? (
           <AssetStage kind={category.media.asset} className="h-full w-full" />
         ) : (
@@ -158,7 +158,7 @@ function CategoryCard({
       {/* Scrim, so type stays legible if a render runs long. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-44"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-40"
         style={{
           background:
             "linear-gradient(180deg, rgba(250,250,248,0) 0%, rgba(250,250,248,0.92) 38%, rgba(250,250,248,1) 100%)",
@@ -211,21 +211,22 @@ function CategoryCard({
  */
 export function PhotoPending() {
   return (
-    <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-graphite">
+    <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-off-white">
       {/* The logo's line-scoring, used as a holding pattern. Reads as an
-          intentional slot awaiting a photograph, not as a broken image. */}
+          intentional slot awaiting a photograph, not as a broken image.
+          Kept light so these sit in the same family as the rendered cards. */}
       <div
         aria-hidden
-        className="absolute inset-0 opacity-[0.18]"
+        className="absolute inset-0 opacity-40"
         style={{
           backgroundImage:
-            "repeating-linear-gradient(180deg, #c1ced6 0px, #c1ced6 1px, transparent 1px, transparent 12px)",
-          maskImage: "radial-gradient(120% 100% at 50% 50%, #000 10%, transparent 80%)",
+            "repeating-linear-gradient(180deg, #c1ced6 0px, #c1ced6 1px, transparent 1px, transparent 11px)",
+          maskImage: "radial-gradient(120% 100% at 50% 45%, #000 5%, transparent 78%)",
           WebkitMaskImage:
-            "radial-gradient(120% 100% at 50% 50%, #000 10%, transparent 80%)",
+            "radial-gradient(120% 100% at 50% 45%, #000 5%, transparent 78%)",
         }}
       />
-      <span className="t-label relative text-steel-500">Photography to follow</span>
+      <span className="t-label relative text-steel-300">Photography to follow</span>
     </div>
   );
 }

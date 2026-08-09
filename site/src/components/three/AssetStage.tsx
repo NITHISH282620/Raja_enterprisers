@@ -14,29 +14,33 @@ import type { AssetKind } from "@/content/inventory";
  * camera angle, identical lighting, identical ground and shadow treatment.
  * Restyling the catalogue means editing this one file.
  *
+ * Assets are presented lifted slightly clear of a soft, wide contact shadow, so
+ * each reads as a physical object set down for inspection rather than a flat
+ * icon pasted onto a card.
+ *
  * Elevation and azimuth are fixed across all assets. Only distance varies, so a
- * truck and a stall bay are both framed without either being unreadable — the
+ * lorry and a stall bay are both framed without either being unreadable — the
  * standard product-catalogue compromise, applied consistently.
  */
 
 const ELEVATION = (22 * Math.PI) / 180;
 const AZIMUTH = (35 * Math.PI) / 180;
 
+/** How far every asset sits clear of its shadow. */
+const LIFT = 0.18;
+
 /**
- * Per-asset framing: camera distance and the height it looks at.
- *
- * At fov 28 the visible height is ~0.5 × distance, so each distance is set from
- * the asset's real extent plus margin. Elevation and azimuth never change —
- * only how far back the camera stands.
+ * Per-asset framing. At fov 28 the visible height is ~0.5 × distance, so each
+ * distance is set from the asset's real extent plus margin.
  */
 const framing: Record<AssetKind, { distance: number; target: number }> = {
-  hanger: { distance: 26, target: 1.8 },
-  stalls: { distance: 12, target: 1.4 },
-  flooring: { distance: 12, target: 0.3 },
-  stage: { distance: 18, target: 1.5 },
-  power: { distance: 12.5, target: 1.1 },
-  lighting: { distance: 12, target: 1.6 },
-  logistics: { distance: 16, target: 1.4 },
+  hanger: { distance: 28, target: 2.0 },
+  stalls: { distance: 16.5, target: 1.4 },
+  flooring: { distance: 15.5, target: 0.5 },
+  stage: { distance: 25, target: 1.8 },
+  power: { distance: 17.5, target: 1.2 },
+  lighting: { distance: 20, target: 1.9 },
+  logistics: { distance: 24, target: 1.5 },
 };
 
 function cameraPosition(distance: number, target: number): [number, number, number] {
@@ -64,9 +68,11 @@ export function AssetStage({
     if (!lazy) return;
     const node = ref.current;
     if (!node) return;
+    // Unmounting off-screen canvases keeps the live WebGL context count well
+    // under the browser's cap on the full-catalogue page.
     const observer = new IntersectionObserver(
       ([entry]) => setVisible(entry.isIntersecting),
-      { rootMargin: "200px" },
+      { rootMargin: "300px" },
     );
     observer.observe(node);
     return () => observer.disconnect();
@@ -78,13 +84,13 @@ export function AssetStage({
     <div ref={ref} className={className}>
       {visible && (
         <Canvas
-          shadows={false}
-          dpr={[1, 1.6]}
+          shadows="soft"
+          dpr={[1, 1.75]}
           gl={{ antialias: true, alpha: true }}
           camera={{
             fov: 28,
             near: 0.5,
-            far: 120,
+            far: 160,
             position: cameraPosition(distance, target),
           }}
           onCreated={({ gl, camera }) => {
@@ -122,27 +128,71 @@ export function AssetStage({
               />
             </Environment>
 
-            {/* Single soft key at 40°, matching the rig spec, plus a low fill
-                so the shadow sides stay readable rather than going to black. */}
-            <directionalLight position={[7, 9, 5]} intensity={2.4} color="#fffaf2" />
+            {/* Single soft key at 40°, matching the rig spec. This is the only
+                shadow-caster: one clean direction reads as a studio, several
+                read as a mess. */}
+            <directionalLight
+              position={[9, 12, 7]}
+              intensity={2.4}
+              color="#fffaf2"
+              castShadow
+              shadow-mapSize={[1024, 1024]}
+              shadow-camera-left={-distance / 2}
+              shadow-camera-right={distance / 2}
+              shadow-camera-top={distance / 2}
+              shadow-camera-bottom={-distance / 2}
+              shadow-camera-far={distance * 3}
+              shadow-bias={-0.0012}
+              shadow-normalBias={0.02}
+            />
+            {/* Low fill, so shadow sides stay readable rather than going black. */}
             <directionalLight position={[-6, 3, -5]} intensity={0.7} color="#cfdde8" />
-            <ambientLight intensity={1.1} />
+            <ambientLight intensity={0.9} />
 
-            <CatalogueAsset kind={kind} />
+            <group position={[0, LIFT, 0]}>
+              <Shadowed>
+                <CatalogueAsset kind={kind} />
+              </Shadowed>
+            </group>
 
-            {/* Contact shadow only — no reflective floor. */}
+            {/* Soft grounding beneath the lifted asset. Contact shadow only —
+                no reflective floor. */}
             <ContactShadows
               position={[0, 0, 0]}
-              opacity={0.42}
-              scale={38}
-              blur={2.6}
-              far={14}
+              opacity={0.5}
+              scale={distance * 1.5}
+              blur={2.4}
+              far={distance / 2}
               resolution={512}
-              color="#2a3037"
+              color="#1d2530"
             />
           </Suspense>
         </Canvas>
       )}
     </div>
+  );
+}
+
+/**
+ * Turns on cast/receive shadows for every mesh in the subtree.
+ *
+ * Setting the flags here rather than on each of several hundred primitives
+ * keeps the asset files about form and material, which is what they should be
+ * about.
+ */
+function Shadowed({ children }: { children: React.ReactNode }) {
+  return (
+    <group
+      ref={(group) => {
+        group?.traverse((object) => {
+          if ((object as THREE.Mesh).isMesh) {
+            object.castShadow = true;
+            object.receiveShadow = true;
+          }
+        });
+      }}
+    >
+      {children}
+    </group>
   );
 }

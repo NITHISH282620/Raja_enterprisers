@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useScrolledPast } from "@/lib/clientState";
 import { cssEase, duration } from "@/lib/motion";
 import { company } from "@/content/company";
 
@@ -21,19 +22,12 @@ const links = [
 ];
 
 export function SiteNav() {
-  const [collapsed, setCollapsed] = useState(false);
+  const collapsed = useScrolledPast(120);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  useEffect(() => {
-    const onScroll = () => setCollapsed(window.scrollY > 120);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Close the overlay on navigation, and lock the page behind it.
-  useEffect(() => setMenuOpen(false), [pathname]);
+  // Lock the page behind the overlay. (The overlay closes itself from its own
+  // links, rather than from an effect watching the pathname.)
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
@@ -41,16 +35,37 @@ export function SiteNav() {
     };
   }, [menuOpen]);
 
+  // The homepage hero is dark, so the rail sits transparent over it and only
+  // takes its paper background once the user scrolls past.
+  const overHero = pathname === "/" && !collapsed && !menuOpen;
+
   return (
     <>
       <header
-        className="fixed inset-x-0 top-0 z-50 border-b border-steel-200 bg-paper/88 backdrop-blur-md"
+        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+          overHero
+            ? "border-b border-transparent bg-transparent"
+            : "border-b border-steel-200 bg-paper/88 backdrop-blur-md"
+        }`}
         style={{
           height: collapsed ? 56 : 80,
-          transition: `height ${duration.base}ms ${cssEase.out}`,
+          transition: `height ${duration.base}ms ${cssEase.out}, background-color ${duration.base}ms ${cssEase.out}`,
         }}
       >
-        <div className="shell flex h-full items-center justify-between">
+        {/* Scrim. The hanger roof is bright at the top of frame, so the rail
+            needs its own ground to stay legible over it. */}
+        {overHero && (
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-32"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(10,12,14,0.78) 0%, rgba(10,12,14,0.42) 55%, rgba(10,12,14,0) 100%)",
+            }}
+          />
+        )}
+
+        <div className="shell relative flex h-full items-center justify-between">
           <Link href="/" aria-label={`${company.name} — home`}>
             <Image
               src="/media/brand/raja-logo.png"
@@ -61,7 +76,10 @@ export function SiteNav() {
               className="w-auto"
               style={{
                 height: collapsed ? 20 : 28,
-                transition: `height ${duration.base}ms ${cssEase.out}`,
+                transition: `height ${duration.base}ms ${cssEase.out}, filter ${duration.base}ms ${cssEase.out}`,
+                // The mark is a single dark navy; inverting gives a clean white
+                // knockout over the hero rather than shipping a second file.
+                filter: overHero ? "brightness(0) invert(1)" : undefined,
               }}
             />
           </Link>
@@ -78,14 +96,26 @@ export function SiteNav() {
                   <span
                     className={
                       active
-                        ? "text-brand"
-                        : "text-steel-300 transition-colors group-hover:text-brand"
+                        ? overHero
+                          ? "text-paper"
+                          : "text-brand"
+                        : overHero
+                          ? "text-steel-500 transition-colors group-hover:text-paper"
+                          : "text-steel-300 transition-colors group-hover:text-brand"
                     }
                   >
-                    {link.index} //
+                    {link.index} {"//"}
                   </span>
                   <span
-                    className={active ? "text-ink" : "text-steel-700"}
+                    className={
+                      overHero
+                        ? active
+                          ? "text-paper"
+                          : "text-steel-200"
+                        : active
+                          ? "text-ink"
+                          : "text-steel-700"
+                    }
                   >
                     {link.label}
                   </span>
@@ -95,7 +125,11 @@ export function SiteNav() {
 
             <Link
               href="/contact"
-              className="t-label border border-brand px-5 py-3 text-brand transition-colors duration-200 hover:bg-brand hover:text-paper"
+              className={`t-label border px-5 py-3 transition-colors duration-200 ${
+                overHero
+                  ? "border-steel-500 text-paper hover:bg-paper hover:text-ink"
+                  : "border-brand text-brand hover:bg-brand hover:text-paper"
+              }`}
             >
               Enquire
             </Link>
@@ -104,7 +138,7 @@ export function SiteNav() {
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
-            className="t-label text-ink md:hidden"
+            className={`t-label md:hidden ${overHero ? "text-paper" : "text-ink"}`}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
           >
@@ -124,6 +158,7 @@ export function SiteNav() {
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={() => setMenuOpen(false)}
                 className="flex items-baseline gap-4"
                 style={{
                   animation: `menu-in ${duration.base}ms ${cssEase.out} both`,

@@ -22,15 +22,21 @@ import type { AssetKind } from "@/content/inventory";
 const ELEVATION = (22 * Math.PI) / 180;
 const AZIMUTH = (35 * Math.PI) / 180;
 
-/** Per-asset framing: camera distance and the height it looks at. */
+/**
+ * Per-asset framing: camera distance and the height it looks at.
+ *
+ * At fov 28 the visible height is ~0.5 × distance, so each distance is set from
+ * the asset's real extent plus margin. Elevation and azimuth never change —
+ * only how far back the camera stands.
+ */
 const framing: Record<AssetKind, { distance: number; target: number }> = {
-  hanger: { distance: 20, target: 1.9 },
-  stalls: { distance: 15, target: 1.4 },
-  flooring: { distance: 14, target: 0.5 },
-  stage: { distance: 20, target: 1.5 },
-  power: { distance: 14, target: 1.1 },
-  lighting: { distance: 15, target: 1.7 },
-  logistics: { distance: 19, target: 1.4 },
+  hanger: { distance: 26, target: 1.8 },
+  stalls: { distance: 12, target: 1.4 },
+  flooring: { distance: 12, target: 0.3 },
+  stage: { distance: 18, target: 1.5 },
+  power: { distance: 12.5, target: 1.1 },
+  lighting: { distance: 12, target: 1.6 },
+  logistics: { distance: 16, target: 1.4 },
 };
 
 function cameraPosition(distance: number, target: number): [number, number, number] {
@@ -92,30 +98,35 @@ export function AssetStage({
                 external HDRI fetch, so the rig works offline and on Vercel
                 without a CDN dependency. */}
             <Environment resolution={256}>
+              {/* Overhead softbox — the dominant source, and what the
+                  aluminium actually reflects. */}
               <Lightformer
-                intensity={2.6}
-                position={[6, 8, 4]}
-                scale={[10, 10, 1]}
+                intensity={7}
+                form="rect"
+                position={[0, 12, 0]}
+                rotation={[-Math.PI / 2, 0, 0]}
+                scale={[22, 22, 1]}
                 color="#ffffff"
               />
               <Lightformer
-                intensity={0.9}
-                position={[-8, 4, -4]}
-                scale={[10, 6, 1]}
-                color="#cddbe6"
+                intensity={4}
+                position={[10, 8, 6]}
+                scale={[14, 14, 1]}
+                color="#ffffff"
               />
               <Lightformer
-                intensity={0.55}
-                form="ring"
-                position={[0, 10, 0]}
-                scale={[12, 12, 1]}
-                color="#ffffff"
+                intensity={2.2}
+                position={[-12, 5, -6]}
+                scale={[14, 10, 1]}
+                color="#d6e3ec"
               />
             </Environment>
 
-            {/* Single soft key at 40°, matching the rig spec. */}
-            <directionalLight position={[7, 9, 5]} intensity={1.5} color="#fffaf2" />
-            <ambientLight intensity={0.45} />
+            {/* Single soft key at 40°, matching the rig spec, plus a low fill
+                so the shadow sides stay readable rather than going to black. */}
+            <directionalLight position={[7, 9, 5]} intensity={2.4} color="#fffaf2" />
+            <directionalLight position={[-6, 3, -5]} intensity={0.7} color="#cfdde8" />
+            <ambientLight intensity={1.1} />
 
             <CatalogueAsset kind={kind} />
 

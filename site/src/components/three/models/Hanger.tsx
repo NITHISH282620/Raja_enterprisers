@@ -3,7 +3,13 @@
 import { useMemo } from "react";
 import * as THREE from "three";
 import { materials } from "../materials";
-import { defaultHanger, membraneShell, portalFrame, type HangerSpec } from "../lattice";
+import {
+  defaultHanger,
+  gableEnd,
+  membraneShell,
+  portalFrame,
+  type HangerSpec,
+} from "../lattice";
 
 /**
  * Imported aluminium German hanger — 5 Lakh Sft in stock (brochure p.4).
@@ -36,6 +42,7 @@ export function Hanger({
     () => membraneShell(spec, length),
     [spec, length],
   );
+  const gableGeometry = useMemo(() => gableEnd(spec), [spec]);
 
   const frameMatrices = useMemo(() => {
     const matrices: THREE.Matrix4[] = [];
@@ -98,7 +105,16 @@ export function Hanger({
       ))}
 
       {showMembrane && (
-        <mesh geometry={membraneGeometry} material={materials.membrane} receiveShadow />
+        <>
+          <mesh geometry={membraneGeometry} material={materials.membrane} receiveShadow />
+          {/* Far end only — the near end stays open for the camera. */}
+          <mesh
+            geometry={gableGeometry}
+            material={materials.membrane}
+            position={[0, 0, -length / 2]}
+            receiveShadow
+          />
+        </>
       )}
 
       {showFloor && (

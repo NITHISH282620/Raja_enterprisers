@@ -7,7 +7,7 @@ import { SectionIndex } from "@/components/primitives/SectionIndex";
 import { Rule } from "@/components/primitives/Rule";
 import { AssetStage } from "@/components/three/AssetStage";
 import { cssEase, duration } from "@/lib/motion";
-import { useReducedMotion } from "@/lib/useReducedMotion";
+import { useCoarsePointer, useReducedMotion } from "@/lib/clientState";
 
 /**
  * Spatial inventory exploration (plan §2, Phase 3 of the brief).
@@ -23,16 +23,8 @@ import { useReducedMotion } from "@/lib/useReducedMotion";
 export function InventoryField() {
   const [selected, setSelected] = useState<string | null>(null);
   const [hovered, setHovered] = useState<string | null>(null);
-  const [coarse, setCoarse] = useState(false);
+  const coarse = useCoarsePointer();
   const reduced = useReducedMotion();
-
-  useEffect(() => {
-    const query = window.matchMedia("(pointer: coarse)");
-    const sync = () => setCoarse(query.matches);
-    sync();
-    query.addEventListener("change", sync);
-    return () => query.removeEventListener("change", sync);
-  }, []);
 
   // Escape closes the expanded category.
   useEffect(() => {
@@ -152,8 +144,10 @@ function CategoryCard({
       onMouseLeave={() => onHover(null)}
     >
       {/* The 3D asset, or a photo placeholder for the two categories we
-          deliberately do not model (workforce, catering). */}
-      <div className="absolute inset-0 overflow-hidden">
+          deliberately do not model (workforce, catering).
+          Inset from the bottom so the render sits in the card's upper field
+          and never collides with the type. */}
+      <div className="absolute inset-x-0 top-0 bottom-[9.5rem] overflow-hidden">
         {category.media.kind === "3d" ? (
           <AssetStage kind={category.media.asset} className="h-full w-full" />
         ) : (
@@ -161,10 +155,20 @@ function CategoryCard({
         )}
       </div>
 
+      {/* Scrim, so type stays legible if a render runs long. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-44"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(250,250,248,0) 0%, rgba(250,250,248,0.92) 38%, rgba(250,250,248,1) 100%)",
+        }}
+      />
+
       <div className="relative flex h-full flex-col justify-between p-6 md:p-7">
         <div className="t-label flex items-baseline gap-2">
           <span className="text-brand">{category.index}</span>
-          <span className="text-steel-300">//</span>
+          <span className="text-steel-300">{"//"}</span>
           <span className="text-steel-700">{category.name.toUpperCase()}</span>
         </div>
 
@@ -205,10 +209,23 @@ function CategoryCard({
  * than modelled — modelling people or food produces exactly the uncanny look
  * the brief rules out (plan §E).
  */
-function PhotoPending() {
+export function PhotoPending() {
   return (
-    <div className="flex h-full w-full items-end justify-end bg-steel-100 p-5">
-      <span className="t-label text-steel-300">Photography</span>
+    <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-graphite">
+      {/* The logo's line-scoring, used as a holding pattern. Reads as an
+          intentional slot awaiting a photograph, not as a broken image. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 opacity-[0.18]"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(180deg, #c1ced6 0px, #c1ced6 1px, transparent 1px, transparent 12px)",
+          maskImage: "radial-gradient(120% 100% at 50% 50%, #000 10%, transparent 80%)",
+          WebkitMaskImage:
+            "radial-gradient(120% 100% at 50% 50%, #000 10%, transparent 80%)",
+        }}
+      />
+      <span className="t-label relative text-steel-500">Photography to follow</span>
     </div>
   );
 }

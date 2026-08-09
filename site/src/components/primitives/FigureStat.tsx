@@ -31,12 +31,11 @@ export function FigureStat({
   const [shown, setShown] = useState<number>(numeric ? 0 : 0);
   const [started, setStarted] = useState(false);
 
+  // Under reduced motion the final value is derived, never counted up to.
+  const display = !numeric ? value : reduced ? (value as number) : shown;
+
   useEffect(() => {
-    if (!numeric) return;
-    if (reduced) {
-      setShown(value as number);
-      return;
-    }
+    if (!numeric || reduced) return;
     const node = ref.current;
     if (!node) return;
 
@@ -78,7 +77,11 @@ export function FigureStat({
   return (
     <div ref={ref} className={className}>
       <div className={`t-figure ${figureColor} flex items-baseline gap-2`}>
-        <span>{numeric ? shown.toLocaleString("en-IN") : value}</span>
+        <span>
+          {typeof display === "number"
+            ? display.toLocaleString("en-IN")
+            : display}
+        </span>
         {unit && (
           <span className={`t-label ${unitColor} translate-y-[-0.15em]`}>
             {unit}

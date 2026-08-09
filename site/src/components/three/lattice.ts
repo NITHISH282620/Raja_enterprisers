@@ -169,3 +169,25 @@ export function membraneShell(
   geometry.computeVertexNormals();
   return geometry;
 }
+
+/**
+ * The gable end wall — rectangle up to the eave, gable triangle above.
+ *
+ * Only the far end is closed. Leaving both ends open read as a hole in the
+ * scene rather than as a structure; closing the far end gives the interior a
+ * terminus and makes the volume read as enclosed.
+ */
+export function gableEnd(spec: HangerSpec = defaultHanger): THREE.BufferGeometry {
+  const { span, eaveHeight, ridgeHeight } = spec;
+  const halfSpan = span / 2;
+
+  const shape = new THREE.Shape();
+  shape.moveTo(-halfSpan, 0);
+  shape.lineTo(halfSpan, 0);
+  shape.lineTo(halfSpan, eaveHeight);
+  shape.lineTo(0, ridgeHeight);
+  shape.lineTo(-halfSpan, eaveHeight);
+  shape.closePath();
+
+  return new THREE.ShapeGeometry(shape);
+}

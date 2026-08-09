@@ -22,7 +22,7 @@ export function SectionIndex({
     <div className={className}>
       <div className="t-label flex items-baseline gap-2">
         <span className="text-brand">{index}</span>
-        <span className={slashColor}>//</span>
+        <span className={slashColor}>{"//"}</span>
         <span className={nameColor}>{name}</span>
       </div>
       <Rule tone={tone === "dark" ? "dark" : "light"} className="mt-3" />

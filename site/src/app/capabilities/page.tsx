@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { categories, headlineStock } from "@/content/inventory";
-import { InventoryField } from "@/components/inventory/InventoryField";
+import { InventoryField, PhotoPending } from "@/components/inventory/InventoryField";
 import { SectionIndex } from "@/components/primitives/SectionIndex";
 import { FigureStat } from "@/components/primitives/FigureStat";
 import { Rule } from "@/components/primitives/Rule";
@@ -64,11 +64,7 @@ export default function CapabilitiesPage() {
                         className="h-full w-full"
                       />
                     ) : (
-                      <div className="flex h-full items-end justify-end bg-steel-100 p-5">
-                        <span className="t-label text-steel-300">
-                          Photography required
-                        </span>
-                      </div>
+                      <PhotoPending />
                     )}
                   </div>
                 </div>
@@ -76,7 +72,7 @@ export default function CapabilitiesPage() {
                 <div className="md:col-span-6">
                   <div className="t-label flex items-baseline gap-2">
                     <span className="text-brand">{category.index}</span>
-                    <span className="text-steel-300">//</span>
+                    <span className="text-steel-300">{"//"}</span>
                     <span className="text-steel-700">
                       {category.name.toUpperCase()}
                     </span>

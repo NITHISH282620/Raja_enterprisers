@@ -25,11 +25,12 @@ export function Rule({
 
   const shouldAnimate = animate && !reduced;
 
+  // Derived rather than pushed through setState, so the static case never
+  // schedules a render it does not need.
+  const drawn = shown || !shouldAnimate;
+
   useEffect(() => {
-    if (!shouldAnimate) {
-      setShown(true);
-      return;
-    }
+    if (!shouldAnimate) return;
     const node = ref.current;
     if (!node) return;
 
@@ -59,7 +60,7 @@ export function Rule({
       aria-hidden
       className={`h-px w-full origin-left ${color} ${className}`}
       style={{
-        transform: `scaleX(${shown ? 1 : 0})`,
+        transform: `scaleX(${drawn ? 1 : 0})`,
         transition: shouldAnimate
           ? `transform ${duration.base}ms ${cssEase.out}`
           : undefined,

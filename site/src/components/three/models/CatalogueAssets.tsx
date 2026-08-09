@@ -3,7 +3,13 @@
 import { useMemo } from "react";
 import * as THREE from "three";
 import { materials } from "../materials";
-import { latticeBeam } from "../lattice";
+import {
+  gableEnd,
+  latticeBeam,
+  membraneShell,
+  portalFrame,
+  type HangerSpec,
+} from "../lattice";
 import { chairGeometry } from "./Seating";
 import type { AssetKind } from "@/content/inventory";
 
@@ -365,83 +371,57 @@ function Logistics() {
   );
 }
 
-/** Compact hanger for the catalogue card — exterior three-quarter view. */
+/**
+ * 01 — Compact hanger for the catalogue card.
+ *
+ * Built from the same `portalFrame` / `membraneShell` / `gableEnd` helpers as
+ * the hero, at a smaller spec. Sharing the geometry source is what keeps the
+ * card and the hero recognisably the same structure rather than two different
+ * tents that happen to sit on one site.
+ */
+const cardHangerSpec: HangerSpec = {
+  span: 9,
+  eaveHeight: 2.4,
+  ridgeHeight: 4.1,
+  depth: 0.26,
+};
+
 function HangerAsset() {
   const bays = 5;
   const baySpacing = 2.4;
-  const span = 9;
-  const eave = 2.4;
-  const ridge = 4.1;
   const length = bays * baySpacing;
+
+  const frameGeometry = useMemo(() => portalFrame(cardHangerSpec), []);
+  const shellGeometry = useMemo(
+    () => membraneShell(cardHangerSpec, length),
+    [length],
+  );
+  const gableGeometry = useMemo(() => gableEnd(cardHangerSpec), []);
+
+  const matrices = useMemo(
+    () =>
+      Array.from({ length: bays + 1 }, (_, i) =>
+        new THREE.Matrix4().makeTranslation(0, 0, -length / 2 + i * baySpacing),
+      ),
+    [length],
+  );
 
   return (
     <group>
-      {/* Membrane roof slopes */}
-      {[-1, 1].map((side) => {
-        const halfSpan = span / 2;
-        const rise = ridge - eave;
-        const slope = Math.hypot(halfSpan, rise);
-        const pitch = Math.atan2(rise, halfSpan);
-        return (
-          <mesh
-            key={side}
-            position={[(side * halfSpan) / 2, eave + rise / 2, 0]}
-            rotation={[Math.PI / 2, 0, side === -1 ? -pitch : pitch]}
-            material={materials.membrane}
-            castShadow
-            receiveShadow
-          >
-            <planeGeometry args={[slope, length]} />
-          </mesh>
-        );
-      })}
-      {/* Side walls */}
-      {[-1, 1].map((side) => (
-        <mesh
-          key={side}
-          position={[(side * span) / 2, eave / 2, 0]}
-          rotation={[0, Math.PI / 2, 0]}
-          material={materials.membrane}
-          castShadow
-        >
-          <planeGeometry args={[length, eave]} />
-        </mesh>
-      ))}
-      {/* Exposed frames at the open end */}
-      {Array.from({ length: bays + 1 }).map((_, i) => {
-        const z = -length / 2 + i * baySpacing;
-        return (
-          <group key={i} position={[0, 0, z]}>
-            {[-1, 1].map((side) => (
-              <mesh
-                key={side}
-                position={[(side * span) / 2, eave / 2, 0]}
-                material={materials.aluminium}
-                castShadow
-              >
-                <boxGeometry args={[0.16, eave, 0.16]} />
-              </mesh>
-            ))}
-            {[-1, 1].map((side) => {
-              const halfSpan = span / 2;
-              const rise = ridge - eave;
-              const slope = Math.hypot(halfSpan, rise);
-              const pitch = Math.atan2(rise, halfSpan);
-              return (
-                <mesh
-                  key={`r${side}`}
-                  position={[(side * halfSpan) / 2, eave + rise / 2, 0]}
-                  rotation={[0, 0, side === -1 ? pitch : -pitch]}
-                  material={materials.aluminium}
-                  castShadow
-                >
-                  <boxGeometry args={[slope, 0.16, 0.16]} />
-                </mesh>
-              );
-            })}
-          </group>
-        );
-      })}
+      <instancedMesh
+        args={[frameGeometry, materials.aluminium, matrices.length]}
+        ref={(mesh) => {
+          if (!mesh) return;
+          matrices.forEach((matrix, i) => mesh.setMatrixAt(i, matrix));
+          mesh.instanceMatrix.needsUpdate = true;
+        }}
+      />
+      <mesh geometry={shellGeometry} material={materials.membrane} />
+      <mesh
+        geometry={gableGeometry}
+        material={materials.membrane}
+        position={[0, 0, -length / 2]}
+      />
     </group>
   );
 }

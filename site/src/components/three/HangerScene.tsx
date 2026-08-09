@@ -1,7 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
+import { useCanRenderWebGL } from "@/lib/clientState";
 
 /**
  * Hero scene wrapper (plan §1, §F).
@@ -17,18 +18,9 @@ const HangerCanvas = dynamic(
 );
 
 export function HangerScene() {
-  const [enabled, setEnabled] = useState(false);
-
-  useEffect(() => {
-    // Only mount the canvas if WebGL is actually available and the device has
-    // some headroom. Cheap guard, saves a broken hero on low-end hardware.
-    const canvas = document.createElement("canvas");
-    const supported = Boolean(
-      canvas.getContext("webgl2") ?? canvas.getContext("webgl"),
-    );
-    const cores = navigator.hardwareConcurrency ?? 4;
-    setEnabled(supported && cores >= 4);
-  }, []);
+  // Only mounts the canvas where WebGL is available and the device has some
+  // headroom. Elsewhere the poster frame stands as the finished hero.
+  const enabled = useCanRenderWebGL();
 
   return (
     <div className="absolute inset-0">

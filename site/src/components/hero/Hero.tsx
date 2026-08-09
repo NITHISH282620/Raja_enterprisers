@@ -23,21 +23,31 @@ export function Hero() {
     <section className="relative min-h-[92svh] overflow-hidden bg-graphite">
       <HangerScene />
 
-      {/* Keeps the type legible over the structure without washing it out. */}
+      {/* Type legibility without crushing the structure. Weighted to the
+          bottom, where the headline sits, and left, where the copy runs —
+          the roof and far end stay open. */}
       <div
         aria-hidden
         className="absolute inset-0 z-10"
         style={{
           background:
-            "linear-gradient(180deg, rgba(10,12,14,0.72) 0%, rgba(10,12,14,0.32) 42%, rgba(10,12,14,0.86) 100%)",
+            "linear-gradient(180deg, rgba(10,12,14,0.30) 0%, rgba(10,12,14,0.05) 34%, rgba(10,12,14,0.55) 78%, rgba(10,12,14,0.82) 100%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0 z-10"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(10,12,14,0.74) 0%, rgba(10,12,14,0.34) 42%, rgba(10,12,14,0) 74%)",
         }}
       />
 
       <div className="shell relative z-20 flex min-h-[92svh] flex-col justify-end pt-32 pb-16">
-        <div className="t-label mb-8 flex items-center gap-3 text-steel-300">
-          <span className="text-brand-mid">EST.</span>
+        <div className="t-label mb-8 flex items-center gap-3 text-steel-100">
+          <span className="text-steel-300">EST.</span>
           <span>{company.established}</span>
-          <span className="ml-2 h-px w-16 bg-steel-700" />
+          <span className="ml-2 h-px w-16 bg-steel-500" />
           <span>{company.city}</span>
         </div>
 

@@ -34,8 +34,11 @@ function Rig({ progress }: { progress: React.RefObject<number> }) {
     const lambda = reduced ? 40 : 4.2;
     current.current = THREE.MathUtils.damp(current.current, target, lambda, delta);
 
-    camera.position.set(0, 2.35, current.current);
-    camera.lookAt(0, 2.9, current.current - 12);
+    // Eye height, tilted very slightly down the length. Looking up filled the
+    // frame with roof; this gives the floor, the seating and the far gable
+    // their share, which is how the reference photographs read.
+    camera.position.set(0, 3.1, current.current);
+    camera.lookAt(0, 2.2, current.current - 14);
   });
 
   return null;
@@ -44,12 +47,13 @@ function Rig({ progress }: { progress: React.RefObject<number> }) {
 function Scene({ progress }: { progress: React.RefObject<number> }) {
   return (
     <>
-      {/* Depth down the length. Does more for spatial feel than any effect. */}
-      <fog attach="fog" args={["#16191c", 12, 62]} />
+      {/* Depth down the length. Does more for spatial feel than any effect.
+          Held back far enough that the near bays stay crisp. */}
+      <fog attach="fog" args={["#1b2026", 22, 88]} />
 
       {/* Daylight through the membrane: sky/ground hemisphere carries the
           ambient, one sun gives direction and the shadow. */}
-      <hemisphereLight args={["#dfe7ee", "#20262b", 1.15]} />
+      <hemisphereLight args={["#e6eef5", "#2a3037", 2.4]} />
       <directionalLight
         position={[14, 26, 10]}
         intensity={2.1}
@@ -119,8 +123,8 @@ export function HangerCanvas() {
         camera={{ fov: 44, near: 0.1, far: 200, position: [0, 2.35, START_Z] }}
         onCreated={({ gl, scene }) => {
           gl.toneMapping = THREE.ACESFilmicToneMapping;
-          gl.toneMappingExposure = 1.05;
-          scene.background = new THREE.Color("#16191c");
+          gl.toneMappingExposure = 1.25;
+          scene.background = new THREE.Color("#1b2026");
         }}
       >
         <Scene progress={progress} />

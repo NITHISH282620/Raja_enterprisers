@@ -16,14 +16,21 @@ export const materials = {
     roughness: 0.38,
   }),
 
-  /** PVC membrane. Slightly translucent so daylight reads through the roof. */
+  /**
+   * PVC membrane.
+   *
+   * The sun is outside; we are looking at the inner face. A purely reflective
+   * white would render the roof near-black from within, which is not how these
+   * structures read in the reference photographs — the fabric transmits light
+   * and glows. The emissive term stands in for that transmission.
+   */
   membrane: new THREE.MeshStandardMaterial({
     color: "#eef0ef",
     metalness: 0,
     roughness: 0.92,
     side: THREE.DoubleSide,
-    transparent: true,
-    opacity: 0.94,
+    emissive: new THREE.Color("#b9c9d4"),
+    emissiveIntensity: 0.55,
   }),
 
   /** Powder-coated steel — barricading, frames, plant. */
@@ -47,9 +54,15 @@ export const materials = {
     roughness: 0.85,
   }),
 
-  /** Synthetic carpet. */
+  /**
+   * Synthetic carpet. Exhibition carpet genuinely is red — the reference
+   * photographs confirm it — but muted here so it sits inside the restrained
+   * palette instead of fighting the brand accent.
+   */
   carpet: new THREE.MeshStandardMaterial({
-    color: "#8d2f33",
+    // Deliberately dark: the catalogue rig is bright, and anything lighter
+    // tone-maps up into a pink that fights the neutral palette.
+    color: "#5c2f2b",
     metalness: 0,
     roughness: 0.98,
   }),

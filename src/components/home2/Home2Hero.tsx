@@ -74,7 +74,7 @@ export function Home2Hero() {
 
           <div className="flex flex-wrap items-center gap-4">
             <Link
-              href="#capabilities"
+              href="#inventory"
               className="group inline-flex items-center gap-3 bg-[#0a66c2] px-6 py-3.5 text-white font-medium text-sm transition-transform duration-300 hover:scale-[1.02] rounded-sm"
             >
               View Capabilities

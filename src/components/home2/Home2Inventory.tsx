@@ -8,7 +8,7 @@ import Image from "next/image";
 
 export function Home2Inventory() {
   return (
-    <section id="capabilities" className="w-full bg-white py-24 border-t border-steel-100">
+    <section id="inventory" className="w-full bg-white py-24 border-t border-steel-100">
       <div className="w-full px-6 md:px-12 xl:px-24 mx-auto max-w-[1920px]">
         
         {/* Header Section */}

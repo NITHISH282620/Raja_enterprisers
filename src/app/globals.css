@@ -23,6 +23,13 @@
   --color-brand: #063c5b;
   --color-brand-mid: #446d83;
 
+  /* Interactive accent, sampled from the approved hero board (raja_1.jpeg). */
+  --color-accent: #0a66c2;
+  --color-accent-soft: #eaf2fb;
+
+  /* Card ground. One value, used on every page. */
+  --color-card: #f4f6f8;
+
   --font-display: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 
@@ -104,9 +111,60 @@
     font-variant-numeric: tabular-nums;
   }
 
+  /* The one container. Every section on every page sits inside this. */
   .shell {
     width: 100%;
-    padding-inline: clamp(1.25rem, 4vw, 4rem);
+    max-width: 1600px;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 5rem);
+  }
+
+  /* Vertical rhythm. Two values only, so the six pages breathe alike. */
+  .band {
+    padding-block: clamp(4.5rem, 8vw, 8.5rem);
+  }
+
+  .band-tight {
+    padding-block: clamp(3rem, 5vw, 5rem);
+  }
+
+  /* Eyebrow label — mono, wide, quiet. Paired with an index number. */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--color-steel-500);
+  }
+
+  /* Cards. One radius, one ground, one hairline — across all six pages. */
+  .card {
+    background-color: var(--color-card);
+    border: 1px solid var(--color-steel-100);
+    border-radius: 1.75rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Motion. One reveal, used everywhere: 18px rise into place on entry.
+   Elements start hidden only once JS has confirmed it can observe them, so a
+   failed hydration leaves content visible rather than blank.
+--------------------------------------------------------------------------- */
+@layer utilities {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.75s var(--ease-out-quart),
+      transform 0.75s var(--ease-out-quart);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-reveal="shown"] {
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -117,6 +175,12 @@
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  /* Content arrives in place rather than animating into it. */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   *,

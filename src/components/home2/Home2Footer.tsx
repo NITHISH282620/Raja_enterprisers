@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { company } from "@/content/company";
 
 export function Home2Footer() {
   return (
@@ -57,7 +56,7 @@ export function Home2Footer() {
               Got a project<br/>in mind?
             </h3>
             <Link href="#contact" className="text-brand text-sm font-medium flex items-center gap-2 hover:gap-3 transition-all">
-              Let's Talk <span>&rarr;</span>
+              Let&rsquo;s Talk <span>&rarr;</span>
             </Link>
           </div>
         </div>

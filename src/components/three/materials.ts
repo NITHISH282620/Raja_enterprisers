@@ -25,12 +25,15 @@ export const materials = {
    * and glows. The emissive term stands in for that transmission.
    */
   membrane: new THREE.MeshStandardMaterial({
-    color: "#eef0ef",
+    color: "#e3e8ec",
     metalness: 0,
     roughness: 0.92,
     side: THREE.DoubleSide,
     emissive: new THREE.Color("#b9c9d4"),
-    emissiveIntensity: 0.55,
+    // Kept low deliberately. Higher values glow the roof planes up to the same
+    // value as the sky behind them, and the structure stops reading as a solid
+    // shell — it looks like a wireframe. The fabric needs to take shading.
+    emissiveIntensity: 0.22,
   }),
 
   /** Powder-coated steel — barricading, frames, plant. */

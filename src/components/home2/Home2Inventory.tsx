@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { AssetStage } from "@/components/three/AssetStage";
-import { categories } from "@/content/inventory";
 
 import Image from "next/image";
 
@@ -30,7 +28,7 @@ export function Home2Inventory() {
               {/* Replace 3D with 2D stitch export */}
               <div className="relative w-full h-full transition-transform duration-700 group-hover:scale-105">
                 <Image 
-                  src="/media/projects/stitch-hanger.png" 
+                  src="/media/catalogue/hanger-aerial.jpg" 
                   alt="Imported German Hangers" 
                   fill 
                   className="object-contain object-bottom"
@@ -64,7 +62,7 @@ export function Home2Inventory() {
               {/* Replace 3D with 2D stitch export */}
               <div className="relative w-full h-full transition-transform duration-700 group-hover:scale-105">
                 <Image 
-                  src="/media/projects/stitch-technical.png" 
+                  src="/media/catalogue/stall-led-fascia.jpg" 
                   alt="Technical Solutions" 
                   fill 
                   className="object-contain object-center"
@@ -127,7 +125,7 @@ export function Home2Inventory() {
               {/* Replace 3D with 2D stitch export */}
               <div className="relative w-full h-full transition-transform duration-700 group-hover:scale-105 translate-y-4">
                 <Image 
-                  src="/media/projects/stitch-lighting.png" 
+                  src="/media/catalogue/hanger-lounge.jpg" 
                   alt="Lighting and AV Solutions" 
                   fill 
                   className="object-contain object-bottom right-[-5%]"

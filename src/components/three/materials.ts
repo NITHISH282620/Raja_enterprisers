@@ -9,11 +9,25 @@ import * as THREE from "three";
  */
 
 export const materials = {
-  /** Mill-finish aluminium truss. */
+  /**
+   * Mill-finish aluminium truss.
+   *
+   * Tuned against the Raja photographs (HMS4180-1, german_tent_raja): erected
+   * hanger frames are dull site aluminium, not polished chrome. Metalness is
+   * held well below 1 and roughness kept high, otherwise the frames go dark
+   * against a bright sky and the whole structure reads as a black wireframe.
+   */
   aluminium: new THREE.MeshStandardMaterial({
-    color: "#b9c0c6",
-    metalness: 0.82,
-    roughness: 0.38,
+    color: "#cfd4d8",
+    metalness: 0.45,
+    roughness: 0.52,
+  }),
+
+  /** Anodised connector blocks, base plates and bolt collars — a shade darker. */
+  fitting: new THREE.MeshStandardMaterial({
+    color: "#9aa3ab",
+    metalness: 0.55,
+    roughness: 0.44,
   }),
 
   /**
@@ -25,15 +39,15 @@ export const materials = {
    * and glows. The emissive term stands in for that transmission.
    */
   membrane: new THREE.MeshStandardMaterial({
-    color: "#e3e8ec",
+    color: "#efedea",
     metalness: 0,
-    roughness: 0.92,
+    roughness: 0.86,
     side: THREE.DoubleSide,
     emissive: new THREE.Color("#b9c9d4"),
     // Kept low deliberately. Higher values glow the roof planes up to the same
     // value as the sky behind them, and the structure stops reading as a solid
     // shell — it looks like a wireframe. The fabric needs to take shading.
-    emissiveIntensity: 0.22,
+    emissiveIntensity: 0.16,
   }),
 
   /** Powder-coated steel — barricading, frames, plant. */

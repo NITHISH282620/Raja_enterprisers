@@ -62,9 +62,9 @@ export const credibility = {
   statement: "Built for the Prime Minister's dais.",
   detail:
     "Raja Enterprises has delivered the ground infrastructure for national programmes inaugurated by the Hon'ble Prime Minister of India — including the Dedication to the Nation and foundation stone laying for projects worth over ₹3,600 crore — and for the swearing-in of the Karnataka state government at Kanteerava Stadium.",
-  image: "/media/catalogue/pm-dedication.jpg",
+  image: "/media/raja/ambedkar-ceremony.jpg",
   imageAlt:
-    "Dais under a Raja Enterprises hanger for the Dedication to the Nation and foundation stone laying ceremony.",
+    "Floral-dressed ceremonial approach to the Ambedkar statue at the Vidhana Soudha, 134th Ambedkar Jayanti, April 2025.",
 } as const;
 
 /**
@@ -99,11 +99,13 @@ export const approach = [
  * gaps are visible and decidable, rather than filled in with invention.
  */
 export const openQuestions = [
-  "The complete postal address — “5th Main Road” needs its locality to be findable on a map or in search.",
-  "Correct dates for the Kempegowda and Shivamogga airport inaugurations. The catalogue prints 20 May 2023 on three different events, which cannot all be right.",
-  "Whether the 5-acre warehouse listed on the website is still owned, and where it is.",
-  "Whether any audio-visual stock is owned, or whether all AV is hired in. The catalogue documents no AV inventory.",
-  "Any projects executed since May 2023 — the newest dated project in the catalogue.",
-  "Written permission to reproduce government emblems and client marks on the website.",
-  "The preferred public email address, and whether the Yahoo address should be retired.",
+  "Confirmation that the locality on the postal address is Chamarajpet. Three business directories give “5th Main, Chamarajpet, Bengaluru 560018”, which matches the PIN, but the catalogue stops at “5th Main Road”.",
+  "Correct dates for the Kempegowda and Shivamogga airport inaugurations. The catalogue prints 20 May 2023 on three different events, which cannot all be right — public record puts Kempegowda at 11 November 2022 and Shivamogga at 27 February 2023.",
+  "Whether “Dedication to the Nation — ₹3,600 crore” and “Shivamogga Airport Inauguration” are the same programme. The Prime Minister's Office records a single ₹3,600 crore Shivamogga event on 27 February 2023 that included the airport inauguration. Both are published here separately until this is settled.",
+  "Whether any audio-visual stock is owned, hired in, or supplied through partners. The catalogue documents no AV inventory, but the company website markets “Lighting & AV Solutions”.",
+  "Photographs of the workforce and the goods-vehicle fleet. 460 personnel and 20 vehicles are headline figures with no supporting image anywhere in the supplied material.",
+  "Any work executed during 2024, or during 2026 to date. The most recent documented project is April 2025.",
+  "Written permission to reproduce government emblems, the Vidhana Soudha and client marks on the website.",
+  "The preferred public email address. Four are currently in circulation across the catalogue and the website, including both a .com and a .co.in spelling of the same Yahoo address.",
+  "What the 1991 transition into core event infrastructure involved — it is the only dated milestone between the 1977 founding and the projects.",
 ] as const;

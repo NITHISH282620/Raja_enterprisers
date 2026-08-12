@@ -56,13 +56,37 @@ export const featuredProject: Project = {
 
 export const projects: Project[] = [
   {
+    slug: "ambedkar-jayanti-134",
+    title: "134th Ambedkar Jayanti",
+    category: "State programme",
+    location: "Vidhana Soudha, Bengaluru",
+    date: "14 April 2025",
+    description:
+      "The most recent documented execution: a clear-span hanger raised on the Vidhana Soudha forecourt, with a dais for official proceedings, floral dressing of the Ambedkar statue, a curated gallery of Dr B. R. Ambedkar's life, seating for a public audience, and catering.",
+    deployed: [
+      "German hangers",
+      "Dais & staging",
+      "Audience seating",
+      "Iron barricading",
+      "Exhibition gallery",
+      "Catering",
+    ],
+    image: "/media/raja/hero-vidhana-soudha.jpg",
+    imageAlt:
+      "Raja clear-span hanger erected in front of the Vidhana Soudha for the 134th Ambedkar Jayanti, with crowds and folk performers.",
+    evidence:
+      "Scope described on Raja Enterprises' own portfolio page, with a photograph set in their media library. The 134th Ambedkar Jayanti fell on 14 April 2025.",
+    confidence: "documented",
+    source: "WEB",
+  },
+  {
     slug: "rail-road-infrastructure-2022",
-    title: "Rail & road infrastructure inauguration by the Hon'ble Prime Minister",
+    title: "PWD Programme Inauguration by the Hon'ble Prime Minister of India",
     category: "National programme",
     location: "Bengaluru",
     date: "20 June 2022",
     description:
-      "Enclosed hanger, dais and full audience infrastructure for the inauguration of rail and road infrastructure projects by the Hon'ble Prime Minister of India.",
+      "Enclosed hanger, dais and full audience infrastructure for the PWD programme inaugurated by the Hon'ble Prime Minister of India. The event backdrop records rail and road infrastructure worth ₹28,000 crore.",
     deployed: ["German hangers", "Dais & staging", "Carpeted flooring", "Audience seating"],
     image: "/media/catalogue/pm-pwd-2022.jpg",
     imageAlt:
@@ -151,6 +175,37 @@ export const projects: Project[] = [
     source: "BR p.14",
   },
   {
+    slug: "aicog-2019",
+    title: "62nd All India Congress of Obstetrics & Gynaecology",
+    category: "Conference",
+    location: "Gayatri Vihar, Palace Grounds, Bengaluru",
+    date: "2019",
+    description:
+      "End-to-end conference infrastructure for one of India's largest medical congresses: stall fabrication, the full exhibition hall build, main stage design and venue branding, alongside delegate accommodation and catering.",
+    deployed: ["Custom fabrication", "Exhibition hall", "Main stage", "Venue branding", "Catering"],
+    image: "/media/catalogue/g20-session.jpg",
+    imageAlt: "Delegate session laid out in a large conference hall.",
+    evidence:
+      "Scope and venue stated on Raja Enterprises' own portfolio page. The photograph shown is representative conference work, not confirmed as this event.",
+    confidence: "needs-confirmation",
+    source: "WEB",
+  },
+  {
+    slug: "national-constitution-day",
+    title: "National Constitution Day",
+    category: "State programme",
+    location: "Vidhan Soudha, Bengaluru",
+    date: null,
+    description:
+      "A constitutional commemoration on the Vidhana Soudha forecourt.",
+    image: "/media/catalogue/emergency-response-112.jpg",
+    imageAlt: "Ceremonial dais and carpeted approach at the Vidhana Soudha, Bengaluru.",
+    evidence:
+      "Listed on Raja Enterprises' own portfolio page, but the description published there is duplicated from the Global Investors Summit entry and does not describe this event. Scope, date and photography all require owner confirmation.",
+    confidence: "needs-confirmation",
+    source: "WEB",
+  },
+  {
     slug: "vishwa-kannada-sammelana-2011",
     title: "Vishwa Kannada Sammelana 2011",
     category: "Cultural programme",
@@ -214,10 +269,11 @@ export const projects: Project[] = [
     slug: "karnataka-cabinet-meeting",
     title: "Karnataka Government Cabinet Meeting",
     category: "State programme",
-    location: "Bengaluru",
+    location: "Male Mahadeshwara Hills",
     date: null,
     description:
-      "Conference infrastructure for a sitting of the state cabinet — enclosed structure, seating and services.",
+      "A cabinet sitting held on a hill site: German hangers with air-conditioning, wooden flooring and red carpet, decorative lighting and floral dressing across the hill, custom entry arches, and catering.",
+    deployed: ["German hangers", "Temporary air-conditioning", "Wooden flooring", "General lighting"],
     image: "/media/projects/cabinet-meeting.jpeg",
     imageAlt: "Karnataka Government cabinet meeting venue.",
     confidence: "documented",
@@ -225,17 +281,18 @@ export const projects: Project[] = [
   },
   {
     slug: "global-investors-summit-2023",
-    title: "Global Investors Summit 2023",
+    title: "Global Investors Summit 2023 — Destination Uttarakhand",
     category: "Government summit",
-    location: null,
+    location: "Uttarakhand",
     date: "2023",
     description:
-      "Summit infrastructure for a government investment forum — exhibition build, delegate seating and conference structures.",
+      "Complete infrastructure for a state investment summit: German hanger tents and customised exhibition stalls, laid out for delegates, investors and dignitaries.",
+    deployed: ["German hangers", "Custom exhibition stalls", "Flooring"],
     image: "/media/catalogue/g20-session.jpg",
     imageAlt: "Delegate session laid out in a large conference hall.",
     evidence:
-      "Listed on the company website. The photograph is from the catalogue's conference section; the scope of work is not itemised in either source.",
-    confidence: "needs-confirmation",
+      "Scope and location are stated on Raja Enterprises' own portfolio page. Photography for this project has not been supplied.",
+    confidence: "documented",
     source: "WEB",
   },
   {

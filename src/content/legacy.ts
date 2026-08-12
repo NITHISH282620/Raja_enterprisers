@@ -38,8 +38,8 @@ export const chapters: Chapter[] = [
     body: "The base of the business is physical stock and the ability to put it on unmade ground. Imported German hangers give a column-free enclosure; wooden floor platforms make an uneven field level and load-bearing; generators and temporary air-conditioning make the result habitable for a full day. It is the layer every other line of work sits on.",
     terms: ["German Hangers", "Wooden Floor Platform", "Generators", "Temporary Air-conditioners"],
     evidence: "kannada-sahitya-sammelana-86",
-    image: "/media/catalogue/hanger-aerial.jpg",
-    imageAlt: "Two hangers erected side by side on open ground, seen from the air.",
+    image: "/media/raja/hero-vidhana-soudha.jpg",
+    imageAlt: "Raja clear-span hanger erected at the Vidhana Soudha, Bengaluru.",
   },
   {
     index: "02",
@@ -47,8 +47,8 @@ export const chapters: Chapter[] = [
     body: "Turnkey event management: the catalogue's own framing of the service. One contract carries structure, flooring, staging, seating, lighting, power and catering, so the client holds a single line of responsibility rather than coordinating a field of vendors on site.",
     terms: ["Corporate Events", "Turnkey", "Stage", "Cushion Chairs with Covers"],
     evidence: "ds-max-anniversary-2023",
-    image: "/media/catalogue/hanger-lounge.jpg",
-    imageAlt: "Hanger interior at dusk arranged with lounge seating for a corporate event.",
+    image: "/media/raja/hanger-interior-2025.jpg",
+    imageAlt: "Interior of a Raja clear-span hanger, looking up into the roof structure.",
   },
   {
     index: "03",
@@ -56,8 +56,8 @@ export const chapters: Chapter[] = [
     body: "Design and fabrication of exhibition stalls and interiors — modular Octonorm and Maxima systems alongside custom-built shells, developed through design and visualisation before anything is cut. The catalogue describes a team assembled for design, fabrication, display, production, construction and installation.",
     terms: ["Octonorm Stalls", "Maxima Stalls", "LED Fascia", "Interior"],
     evidence: "india-international-trade-fair",
-    image: "/media/catalogue/stall-karnataka.jpg",
-    imageAlt: "Illuminated state pavilion built from modular stall systems with LED fascia.",
+    image: "/media/raja/exhibition-hall-2020.jpg",
+    imageAlt: "Exhibition hall under a Raja hanger, filled with fabricated stalls, 107th Indian Science Congress.",
   },
   {
     index: "04",
@@ -74,8 +74,8 @@ export const chapters: Chapter[] = [
     body: "Conferences, business forums, roadshows and anniversary events, run through the same inventory and the same crew as the state work. Catering is delivered in-house by sister concern Sharada Caterers rather than subcontracted around the build.",
     terms: ["Conferences", "Business forums", "Sharada Caterers", "Rental Furnitures"],
     evidence: "indian-science-congress-107",
-    image: "/media/catalogue/banquet-hall.jpg",
-    imageAlt: "Banquet hall laid with covered cushioned chairs ahead of a conference session.",
+    image: "/media/raja/exhibition-crowd.jpg",
+    imageAlt: "Delegates in the exhibition hall at the 107th Indian Science Congress.",
   },
   {
     index: "06",

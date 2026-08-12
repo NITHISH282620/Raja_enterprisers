@@ -6,154 +6,212 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { Hanger } from "@/components/three/models/Hanger";
 import { Seating } from "@/components/three/models/Seating";
-import { defaultHanger } from "@/components/three/lattice";
 import { useReducedMotion } from "@/lib/useReducedMotion";
+import { useCanRenderWebGL, useCoarsePointer, useMediaQuery } from "@/lib/clientState";
 
 /**
- * The hero structure: an imported German hanger, live, rather than a stock
- * photograph of somebody else's building.
+ * The hero structure — an imported German hanger, live, composited over a real
+ * Raja photograph rather than floating on a blank gradient.
  *
- * Composition follows the approved board (raja_1.jpeg) — the structure sits
- * right of centre, seen from outside on a three-quarter view so both the long
- * elevation and the open gable read at once, on a pale ground that the copy
- * overlay can sit on at the left.
+ * The canvas is transparent: the photograph behind it supplies sky, ground and
+ * context, and the geometry only has to supply the structure and the camera.
+ * That is what makes the two layers read as one scene instead of a render
+ * pasted on a picture.
  *
- * Motion is two things and no more: a very slow lateral drift so the frame is
- * alive at rest, and a scroll-linked dolly so leaving the hero feels like
- * walking away from a structure rather than scrolling past a picture. Both
- * stop under prefers-reduced-motion.
+ * Motion is a single continuous drone approach — establish, dolly, descend,
+ * enter, settle — landing on the raja_1 resting composition and then handing
+ * over to a scroll-linked drift. Any scroll input during the approach cuts it
+ * short and eases to the resting frame, because a reviewer who has started
+ * reading should never be fighting the camera.
  */
 
-/** Sky. Deep enough that a white PVC membrane has something to read against. */
-const SKY = "#dfe7ee";
+/** The five beats, in camera space. The last is the raja_1 resting frame. */
+const BEATS = [
+  { pos: new THREE.Vector3(-64, 34, 104), target: new THREE.Vector3(10, 7, -10) }, // establish
+  { pos: new THREE.Vector3(-50, 22, 74), target: new THREE.Vector3(11, 6, -12) }, // approach
+  { pos: new THREE.Vector3(-38, 12, 52), target: new THREE.Vector3(12, 5.2, -14) }, // descend
+  { pos: new THREE.Vector3(-31, 6.4, 40), target: new THREE.Vector3(13, 5.4, -16) }, // enter
+  { pos: new THREE.Vector3(-27, 4.6, 34), target: new THREE.Vector3(13, 5.2, -18) }, // rest
+];
 
-/**
- * Camera path.
- *
- * The structure is 25m across the span, 7.4m to the ridge and 45m long, sitting
- * centred on z = -6 — so it occupies z ∈ [-28.5, 16.5] and x ∈ [-12.5, 12.5].
- * Every camera position below has to stay outside that box or the shot ends up
- * under the roof looking at bare truss, which reads as scaffolding.
- *
- * The shot is deliberately close and low, the way the approved board frames its
- * structure: the near corner is only about ten metres off the lens, so the
- * flank rakes away hard and the structure is cropped by the frame rather than
- * sitting inside it as an object. Far enough back and it reads as a model.
- */
-const START = new THREE.Vector3(-24, 10.8, 27);
-const END = new THREE.Vector3(-18, 8.6, 19);
-/** Aimed down the length and right of the copy column, so the structure fills
- *  the right of the frame and the left stays clear for type. */
-const TARGET = new THREE.Vector3(3, 3.4, -20);
+const REST = BEATS[BEATS.length - 1];
+/** Where the scroll-linked drift ends, past the resting frame. */
+const SCROLL_END = new THREE.Vector3(-21, 4.0, 25);
+const INTRO_SECONDS = 8.4;
 
-function Rig({ progress }: { progress: React.RefObject<number> }) {
+/** Cubic ease-out: velocity peaks early and decays, so the move arrives. */
+const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+
+function samplePath(t: number, pos: THREE.Vector3, target: THREE.Vector3) {
+  const span = BEATS.length - 1;
+  const scaled = Math.min(Math.max(t, 0), 1) * span;
+  const i = Math.min(Math.floor(scaled), span - 1);
+  const f = scaled - i;
+  // Smoothstep within each leg so beat joins are not felt as corners.
+  const s = f * f * (3 - 2 * f);
+  pos.copy(BEATS[i].pos).lerp(BEATS[i + 1].pos, s);
+  target.copy(BEATS[i].target).lerp(BEATS[i + 1].target, s);
+}
+
+function Rig({
+  scroll,
+  onIntroDone,
+}: {
+  scroll: React.RefObject<number>;
+  onIntroDone: () => void;
+}) {
   const { camera } = useThree();
   const reduced = useReducedMotion();
-  const eased = useRef(0);
-  const position = useRef(START.clone());
+
+  const intro = useRef(0);
+  const skipped = useRef(false);
+  const settle = useRef(0); // 0..1 blend from intro path to scroll control
+  const pos = useRef(new THREE.Vector3());
+  const target = useRef(new THREE.Vector3());
+  const smoothPos = useRef(BEATS[0].pos.clone());
+  const smoothTarget = useRef(BEATS[0].target.clone());
+  const parked = useRef(false);
+  const done = useRef(false);
+
+  // A scroll during the approach means the reviewer is reading — cut it short.
+  useEffect(() => {
+    const skip = () => {
+      if (intro.current < 1) skipped.current = true;
+    };
+    window.addEventListener("wheel", skip, { passive: true });
+    window.addEventListener("touchmove", skip, { passive: true });
+    window.addEventListener("keydown", skip);
+    return () => {
+      window.removeEventListener("wheel", skip);
+      window.removeEventListener("touchmove", skip);
+      window.removeEventListener("keydown", skip);
+    };
+  }, []);
 
   useFrame((state, delta) => {
-    // Reduced motion parks the camera at a fixed, well-composed frame.
-    const target = reduced ? 0.12 : progress.current;
-    eased.current = THREE.MathUtils.damp(eased.current, target, 3.4, delta);
+    const d = Math.min(delta, 0.05); // clamp so a dropped frame is not a jump
 
-    const next = START.clone().lerp(END, eased.current);
-
-    if (!reduced) {
-      // Slow lateral breath. Amplitude is under a metre — felt, not watched.
-      const t = state.clock.elapsedTime;
-      next.x += Math.sin(t * 0.13) * 0.75;
-      next.y += Math.sin(t * 0.09) * 0.28;
+    // Reduced motion parks the camera at the resting frame — no fly-through.
+    if (reduced && !parked.current) {
+      parked.current = true;
+      intro.current = 1;
+      settle.current = 1;
+      smoothPos.current.copy(REST.pos);
+      smoothTarget.current.copy(REST.target);
     }
 
-    position.current.lerp(next, 1 - Math.pow(0.001, delta));
-    camera.position.copy(position.current);
-    camera.lookAt(TARGET);
+    if (settle.current < 1) {
+      // Skipping accelerates the remaining path rather than cutting to it.
+      const rate = skipped.current ? 3.2 : 1 / INTRO_SECONDS;
+      intro.current = Math.min(intro.current + d * rate, 1);
+      samplePath(easeOut(intro.current), pos.current, target.current);
+      if (intro.current >= 1) {
+        settle.current = Math.min(settle.current + d * 1.6, 1);
+        if (!done.current) {
+          done.current = true;
+          onIntroDone();
+        }
+      }
+    }
+
+    if (settle.current >= 1) {
+      // Scroll-linked drift: a slow push past the resting frame.
+      pos.current.copy(REST.pos).lerp(SCROLL_END, scroll.current);
+      target.current.copy(REST.target);
+      if (!reduced) {
+        const t = state.clock.elapsedTime;
+        pos.current.x += Math.sin(t * 0.11) * 0.5;
+        pos.current.y += Math.sin(t * 0.08) * 0.2;
+      }
+    }
+
+    // Critically damped follow — removes any residual stepping.
+    const lambda = reduced ? 40 : 3.6;
+    smoothPos.current.lerp(pos.current, 1 - Math.exp(-lambda * d));
+    smoothTarget.current.lerp(target.current, 1 - Math.exp(-lambda * d));
+    camera.position.copy(smoothPos.current);
+    camera.lookAt(smoothTarget.current);
   });
 
   return null;
 }
 
-function Scene({ progress }: { progress: React.RefObject<number> }) {
-  const { span } = defaultHanger;
+function Scene({
+  scroll,
+  quality,
+  onIntroDone,
+}: {
+  scroll: React.RefObject<number>;
+  quality: "high" | "low";
+  onIntroDone: () => void;
+}) {
+  const low = quality === "low";
 
   return (
     <>
-      {/* Haze pulled in close. It is what separates the near frames from the
-          far ones and stops the long elevation reading as a flat white band. */}
-      <fog attach="fog" args={[SKY, 26, 118]} />
-
-      {/* Overcast key: bright, soft, directional enough to model the truss. */}
-      <hemisphereLight args={["#ffffff", "#c8d4de", 2.6]} />
+      {/* Overcast key matched to the photograph: bright, soft, high sun. */}
+      <hemisphereLight args={["#ffffff", "#b9c6d2", 2.4]} />
       <directionalLight
-        position={[26, 34, 18]}
-        intensity={3.1}
-        color="#fffaf3"
-        castShadow
-        shadow-mapSize={[2048, 2048]}
+        position={[30, 42, 22]}
+        intensity={2.6}
+        color="#fff6e9"
+        castShadow={!low}
+        shadow-mapSize={low ? [512, 512] : [2048, 2048]}
         shadow-camera-left={-46}
         shadow-camera-right={46}
         shadow-camera-top={46}
         shadow-camera-bottom={-46}
-        shadow-camera-far={150}
+        shadow-camera-far={160}
         shadow-bias={-0.0004}
       />
-      {/* Cool bounce from the far side so the shaded elevation is not dead. */}
-      <directionalLight position={[-24, 12, -30]} intensity={0.9} color="#aebfcd" />
+      <directionalLight position={[-26, 14, -30]} intensity={0.75} color="#aebfcd" />
 
-      {/* Ground. A shade under the sky so a horizon exists — without it the
-          structure floats in white and stops reading as something built. */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.02, 0]} receiveShadow>
-        <planeGeometry args={[520, 520]} />
-        <meshStandardMaterial color="#c4d0dc" roughness={1} metalness={0} />
-      </mesh>
+      {/* Grounding shadow only — no ground plane, the photograph is the ground. */}
+      {!low && (
+        <ContactShadows
+          position={[0, 0.02, -6]}
+          scale={120}
+          resolution={1024}
+          blur={2.2}
+          opacity={0.38}
+          far={22}
+          frames={1}
+        />
+      )}
 
-      {/* Occlusion under the structure. This is what actually sets it down on
-          the ground; the directional shadow alone is too soft at this angle. */}
-      <ContactShadows
-        position={[0, 0.02, -6]}
-        scale={120}
-        resolution={1024}
-        blur={1.8}
-        opacity={0.78}
-        far={22}
-        frames={1}
-      />
+      <Hanger bays={low ? 6 : 10} baySpacing={5} position={[0, 0, -6]} showFloor={false} />
+      <Seating position={[0, 0, -12]} rows={low ? 12 : 22} columns={low ? 12 : 18} />
 
-      {/* The hero structure. Nine bays is enough for the frames to read as
-          rhythm down the flank without pushing the far end into the fog. */}
-      <Hanger bays={9} baySpacing={5} position={[0, 0, -6]} />
-      {/* Seating inside, visible through the open near gable. Its job is scale:
-          an empty shell reads as a render, chairs give the span a human measure. */}
-      <Seating position={[0, 0, -10]} rows={26} columns={20} />
+      {/*
+        There is deliberately no second structure. Over a blank gradient a
+        distant hanger added depth; over a photograph it has no ground to stand
+        on and reads as floating in the sky. The plate supplies the depth now.
+      */}
 
-      {/* A second, smaller structure set back and across, for depth. The
-          catalogue's aerial shows exactly this pairing on site. */}
-      <Hanger
-        bays={6}
-        baySpacing={4.6}
-        position={[span + 20, 0, -40]}
-        rotation={[0, Math.PI / 2, 0]}
-        showFloor={false}
-      />
-
-      <Rig progress={progress} />
+      <Rig scroll={scroll} onIntroDone={onIntroDone} />
     </>
   );
 }
 
 export function HeroHangerCanvas() {
-  const progress = useRef(0);
+  const scroll = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(true);
+  const [, setIntroDone] = useState(false);
+
+  // Read as external stores rather than effect-and-setState, so there is no
+  // cascading render and the server snapshot is explicit.
+  const canRender = useCanRenderWebGL();
+  const narrow = useMediaQuery("(max-width: 900px)", false);
+  const coarse = useCoarsePointer();
+  const quality: "high" | "low" = narrow || coarse ? "low" : "high";
 
   useEffect(() => {
     const onScroll = () => {
       const node = containerRef.current;
       if (!node) return;
       const rect = node.getBoundingClientRect();
-      const travel = rect.height || 1;
-      progress.current = Math.min(Math.max(-rect.top / travel, 0), 1);
+      scroll.current = Math.min(Math.max(-rect.top / (rect.height || 1), 0), 1);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -164,32 +222,38 @@ export function HeroHangerCanvas() {
     };
   }, []);
 
-  // Stop rendering entirely once the hero is off screen.
   useEffect(() => {
     const node = containerRef.current;
     if (!node) return;
-    const observer = new IntersectionObserver(([entry]) => setActive(entry.isIntersecting), {
+    const observer = new IntersectionObserver(([e]) => setActive(e.isIntersecting), {
       threshold: 0,
     });
     observer.observe(node);
     return () => observer.disconnect();
   }, []);
 
+  // No WebGL, or too few cores — the photograph stands alone.
+  if (!canRender) return null;
+
   return (
-    <div ref={containerRef} className="absolute inset-0" aria-hidden>
+    <div ref={containerRef} className="absolute inset-0 z-10" aria-hidden>
       <Canvas
         frameloop={active ? "always" : "never"}
-        shadows
-        dpr={[1, 1.75]}
-        gl={{ antialias: true, powerPreference: "high-performance" }}
-        camera={{ fov: 38, near: 0.1, far: 320, position: START.toArray() }}
-        onCreated={({ gl, scene }) => {
+        shadows={quality === "high"}
+        dpr={quality === "low" ? [1, 1.25] : [1, 1.75]}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        camera={{ fov: 38, near: 0.1, far: 400, position: BEATS[0].pos.toArray() }}
+        onCreated={({ gl }) => {
           gl.toneMapping = THREE.ACESFilmicToneMapping;
-          gl.toneMappingExposure = 1.12;
-          scene.background = new THREE.Color(SKY);
+          gl.toneMappingExposure = 1.05;
+          gl.setClearAlpha(0);
         }}
       >
-        <Scene progress={progress} />
+        <Scene
+          scroll={scroll}
+          quality={quality}
+          onIntroDone={() => setIntroDone(true)}
+        />
       </Canvas>
     </div>
   );

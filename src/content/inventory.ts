@@ -37,9 +37,9 @@ export const categories: Category[] = [
     detail:
       "Clear-span aluminium hangers imported for large-format deployment. Column-free interiors take staging, seating and services without breaking sightlines, and the shell is weatherproof enough to hold a full day's programme on open ground. This is the single largest holding in the inventory and the reason a field can become a venue.",
     stock: [{ item: "Imported German Hanger", quantity: "5 Lakh Sft" }],
-    image: "/media/catalogue/hanger-aerial.jpg",
+    image: "/media/raja/hanger-interior-2025.jpg",
     imageAlt:
-      "Aerial view of two Raja Enterprises hangers — one solid-roof, one clear-span glazed — erected on a lawn.",
+      "Interior of a Raja clear-span hanger at the Vidhana Soudha, looking up into the roof structure.",
     weight: "flagship",
   },
   {
@@ -54,9 +54,9 @@ export const categories: Category[] = [
       { item: "Wooden Floor Platform", quantity: "10 Lakh Sft" },
       { item: "Brand New Synthetic Carpet", quantity: "As per requirements" },
     ],
-    image: "/media/catalogue/hanger-avenue.jpg",
+    image: "/media/raja/isc-avenue.jpg",
     imageAlt:
-      "Carpeted central avenue running the length of a hanger, with iron barricading on both sides.",
+      "Carpeted banner avenue at the 107th Indian Science Congress, University of Agricultural Sciences, Bengaluru.",
     weight: "major",
   },
   {
@@ -72,8 +72,8 @@ export const categories: Category[] = [
       { item: "Maxima Stalls", quantity: "5,000 Sqmtr" },
       { item: "LED Fascia for Stalls", quantity: "Contemporary" },
     ],
-    image: "/media/catalogue/stall-led-fascia.jpg",
-    imageAlt: "Exhibition stall with illuminated LED fascia and custom timber cladding.",
+    image: "/media/raja/octonorm-stalls.jpg",
+    imageAlt: "Octonorm stall bays fitted out for exhibitors at the 107th Indian Science Congress.",
     weight: "major",
   },
   {
@@ -90,8 +90,8 @@ export const categories: Category[] = [
       { item: "Cushion Chairs with Covers", quantity: "5,000 Nos." },
       { item: "Iron Barricading", quantity: "10,000 Nos. (1 Lakh RFT)" },
     ],
-    image: "/media/catalogue/hanger-conference.jpg",
-    imageAlt: "Rows of covered cushioned chairs facing a stage inside a clear-span hanger.",
+    image: "/media/raja/stage-dais.jpg",
+    imageAlt: "Dais and stage backdrop built for a state ceremony at the Vidhana Soudha.",
     weight: "major",
   },
   {
@@ -164,8 +164,8 @@ export const categories: Category[] = [
     detail:
       "Catering is handled by sister concern Sharada Caterers — corporate breakfast, lunch and meal-box service for business meetings, conferences and events — planned alongside the infrastructure rather than subcontracted around it.",
     stock: [{ item: "Sharada Caterers", quantity: "Sister concern" }],
-    image: "/media/catalogue/banquet-hall.jpg",
-    imageAlt: "Banquet hall laid with covered cushioned chairs ahead of a conference session.",
+    image: "/media/raja/catering-service.jpg",
+    imageAlt: "Catering service laid out by sister concern Sharada Caterers at a state ceremony.",
     weight: "standard",
   },
 ];

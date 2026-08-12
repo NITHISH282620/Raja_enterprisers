@@ -119,55 +119,101 @@ export function portalFrame(spec: HangerSpec = defaultHanger): THREE.BufferGeome
 export function membraneShell(
   spec: HangerSpec = defaultHanger,
   length: number,
+  bays = 9,
 ): THREE.BufferGeometry {
   const { span, eaveHeight, ridgeHeight } = spec;
   const halfSpan = span / 2;
   const z0 = -length / 2;
-  const z1 = length / 2;
 
-  const quads: [number[], number[], number[], number[]][] = [
-    // Roof, left slope.
-    [
-      [-halfSpan, eaveHeight, z0],
-      [0, ridgeHeight, z0],
-      [0, ridgeHeight, z1],
-      [-halfSpan, eaveHeight, z1],
-    ],
-    // Roof, right slope.
-    [
-      [0, ridgeHeight, z0],
-      [halfSpan, eaveHeight, z0],
-      [halfSpan, eaveHeight, z1],
-      [0, ridgeHeight, z1],
-    ],
-    // Left wall.
-    [
-      [-halfSpan, 0, z0],
-      [-halfSpan, eaveHeight, z0],
-      [-halfSpan, eaveHeight, z1],
-      [-halfSpan, 0, z1],
-    ],
-    // Right wall.
-    [
-      [halfSpan, eaveHeight, z0],
-      [halfSpan, 0, z0],
-      [halfSpan, 0, z1],
-      [halfSpan, eaveHeight, z1],
-    ],
-  ];
-
+  /**
+   * PVC is tensioned between purlins, so it dips slightly in the middle of each
+   * bay and pulls tight at every frame. A flat quad is what made the roof read
+   * as folded card. Subdividing per bay and sagging the mid-span is the single
+   * change that makes the shell look like fabric — the Raja photographs show
+   * exactly this scalloping along the eave.
+   */
+  const SAG = 0.12;
+  const segs = Math.max(bays, 1) * 2;
   const positions: number[] = [];
-  for (const [a, b, c, d] of quads) {
+
+  const push = (a: number[], b: number[], c: number[], d: number[]) =>
     positions.push(...a, ...b, ...c, ...a, ...c, ...d);
+
+  /** How far this z sits into its bay, 0 at a frame, 1 mid-bay. */
+  const sagAt = (z: number) => {
+    const bayLen = length / Math.max(bays, 1);
+    const t = ((z - z0) % bayLen) / bayLen;
+    return Math.sin(t * Math.PI) * SAG;
+  };
+
+  for (let i = 0; i < segs; i++) {
+    const za = z0 + (length * i) / segs;
+    const zb = z0 + (length * (i + 1)) / segs;
+    const sa = sagAt(za);
+    const sb = sagAt(zb);
+
+    // Roof, both slopes — ridge and eave drop by the local sag.
+    for (const side of [-1, 1]) {
+      push(
+        [side * halfSpan, eaveHeight - sa * 0.6, za],
+        [0, ridgeHeight - sa, za],
+        [0, ridgeHeight - sb, zb],
+        [side * halfSpan, eaveHeight - sb * 0.6, zb],
+      );
+    }
+
+    // Side walls, scalloped along the eave line.
+    for (const side of [-1, 1]) {
+      push(
+        [side * halfSpan, 0, za],
+        [side * halfSpan, eaveHeight - sa * 0.6, za],
+        [side * halfSpan, eaveHeight - sb * 0.6, zb],
+        [side * halfSpan, 0, zb],
+      );
+    }
   }
 
   const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute(
-    "position",
-    new THREE.Float32BufferAttribute(positions, 3),
-  );
+  geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
   geometry.computeVertexNormals();
   return geometry;
+}
+
+/**
+ * Base plates, leg bracing and eave brackets — merged into one geometry.
+ *
+ * Small parts, disproportionate effect: without a footing the legs appear to
+ * pierce the ground, which is the tell that separates a render from a
+ * photograph. The Raja site photographs show a plate and a diagonal knee brace
+ * at every leg.
+ */
+export function frameFittings(spec: HangerSpec = defaultHanger): THREE.BufferGeometry {
+  const { span, eaveHeight, depth } = spec;
+  const halfSpan = span / 2;
+  const parts: THREE.BufferGeometry[] = [];
+
+  for (const side of [-1, 1]) {
+    const plate = new THREE.BoxGeometry(0.62, 0.07, 0.62);
+    plate.translate(side * halfSpan, 0.035, 0);
+    parts.push(plate);
+
+    const collar = new THREE.BoxGeometry(depth * 1.5, 0.22, depth * 1.5);
+    collar.translate(side * halfSpan, 0.2, 0);
+    parts.push(collar);
+
+    // Knee brace from leg to eave.
+    const brace = new THREE.BoxGeometry(2.3, 0.09, 0.09);
+    brace.rotateZ(side * -Math.PI / 4);
+    brace.translate(side * (halfSpan - 0.78), eaveHeight - 0.78, 0);
+    parts.push(brace);
+
+    // Eave bracket.
+    const bracket = new THREE.BoxGeometry(0.42, 0.3, depth * 1.3);
+    bracket.translate(side * halfSpan, eaveHeight, 0);
+    parts.push(bracket);
+  }
+
+  return mergeGeometries(parts, false)!;
 }
 
 /**

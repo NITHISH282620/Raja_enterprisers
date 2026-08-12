@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { materials } from "../materials";
 import {
   defaultHanger,
+  frameFittings,
   gableEnd,
   membraneShell,
   portalFrame,
@@ -39,10 +40,11 @@ export function Hanger({
 
   const frameGeometry = useMemo(() => portalFrame(spec), [spec]);
   const membraneGeometry = useMemo(
-    () => membraneShell(spec, length),
-    [spec, length],
+    () => membraneShell(spec, length, bays),
+    [spec, length, bays],
   );
   const gableGeometry = useMemo(() => gableEnd(spec), [spec]);
+  const fittingGeometry = useMemo(() => frameFittings(spec), [spec]);
 
   const frameMatrices = useMemo(() => {
     const matrices: THREE.Matrix4[] = [];
@@ -82,6 +84,18 @@ export function Hanger({
       {/* Portal frames */}
       <instancedMesh
         args={[frameGeometry, materials.aluminium, frameMatrices.length]}
+        castShadow
+        receiveShadow
+        ref={(mesh) => {
+          if (!mesh) return;
+          frameMatrices.forEach((matrix, i) => mesh.setMatrixAt(i, matrix));
+          mesh.instanceMatrix.needsUpdate = true;
+        }}
+      />
+
+      {/* Base plates, knee braces and eave brackets — one instanced draw call. */}
+      <instancedMesh
+        args={[fittingGeometry, materials.fitting, frameMatrices.length]}
         castShadow
         receiveShadow
         ref={(mesh) => {

@@ -1,31 +1,44 @@
 "use client";
 
+import { useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { company, hero } from "@/content/company";
 import { Button } from "./Primitives";
 import { HeroParallax } from "./HeroParallax";
 
-/**
- * The hero.
- *
- * Composition follows the signed-off board (raja_1.jpeg): copy left over a
- * light-to-clear wash, architectural mass right. The photograph is the star —
- * the Vidhana Soudha hanger at full weight — and a CSS-driven geometric
- * parallax replaces the former Three.js canvas.
- *
- * This removes all canvas–text overlap issues: the parallax layer is z-indexed
- * behind the copy, and the geometric elements are deliberately kept to the
- * right half and lower third where no text sits.
- *
- * Layer order, back to front:
- *   1. HMS4180-1, graded         — the factual evidence (parallax scroll)
- *   2. geometric structural grid — CSS shapes that give a 3D engineering feel
- *   3. legibility wash + copy    — always painted, never waits for any canvas
- */
-
 export function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const rafRef = useRef<number>(0);
+
+  const tick = useCallback(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+
+    const rect = node.getBoundingClientRect();
+    const vh = window.innerHeight;
+    // 0 when hero top is at viewport top, 1 when hero is fully scrolled away
+    const progress = Math.min(Math.max(-rect.top / (vh || 1), 0), 1);
+
+    // Apply parallax via CSS custom property — GPU-composited transforms only
+    node.style.setProperty("--parallax", `${progress}`);
+
+    rafRef.current = requestAnimationFrame(tick);
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mq.matches) return;
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [tick]);
+
   return (
-    <section className="relative isolate min-h-[92svh] w-full overflow-hidden bg-[#dfe7ee]">
+    <section 
+      ref={sectionRef} 
+      className="relative isolate min-h-[92svh] w-full overflow-hidden bg-[#dfe7ee]"
+      style={{ "--parallax": "0" } as React.CSSProperties}
+    >
       {/* ---------------------------------------------------------------- */}
       {/* 1 · The photograph. Raja-owned, native 5808x3872.                 */}
       {/* ---------------------------------------------------------------- */}
@@ -82,7 +95,13 @@ export function Hero() {
         className="absolute inset-x-0 bottom-0 z-20 h-28 bg-[linear-gradient(to_bottom,transparent,var(--color-paper))]"
       />
 
-      <div className="shell relative z-30 flex min-h-[92svh] flex-col justify-center pt-32 pb-20">
+      <div 
+        className="shell relative z-30 flex min-h-[92svh] flex-col justify-center pt-32 pb-20 will-change-transform"
+        style={{ 
+          transform: 'translateY(calc(var(--parallax) * 120px))',
+          opacity: 'calc(1 - (var(--parallax) * 1.5))' 
+        }}
+      >
         <div className="max-w-2xl">
           <div className="flex items-center gap-4 hero-entrance hero-entrance--1">
             <span className="eyebrow rounded-sm border border-steel-400/70 bg-paper/50 px-3 py-1.5 text-ink backdrop-blur-sm">

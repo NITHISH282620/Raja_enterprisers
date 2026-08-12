@@ -86,7 +86,7 @@ export const projects: Project[] = [
     location: "Bengaluru",
     date: "20 June 2022",
     description:
-      "Enclosed hanger, dais and full audience infrastructure for the PWD programme inaugurated by the Hon'ble Prime Minister of India. The event backdrop records rail and road infrastructure worth ₹28,000 crore.",
+      "Enclosed hanger, dais and full audience infrastructure for the PWD programme inaugurated by the Hon'ble Prime Minister of India. [OWNER CONFIRMATION REQUIRED: The event backdrop records rail and road infrastructure worth ₹28,000 crore. Confirm if this figure should be published, and what exact programme/Raja scope this relates to.]",
     deployed: ["German hangers", "Dais & staging", "Carpeted flooring", "Audience seating"],
     image: "/media/catalogue/pm-pwd-2022.jpg",
     imageAlt:

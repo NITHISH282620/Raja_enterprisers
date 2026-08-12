@@ -20,7 +20,7 @@ export type Category = {
   /** Expanded copy for the inventory page. */
   detail: string;
   /** Verbatim catalogue quantities. */
-  stock: { item: string; quantity: string }[];
+  stock: { item: string; quantity: string; ownershipStatus?: "owned" | "in-house" | "partner-provided" | "hired" | "unclear" | "owner-confirmation-required" }[];
   image?: string;
   imageAlt?: string;
   /** Bento weight on the homepage grid. */
@@ -184,25 +184,25 @@ export const headlineStock = [
  * document line for line.
  */
 export const inventorySchedule = [
-  { item: "Imported German Hanger", quantity: "5 Lakh Sft" },
-  { item: "Wooden Floor Platform", quantity: "10 Lakh Sft" },
-  { item: "Octonorm Stalls", quantity: "10,000 Sqmtr" },
-  { item: "Maxima Stalls", quantity: "5,000 Sqmtr" },
-  { item: "LED Fascia for Stalls", quantity: "Contemporary" },
-  { item: "Temporary Air-conditioners", quantity: "3,000 Tons" },
-  { item: "Plastic Chairs", quantity: "50,000 Nos." },
-  { item: "Cushion Chairs with Covers", quantity: "5,000 Nos." },
-  { item: "Brand New Synthetic Carpet", quantity: "As per requirements" },
-  { item: "Iron Barricading", quantity: "10,000 Nos. (1 Lakh RFT)" },
-  { item: "Stage", quantity: "1 Lakh Sft (different sizes)" },
-  { item: "General Lightings", quantity: "As per requirements" },
-  { item: "Generators", quantity: "As per requirements" },
-  { item: "Different Sizes Lighting Cables", quantity: "As per requirements" },
-  { item: "Labours", quantity: "300 Members" },
-  { item: "Skilled Labours", quantity: "100 Members" },
-  { item: "Field Work Supervisors", quantity: "50 Members" },
-  { item: "Managers", quantity: "10 Members" },
-  { item: "Own Goods Vehicles", quantity: "20 Nos." },
+  { item: "Imported German Hanger", quantity: "5 Lakh Sft", ownershipStatus: "owned" },
+  { item: "Wooden Floor Platform", quantity: "10 Lakh Sft", ownershipStatus: "owned" },
+  { item: "Octonorm Stalls", quantity: "10,000 Sqmtr", ownershipStatus: "owned" },
+  { item: "Maxima Stalls", quantity: "5,000 Sqmtr", ownershipStatus: "owned" },
+  { item: "LED Fascia for Stalls", quantity: "Contemporary", ownershipStatus: "unclear" },
+  { item: "Temporary Air-conditioners", quantity: "3,000 Tons", ownershipStatus: "owner-confirmation-required" },
+  { item: "Plastic Chairs", quantity: "50,000 Nos.", ownershipStatus: "owned" },
+  { item: "Cushion Chairs with Covers", quantity: "5,000 Nos.", ownershipStatus: "owned" },
+  { item: "Brand New Synthetic Carpet", quantity: "As per requirements", ownershipStatus: "unclear" },
+  { item: "Iron Barricading", quantity: "10,000 Nos. (1 Lakh RFT)", ownershipStatus: "owned" },
+  { item: "Stage", quantity: "1 Lakh Sft (different sizes)", ownershipStatus: "owned" },
+  { item: "General Lightings", quantity: "As per requirements", ownershipStatus: "unclear" },
+  { item: "Generators", quantity: "As per requirements", ownershipStatus: "unclear" },
+  { item: "Different Sizes Lighting Cables", quantity: "As per requirements", ownershipStatus: "unclear" },
+  { item: "Labours", quantity: "300 Members", ownershipStatus: "in-house" },
+  { item: "Skilled Labours", quantity: "100 Members", ownershipStatus: "in-house" },
+  { item: "Field Work Supervisors", quantity: "50 Members", ownershipStatus: "in-house" },
+  { item: "Managers", quantity: "10 Members", ownershipStatus: "in-house" },
+  { item: "Own Goods Vehicles", quantity: "20 Nos.", ownershipStatus: "owned" },
 ] as const;
 
 /** The eight lines the catalogue cover sells (BR p.2). */

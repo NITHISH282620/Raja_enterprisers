@@ -424,15 +424,15 @@
 
 .marquee-track {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
   width: max-content;
-  animation: marqueeScroll 45s linear infinite;
+  animation: marqueeScroll 85s linear infinite;
   padding-block: 0.25rem;
 }
 
 .marquee-track--reverse {
   animation-name: marqueeScrollReverse;
-  animation-duration: 50s;
+  animation-duration: 95s;
 }
 
 /* Pause on hover — lets the user read a chip */

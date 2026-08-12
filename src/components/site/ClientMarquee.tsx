@@ -139,17 +139,24 @@ function ClientLogo({ client }: { client: Client }) {
   };
 
   return (
-    <div className="client-logo-card flex flex-col items-center justify-center gap-2.5 rounded-2xl border border-steel-100/80 bg-paper/60 px-8 py-5 backdrop-blur-sm transition-all duration-500 ease-[var(--ease-out-quart)] hover:border-steel-200 hover:bg-paper hover:shadow-[0_4px_24px_rgba(10,12,14,0.06)] min-w-[160px]">
-      <div className="text-steel-600 transition-colors duration-300 group-hover:text-ink">
+    <div className="client-logo-card flex min-w-[200px] flex-col items-center justify-center gap-3 rounded-md border border-steel-200/50 bg-paper/30 px-8 py-6 backdrop-blur-sm transition-all duration-700 ease-[var(--ease-out-quart)] hover:border-steel-300 hover:bg-paper/80 group">
+      <div className="text-steel-400 transition-colors duration-500 group-hover:text-steel-700">
         {iconMap[client.slug] || (
-          <div className="flex h-10 w-10 items-center justify-center rounded-full border border-steel-200 text-sm font-bold text-steel-500">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full border border-steel-200 text-sm font-bold text-steel-400 transition-colors duration-500 group-hover:text-steel-600">
             {client.name.charAt(0)}
           </div>
         )}
       </div>
-      <span className="whitespace-nowrap text-[0.75rem] font-medium tracking-wide text-steel-600 uppercase">
-        {client.name}
-      </span>
+      <div className="text-center mt-1">
+        <span className="block text-[0.65rem] font-medium tracking-[0.1em] text-steel-700 uppercase">
+          {client.name}
+        </span>
+        {client.categoryLabel && (
+          <span className="block mt-1 text-[0.65rem] text-steel-400">
+            {client.categoryLabel}
+          </span>
+        )}
+      </div>
     </div>
   );
 }
@@ -159,10 +166,13 @@ export function ClientMarquee() {
   const strip = [...clients, ...clients, ...clients];
 
   return (
-    <section className="border-y border-steel-100 bg-card/30 overflow-hidden py-10 md:py-14">
+    <section className="border-y border-steel-200/50 bg-card/20 overflow-hidden py-14 md:py-20">
       {/* Header */}
-      <div className="shell mb-8 text-center">
-        <p className="eyebrow text-steel-400 tracking-[0.3em] text-[0.625rem]">Trusted by</p>
+      <div className="shell mb-12 text-center">
+        <p className="eyebrow text-steel-500 tracking-[0.25em] text-[0.6875rem]">SELECTED PROGRAMMES & ORGANISATIONS</p>
+        <p className="mt-4 text-sm text-steel-500 max-w-xl mx-auto text-balance">
+          From government programmes and national exhibitions to corporate events and institutional gatherings.
+        </p>
       </div>
 
       {/* Marquee row 1 */}

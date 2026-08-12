@@ -18,8 +18,12 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  // The three bento cards that carry photography, chosen for weight.
-  const [structures, flooring, stalls, staging] = categories;
+  // Extract specific categories for the bento grid
+  const structures = categories.find((c) => c.slug === "structures")!;
+  const flooring = categories.find((c) => c.slug === "flooring-platforms")!;
+  const stalls = categories.find((c) => c.slug === "stalls-interiors")!;
+  const staging = categories.find((c) => c.slug === "stage-seating")!;
+  const catering = categories.find((c) => c.slug === "catering")!;
 
   return (
     <>
@@ -76,6 +80,7 @@ export default function HomePage() {
           />
         </Reveal>
 
+        {/* Top Tier: Flagship + Inventory Schedule */}
         <div className="mt-14 grid gap-5 lg:grid-cols-12">
           {/* Flagship — structures */}
           <Reveal className="lg:col-span-8">
@@ -97,13 +102,13 @@ export default function HomePage() {
                 />
               </div>
 
-              <div className="relative">
+              <div className="relative transform transition-transform duration-[800ms] ease-[var(--ease-out-quart)] group-hover:-translate-y-2">
                 <p className="eyebrow text-white/75">
-                  <span className="text-white">{structures.index}</span>
-                  <span aria-hidden className="mx-3 inline-block h-px w-6 align-middle bg-white/40" />
-                  {structures.kicker}
+                  <span className="text-white">01</span>
+                  <span aria-hidden className="mx-3 inline-block h-px w-6 align-middle bg-white/40 transition-all duration-700 group-hover:w-10" />
+                  OWNED INVENTORY
                 </p>
-                <h3 className="t-heading mt-5 max-w-xl text-white md:text-3xl lg:text-4xl">{structures.name}</h3>
+                <h3 className="t-heading mt-5 max-w-xl text-white md:text-3xl lg:text-4xl">Turnkey Event Infrastructure</h3>
                 <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/80 md:text-base">
                   {structures.detail}
                 </p>
@@ -142,53 +147,107 @@ export default function HomePage() {
               </ArrowLink>
             </div>
           </Reveal>
+        </div>
 
-          {/* Stalls */}
-          <Reveal delay={40} className="lg:col-span-6">
+        {/* Bottom Tier: 4-Card Capability Grid */}
+        <div className="mt-5 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+          
+          {/* Card 01: Fabrication */}
+          <Reveal delay={0}>
             <Link
               href="/home3/inventory#stalls-interiors"
-              className="card group relative flex min-h-[320px] flex-col overflow-hidden lg:min-h-[420px]"
+              className="card group relative flex min-h-[360px] flex-col overflow-hidden lg:min-h-[440px]"
             >
               <div className="relative flex-1 overflow-hidden">
                 <Image
                   src={stalls.image!}
                   alt={stalls.imageAlt!}
                   fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-105"
+                  sizes="(max-width: 1024px) 100vw, 25vw"
+                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
                 />
               </div>
-              <div className="p-8 lg:p-11">
-                <Eyebrow index={stalls.index}>{stalls.kicker}</Eyebrow>
-                <h3 className="mt-4 text-2xl font-medium text-ink transition-colors group-hover:text-accent lg:text-3xl">
+              <div className="p-7 transform transition-transform duration-[800ms] ease-[var(--ease-out-quart)] group-hover:-translate-y-1">
+                <Eyebrow index="01">FABRICATION</Eyebrow>
+                <h3 className="mt-4 text-xl font-medium text-ink transition-colors group-hover:text-accent lg:text-2xl">
                   {stalls.name}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-steel-600 md:text-base">{stalls.summary}</p>
+                <p className="mt-3 text-sm leading-relaxed text-steel-600">{stalls.summary}</p>
               </div>
             </Link>
           </Reveal>
 
-          {/* Staging & seating */}
-          <Reveal delay={120} className="lg:col-span-6">
+          {/* Card 02: Audience */}
+          <Reveal delay={70}>
             <Link
               href="/home3/inventory#stage-seating"
-              className="card group relative flex min-h-[320px] flex-col overflow-hidden lg:min-h-[420px]"
+              className="card group relative flex min-h-[360px] flex-col overflow-hidden lg:min-h-[440px]"
             >
               <div className="relative flex-1 overflow-hidden">
                 <Image
                   src={staging.image!}
                   alt={staging.imageAlt!}
                   fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-105"
+                  sizes="(max-width: 1024px) 100vw, 25vw"
+                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
                 />
               </div>
-              <div className="p-8 lg:p-11">
-                <Eyebrow index={staging.index}>{staging.kicker}</Eyebrow>
-                <h3 className="mt-4 text-2xl font-medium text-ink transition-colors group-hover:text-accent lg:text-3xl">
+              <div className="p-7 transform transition-transform duration-[800ms] ease-[var(--ease-out-quart)] group-hover:-translate-y-1">
+                <Eyebrow index="02">AUDIENCE</Eyebrow>
+                <h3 className="mt-4 text-xl font-medium text-ink transition-colors group-hover:text-accent lg:text-2xl">
                   {staging.name}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-steel-600 md:text-base">{staging.summary}</p>
+                <p className="mt-3 text-sm leading-relaxed text-steel-600">{staging.summary}</p>
+              </div>
+            </Link>
+          </Reveal>
+
+          {/* Card 03: Infrastructure */}
+          <Reveal delay={140}>
+            <Link
+              href="/home3/inventory#structures"
+              className="card group relative flex min-h-[360px] flex-col overflow-hidden lg:min-h-[440px]"
+            >
+              <div className="relative flex-1 overflow-hidden">
+                <Image
+                  src={structures.image!}
+                  alt={structures.imageAlt!}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 25vw"
+                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
+                />
+              </div>
+              <div className="p-7 transform transition-transform duration-[800ms] ease-[var(--ease-out-quart)] group-hover:-translate-y-1">
+                <Eyebrow index="03">INFRASTRUCTURE</Eyebrow>
+                <h3 className="mt-4 text-xl font-medium text-ink transition-colors group-hover:text-accent lg:text-2xl">
+                  {structures.name}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-steel-600">{structures.summary}</p>
+              </div>
+            </Link>
+          </Reveal>
+
+          {/* Card 04: Services */}
+          <Reveal delay={210}>
+            <Link
+              href="/home3/inventory#catering"
+              className="card group relative flex min-h-[360px] flex-col overflow-hidden lg:min-h-[440px]"
+            >
+              <div className="relative flex-1 overflow-hidden">
+                <Image
+                  src={catering.image!}
+                  alt={catering.imageAlt!}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 25vw"
+                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
+                />
+              </div>
+              <div className="p-7 transform transition-transform duration-[800ms] ease-[var(--ease-out-quart)] group-hover:-translate-y-1">
+                <Eyebrow index="04">SERVICES</Eyebrow>
+                <h3 className="mt-4 text-xl font-medium text-ink transition-colors group-hover:text-accent lg:text-2xl">
+                  Catering & Event Support
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-steel-600">{catering.summary}</p>
               </div>
             </Link>
           </Reveal>

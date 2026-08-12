@@ -15,8 +15,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   async redirects() {
     return [
-      { source: "/", destination: "/home3", permanent: false },
-
       // Indexed WordPress URLs from the live site. Preserved rather than
       // 404'd, so existing search equity lands on the new page system.
       { source: "/about-us", destination: "/home3/legacy", permanent: false },

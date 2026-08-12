@@ -39,11 +39,11 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,padding] duration-500 ease-[var(--ease-out-quart)] ${
+      className={`fixed left-4 right-4 z-50 transition-all duration-500 ease-[var(--ease-out-quart)] md:left-1/2 md:right-auto md:w-full md:max-w-6xl md:-translate-x-1/2 ${
         grounded
-          ? "bg-paper/85 py-3 shadow-[0_1px_0_0_var(--color-steel-100)] backdrop-blur-md"
-          : "bg-transparent py-5"
-      }`}
+          ? "top-4 bg-[#111823]/90 py-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-md md:rounded-full md:px-8"
+          : "top-6 bg-[#111823] py-4 shadow-[0_8px_30px_rgb(0,0,0,0.12)] md:rounded-full md:px-8"
+      } rounded-2xl px-4`}
     >
       <div className="shell flex items-center justify-between gap-6">
         <Link href="/home3" aria-label="Raja Enterprises — home" className="shrink-0">
@@ -58,23 +58,29 @@ export function SiteHeader() {
         </Link>
 
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center gap-9">
-            {navigation.slice(1).map((item) => {
+          <ul className="flex items-center gap-10">
+            {[
+              { label: "HOME", href: "/home3" },
+              { label: "ABOUT", href: "/home3/legacy" },
+              { label: "SERVICES", href: "/home3/inventory" },
+              { label: "TESTIMONIALS", href: "#" },
+              { label: "GALLERY", href: "/home3/portfolio" },
+            ].map((item) => {
               const active = pathname === item.href;
               return (
-                <li key={item.href}>
+                <li key={item.label}>
                   <Link
                     href={item.href}
                     aria-current={active ? "page" : undefined}
-                    className={`relative py-1 text-sm font-medium transition-colors ${
-                      active ? "text-accent" : "text-steel-700 hover:text-ink"
+                    className={`relative py-2 text-[0.8125rem] font-bold tracking-wider transition-colors ${
+                      active ? "text-white" : "text-white/70 hover:text-white"
                     }`}
                   >
                     {item.label}
                     <span
                       aria-hidden
-                      className={`absolute -bottom-0.5 left-0 h-px bg-accent transition-[width] duration-400 ease-[var(--ease-out-quart)] ${
-                        active ? "w-full" : "w-0"
+                      className={`absolute -bottom-1 left-1/2 h-[2px] -translate-x-1/2 bg-white transition-[width] duration-400 ease-[var(--ease-out-quart)] ${
+                        active ? "w-4" : "w-0"
                       }`}
                     />
                   </Link>
@@ -87,9 +93,9 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <Link
             href="/home3/contact"
-            className="hidden rounded-sm bg-accent-soft px-5 py-2.5 text-sm font-medium text-accent transition-colors hover:bg-accent hover:text-white md:inline-flex"
+            className="hidden rounded-full bg-white px-7 py-3 text-[0.8125rem] font-bold tracking-wider text-[#111823] transition-transform hover:scale-105 md:inline-flex"
           >
-            Enquire
+            CONTACT +
           </Link>
 
           <button
@@ -102,12 +108,12 @@ export function SiteHeader() {
             <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
             <span aria-hidden className="relative block h-3.5 w-5">
               <span
-                className={`absolute left-0 block h-px w-full bg-ink transition-transform duration-300 ease-[var(--ease-out-quart)] ${
+                className={`absolute left-0 block h-px w-full bg-white transition-transform duration-300 ease-[var(--ease-out-quart)] ${
                   open ? "top-1.5 rotate-45" : "top-0"
                 }`}
               />
               <span
-                className={`absolute left-0 block h-px w-full bg-ink transition-transform duration-300 ease-[var(--ease-out-quart)] ${
+                className={`absolute left-0 block h-px w-full bg-white transition-transform duration-300 ease-[var(--ease-out-quart)] ${
                   open ? "top-1.5 -rotate-45" : "top-3"
                 }`}
               />

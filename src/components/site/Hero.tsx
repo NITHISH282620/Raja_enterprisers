@@ -42,7 +42,11 @@ export function Hero() {
       {/* ---------------------------------------------------------------- */}
       {/* 1 · The photograph. Raja-owned, native 5808x3872.                 */}
       {/* ---------------------------------------------------------------- */}
-      <div aria-hidden className="absolute inset-0 hero-image-layer">
+      <div 
+        aria-hidden 
+        className="absolute inset-0 hero-image-layer will-change-transform"
+        style={{ transform: 'scale(1.05) translateY(calc(var(--parallax) * 30px))' }}
+      >
         {/* Landscape plate — hidden on phones, which get the portrait crop. */}
         <Image
           src="/media/raja/home.1.png"
@@ -60,13 +64,9 @@ export function Hero() {
           sizes="100vw"
           className="object-cover object-center md:hidden"
         />
-        {/*
-          Grade. High-key and slightly desaturated so the display type sits on
-          it — but deliberately gentle: the Vidhana Soudha dome, the hanger and
-          the crowd all have to stay legible. This is evidence, not wallpaper.
-        */}
-        <div className="absolute inset-0 bg-paper/30" />
-        <div className="absolute inset-0 bg-gradient-to-b from-paper/45 via-transparent to-paper/25" />
+        {/* Grade: Gentle vignette for text legibility without washing out the image */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.15)_100%)]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#dfe7ee]/80 via-transparent to-transparent" />
       </div>
 
       {/* ---------------------------------------------------------------- */}
@@ -88,7 +88,7 @@ export function Hero() {
       */}
       <div
         aria-hidden
-        className="absolute inset-0 z-20 bg-[linear-gradient(to_bottom,var(--color-paper)_0%,color-mix(in_srgb,var(--color-paper)_82%,transparent)_40%,color-mix(in_srgb,var(--color-paper)_22%,transparent)_68%,transparent_100%)] md:hidden"
+        className="absolute inset-0 z-20 bg-[linear-gradient(to_bottom,var(--color-paper)_0%,color-mix(in_srgb,var(--color-paper)_60%,transparent)_40%,color-mix(in_srgb,var(--color-paper)_10%,transparent)_68%,transparent_100%)] md:hidden"
       />
       <div
         aria-hidden

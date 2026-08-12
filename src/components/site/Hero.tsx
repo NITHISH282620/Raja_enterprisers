@@ -98,7 +98,15 @@ export function Hero() {
       */}
       <div
         aria-hidden
-        className="absolute inset-0 z-20 bg-[linear-gradient(to_bottom,color-mix(in_srgb,var(--color-paper)_72%,transparent)_0%,color-mix(in_srgb,var(--color-paper)_38%,transparent)_36%,color-mix(in_srgb,var(--color-paper)_6%,transparent)_62%,transparent_100%)] md:hidden"
+        /*
+          Heavier than the desktop veil, deliberately. On desktop the copy sits
+          in a column with open photograph beside it; below 768px the plate is
+          behind every line of text, and this crop — ceremonial crowd, bunting,
+          full colour — is the busiest ground on the site. 88% falling to 30%
+          keeps the standfirst and the caption readable without flattening the
+          image back into the pale ground we just took it out of.
+        */
+        className="absolute inset-0 z-20 bg-[linear-gradient(to_bottom,color-mix(in_srgb,var(--color-paper)_88%,transparent)_0%,color-mix(in_srgb,var(--color-paper)_66%,transparent)_38%,color-mix(in_srgb,var(--color-paper)_30%,transparent)_72%,color-mix(in_srgb,var(--color-paper)_10%,transparent)_100%)] md:hidden"
       />
       <div
         aria-hidden

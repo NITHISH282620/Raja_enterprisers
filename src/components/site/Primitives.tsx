@@ -8,20 +8,27 @@ import type { ReactNode } from "react";
  * without any page restating them.
  */
 
-/** Mono label with an optional index, as on the catalogue's section pages. */
+/**
+ * Mono label above a heading.
+ *
+ * It used to carry a two-digit index. The numbers were removed because they
+ * were not describing anything: the sections they sat on are not a sequence,
+ * nothing refers back to "03", and the count restarted on every page — so the
+ * same section could be 03 in one place and 05 in another. A number that does
+ * not encode order is decoration wearing the costume of structure. The rule
+ * stays, because that is doing real work separating the label from the
+ * heading it introduces.
+ */
 export function Eyebrow({
-  index,
   children,
   className = "",
 }: {
-  index?: string;
   children: ReactNode;
   className?: string;
 }) {
   return (
     <p className={`eyebrow flex items-center gap-3 ${className}`}>
-      {index && <span className="text-accent">{index}</span>}
-      {index && <span aria-hidden className="h-px w-6 bg-steel-200" />}
+      <span aria-hidden className="h-px w-6 bg-steel-300" />
       <span>{children}</span>
     </p>
   );
@@ -29,14 +36,12 @@ export function Eyebrow({
 
 /** Section head: eyebrow, heading, optional standfirst, optional trailing link. */
 export function SectionHead({
-  index,
   eyebrow,
   heading,
   standfirst,
   action,
   align = "left",
 }: {
-  index?: string;
   eyebrow: string;
   heading: ReactNode;
   standfirst?: ReactNode;
@@ -53,7 +58,7 @@ export function SectionHead({
       }`}
     >
       <div className={centered ? "max-w-3xl" : "max-w-2xl"}>
-        <Eyebrow index={index} className={centered ? "justify-center" : ""}>
+        <Eyebrow className={centered ? "justify-center" : ""}>
           {eyebrow}
         </Eyebrow>
         <h2 className="t-display-l mt-6 text-ink text-balance">{heading}</h2>

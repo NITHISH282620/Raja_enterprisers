@@ -17,7 +17,6 @@ export default function ContactPage() {
   return (
     <>
       <Masthead
-        index="05"
         eyebrow="Contact"
         heading="Tell us the ground, the date and the headcount."
         standfirst="Those three things are enough for a first conversation about what a deployment takes. Everything below is reproduced exactly as it appears in the company catalogue."
@@ -29,7 +28,7 @@ export default function ContactPage() {
           {/* Details — the catalogue's own, unaltered                      */}
           {/* ------------------------------------------------------------ */}
           <Reveal className="lg:col-span-5">
-            <Eyebrow index="01">Head office</Eyebrow>
+            <Eyebrow>Head office</Eyebrow>
 
             <address className="mt-8 space-y-1.5 text-[1.25rem] not-italic leading-relaxed text-ink">
               {contact.addressLines.map((line) => (
@@ -111,7 +110,7 @@ export default function ContactPage() {
           {/* ------------------------------------------------------------ */}
           <Reveal delay={90} className="lg:col-span-7">
             <div className="card p-8 md:p-12">
-              <Eyebrow index="02">Enquiry</Eyebrow>
+              <Eyebrow>Enquiry</Eyebrow>
               <h2 className="t-heading mt-6 text-ink">Start a conversation.</h2>
 
               <form className="mt-10 grid gap-6 sm:grid-cols-2">
@@ -182,7 +181,6 @@ export default function ContactPage() {
         <div className="shell band">
           <Reveal>
             <SectionHead
-              index="03"
               eyebrow="Before this goes live"
               heading="Seven things only the owner can settle."
               standfirst="Rather than fill these gaps with plausible-sounding text, the prototype leaves them open. Each one is a decision, not a writing task."
@@ -191,14 +189,14 @@ export default function ContactPage() {
 
           <Reveal delay={80} className="mt-14">
             <ol className="grid gap-x-16 md:grid-cols-2">
-              {openQuestions.map((question, i) => (
+              {openQuestions.map((question) => (
                 <li
                   key={question}
                   className="flex gap-5 border-b border-steel-200 py-6"
                 >
-                  <span className="eyebrow shrink-0 pt-1 text-accent">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
+                  {/* Still an <ol>, so assistive tech announces the position.
+                      Sighted readers get a marker rather than a numeral. */}
+                  <span aria-hidden className="mt-3 h-px w-5 shrink-0 bg-accent" />
                   <p className="text-[0.9375rem] leading-relaxed text-steel-700 text-pretty">
                     {question}
                   </p>

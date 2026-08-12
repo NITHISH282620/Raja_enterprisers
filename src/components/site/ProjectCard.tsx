@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Project } from "@/content/projects";
 import { ConfirmMarker, Pill } from "./Primitives";
+import { ParallaxMedia } from "./motion/ParallaxMedia";
 
 /**
  * One executed project.
@@ -29,18 +30,20 @@ export function ProjectCard({
         }`}
       >
         {project.image ? (
-          <Image
-            src={project.image}
-            alt={project.imageAlt ?? project.title}
-            fill
-            priority={priority}
-            sizes={
-              size === "lg"
-                ? "(max-width: 1024px) 100vw, 60vw"
-                : "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-            }
-            className="media-in object-cover transition-transform duration-[1200ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.04]"
-          />
+          <ParallaxMedia distance={14}>
+            <Image
+              src={project.image}
+              alt={project.imageAlt ?? project.title}
+              fill
+              priority={priority}
+              sizes={
+                size === "lg"
+                  ? "(max-width: 1024px) 100vw, 60vw"
+                  : "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+              }
+              className="media-in object-cover transition-transform duration-[1200ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
+            />
+          </ParallaxMedia>
         ) : (
           <div className="absolute inset-0 grid place-items-center">
             <p className="eyebrow">Photography pending</p>

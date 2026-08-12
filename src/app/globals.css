@@ -305,8 +305,12 @@
      hero resolves into place instead of snapping. Runs on the <Image> itself
      rather than its wrapper — the wrapper carries the scroll parallax
      transform, and two animations cannot share one transform channel. */
+  /* Entrance push-in, then the standing camera takes over and never stops.
+     The drift is delayed past the push-in so the two do not overlap. */
   .hero-plate-in {
-    animation: heroPlateIn 1.7s var(--ease-out-quart) both;
+    animation:
+      heroPlateIn 1.7s var(--ease-out-quart) both,
+      heroCameraDrift 32s ease-in-out 1.7s infinite;
   }
 
   /* Fade-only, deliberately. The header is centred with a translate utility
@@ -325,6 +329,30 @@
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+/*
+  The standing camera.
+
+  A very slow, very small drift that never stops. It is not a Ken Burns zoom —
+  the travel is under a percent and the cycle is 32 seconds, so at any instant
+  it is imperceptible, and what the viewer registers instead is that the frame
+  is not dead. This is the whole difference between a photograph on a page and
+  a view held by someone standing still.
+
+  It runs on `translate`, leaving `transform` to the scroll parallax on the
+  wrapper and `scale` to the entrance push-in, so the three never contend.
+*/
+@keyframes heroCameraDrift {
+  0% {
+    translate: 0 0;
+  }
+  50% {
+    translate: -0.6% -0.5%;
+  }
+  100% {
+    translate: 0 0;
   }
 }
 
@@ -393,6 +421,49 @@
   }
 
   /*
+    Wipe — structural bands. The section is uncovered from its own bottom edge
+    rather than sliding, so the band reads as being built in place. No rise, or
+    the two gestures fight and it looks like a slide with a bug.
+  */
+  [data-reveal-variant="wipe"] {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1s var(--ease-out-quart);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-reveal-variant="wipe"][data-reveal="shown"] {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /*
+    Mask — photographs. A plate uncovered left to right, which is how a print
+    arrives, and pairs with the push-in already on the image inside it.
+  */
+  [data-reveal-variant="mask"] {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 1.05s var(--ease-out-quart);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-reveal-variant="mask"][data-reveal="shown"] {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /*
+    The parallax channel. `translate` is deliberately separate from `transform`
+    (hover magnify) and `scale` (entrance push-in) so all three compose on one
+    photograph without any of them clobbering the others.
+  */
+  .media-drift {
+    translate: 0 var(--drift, 0px);
+    will-change: translate;
+  }
+
+  /*
     Photographs settle out of a slow push-in as their block arrives, the same
     gesture the hero plate makes on load. Driven off the ancestor's reveal
     state rather than its own observer, so the image and the copy beside it
@@ -410,13 +481,133 @@
     scale: 1;
   }
 
-  /* Header contents arrive after the bar itself: logo, then links, then CTA. */
-  .nav-inner-in > * {
-    animation: navItemIn 0.7s var(--ease-out-quart) both;
+  /* Header contents arrive after the bar itself: mark, then routes, then the
+     enquiry action. Small distance, short stagger — the masthead should look
+     composed on arrival, not choreographed. */
+  .nav-load {
+    animation: navItemIn 0.65s var(--ease-out-quart) both;
   }
-  .nav-inner-in > *:nth-child(1) { animation-delay: 0.22s; }
-  .nav-inner-in > *:nth-child(2) { animation-delay: 0.32s; }
-  .nav-inner-in > *:nth-child(3) { animation-delay: 0.42s; }
+  .nav-load--1 { animation-delay: 0.16s; }
+  .nav-load--2 { animation-delay: 0.26s; }
+  .nav-load--3 { animation-delay: 0.34s; }
+
+  /*
+    Navigation hover: a rule draws itself under the label and the label lifts a
+    single pixel to meet it. No pill, no background, no colour flash — the page
+    is an editorial one and the navigation should behave like a running head.
+  */
+  .nav-link {
+    position: relative;
+    display: inline-block;
+    padding-block: 0.35rem;
+    transition:
+      color 0.3s var(--ease-out-quart),
+      transform 0.3s var(--ease-out-quart);
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--ease-out-quart);
+  }
+
+  .nav-link:hover,
+  .nav-link:focus-visible {
+    transform: translateY(-1px);
+  }
+
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after,
+  .nav-link[data-active]::after {
+    transform: scaleX(1);
+  }
+
+  /* The current route keeps its rule drawn. It inherits currentColor like the
+     hover rule does — on the navy capsule an accent-blue underline would be
+     the one element fighting its own ground. */
+
+  /* Reading position. scaleX on a 1px bar composites on the GPU; animating
+     width would relayout the header on every frame of every scroll. */
+  .scroll-rail {
+    transform: scaleX(var(--progress, 0));
+  }
+
+  /*
+    Capability cards. The card lifts 4px as one object and takes a shadow that
+    grows with it — the point is that the card has weight and is being picked
+    up, not that a rectangle is changing colour. The index rule draws itself
+    out under the number at the same time, which is the same gesture the
+    navigation makes, so hovering anywhere on the site means one thing.
+  */
+  .capability-card {
+    transition:
+      transform 0.45s var(--ease-out-quart),
+      box-shadow 0.45s var(--ease-out-quart);
+  }
+
+  .capability-card:hover,
+  .capability-card:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgb(6 60 91 / 0.12);
+  }
+
+  /* The eyebrow's index rule. Present at rest, extended on hover. */
+  .capability-card .eyebrow span[aria-hidden] {
+    transition: width 0.45s var(--ease-out-quart);
+  }
+
+  .capability-card:hover .eyebrow span[aria-hidden] {
+    width: 2.5rem;
+  }
+
+  .capability-card .eyebrow > span:first-child {
+    transition: color 0.45s var(--ease-out-quart);
+  }
+
+  /*
+    Schedule rows. Hovering a line lifts its ground and brings the quantity
+    forward — the quantity is the reason the row exists, so it is the thing the
+    pointer should surface. Inline padding is negative so the tinted band
+    breathes past the text without the row changing width.
+  */
+  .schedule-row {
+    margin-inline: -0.75rem;
+    padding-inline: 0.75rem;
+    transition: background-color 0.3s var(--ease-out-quart);
+  }
+
+  .schedule-row:hover {
+    background-color: color-mix(in srgb, var(--color-accent) 6%, transparent);
+  }
+
+  .schedule-row__qty {
+    transition:
+      color 0.3s var(--ease-out-quart),
+      transform 0.3s var(--ease-out-quart);
+  }
+
+  .schedule-row:hover .schedule-row__qty {
+    color: var(--color-accent);
+    transform: translateX(-2px);
+  }
+
+  /* Directional CTAs: the glyph advances, it does not grow. */
+  .cta-arrow__glyph {
+    display: inline-block;
+    transition: transform 0.3s var(--ease-out-quart);
+  }
+
+  .cta-arrow:hover .cta-arrow__glyph,
+  .cta-arrow:focus-visible .cta-arrow__glyph {
+    transform: translateX(5px);
+  }
 }
 
 @keyframes navItemIn {
@@ -445,18 +636,46 @@
     transform: none !important;
   }
 
+  /* Clip-based reveals are fully open from the start — a partially clipped
+     section is content the reader simply cannot see, which is a correctness
+     problem rather than a taste one. */
+  [data-reveal-variant="wipe"],
+  [data-reveal-variant="mask"] {
+    clip-path: none !important;
+    transition: none !important;
+  }
+
+  /* No scroll-linked drift, and no residual offset from a frame that ran
+     before the preference was read. */
+  .media-drift {
+    translate: none !important;
+    will-change: auto;
+  }
+
   /* Hero entrance, plate push-in and header fade all arrive already resolved */
   .hero-entrance,
   .hero-plate-in,
   .nav-entrance,
-  .nav-inner-in > * {
+  .nav-load {
     opacity: 1 !important;
     animation: none !important;
   }
 
   .hero-entrance,
   .hero-plate-in,
-  .nav-inner-in > * {
+  .nav-load {
+    transform: none !important;
+  }
+
+  /* Hover affordances still respond — they are feedback, not decoration — but
+     without travel. The rule still draws; the label no longer lifts. */
+  .nav-link:hover,
+  .nav-link:focus-visible {
+    transform: none !important;
+  }
+
+  .cta-arrow:hover .cta-arrow__glyph,
+  .cta-arrow:focus-visible .cta-arrow__glyph {
     transform: none !important;
   }
 
@@ -516,13 +735,23 @@
   display: flex;
   gap: 2rem;
   width: max-content;
-  animation: marqueeScroll 85s linear infinite;
+  /*
+    ~25px/sec, measured rather than guessed. The duration is fixed but the
+    distance is not: the track travels half its own width per cycle, so the
+    speed changes whenever the number of organisations or the width of a mark
+    changes. Re-measure after either. (It has already moved twice — 63px/sec
+    with the old logo cards, 14px/sec once they became wordmarks.)
+
+    The band matters. Much faster and it scans as a carousel selling something;
+    this should read as a record moving past.
+  */
+  animation: marqueeScroll 120s linear infinite;
   padding-block: 0.25rem;
 }
 
 .marquee-track--reverse {
   animation-name: marqueeScrollReverse;
-  animation-duration: 95s;
+  animation-duration: 240s;
 }
 
 /* Pause on hover — lets the user read a chip */

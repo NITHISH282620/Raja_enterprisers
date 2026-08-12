@@ -20,11 +20,20 @@ type PolymorphicTag = ComponentType<
 >;
 
 /**
- * The site's single entrance motion: an 18px rise into place, once, on first
- * intersection. Every section on every page uses this and nothing else, which
- * is what makes six pages read as one system.
+ * The site's entrance motion, in three registers.
  *
- * Two deliberate choices:
+ * Every section on every page draws from this one component, which is what
+ * makes six pages read as one system. The variants are a small grammar with
+ * fixed meanings, not a menu to alternate through for variety:
+ *
+ *  - `rise` — the default, and what most things should use. Copy, figures,
+ *    cards: anything that is arriving as *information*.
+ *  - `wipe` — a bottom-up clip. Reserved for structural bands and mastheads,
+ *    where the section itself is what is arriving, not its contents.
+ *  - `mask` — a left-to-right clip. Reserved for photographs, where it reads
+ *    as a plate being uncovered rather than a box fading up.
+ *
+ * Two deliberate choices carried over:
  *  - The hidden state is applied by CSS (`[data-reveal]`) but only after mount
  *    sets the attribute. If JS never runs, no attribute is written and the
  *    content is simply visible.
@@ -35,6 +44,7 @@ export function Reveal({
   children,
   as = "div",
   delay = 0,
+  variant = "rise",
   className,
   id,
 }: {
@@ -42,6 +52,7 @@ export function Reveal({
   as?: ElementType;
   /** Stagger, in milliseconds. Keep under ~240ms — beyond that it reads as lag. */
   delay?: number;
+  variant?: "rise" | "wipe" | "mask";
   className?: string;
   id?: string;
 }) {
@@ -73,6 +84,7 @@ export function Reveal({
       id={id}
       className={className}
       data-reveal={shown ? "shown" : undefined}
+      data-reveal-variant={variant === "rise" ? undefined : variant}
       style={delay ? ({ "--reveal-delay": `${delay}ms` } as CSSProperties) : undefined}
     >
       {children}

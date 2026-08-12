@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Masthead, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
+import { ParallaxMedia } from "@/components/site/motion/ParallaxMedia";
+import { CountUp } from "@/components/site/motion/CountUp";
 import { ArrowLink, Eyebrow, Rule, SectionHead } from "@/components/site/Primitives";
 import {
   categories,
@@ -20,7 +22,6 @@ export default function InventoryPage() {
   return (
     <>
       <Masthead
-        index="01"
         eyebrow="Inventory & capabilities"
         heading="What we own, and how much of it."
         standfirst="An event company is only as good as the stock it can put on a lorry. Everything below is held as owned inventory and moved by an owned fleet — the quantities are reproduced from the company's inventory schedule, unrounded."
@@ -30,7 +31,7 @@ export default function InventoryPage() {
               <div key={row.item}>
                 <dt className="sr-only">{row.item}</dt>
                 <dd className="t-figure text-ink">
-                  {row.figure}
+                  <CountUp value={row.figure} />
                   <span className="ml-2 align-baseline text-[0.3em] font-medium uppercase tracking-[0.16em] text-steel-500">
                     {row.unit}
                   </span>
@@ -54,7 +55,7 @@ export default function InventoryPage() {
               }`}
             >
               <div className={`lg:col-span-5 ${i % 2 === 1 ? "lg:order-2" : ""}`}>
-                <Eyebrow index={category.index}>{category.kicker}</Eyebrow>
+                <Eyebrow>{category.kicker}</Eyebrow>
                 <h2 className="t-heading mt-6 text-ink text-balance">{category.name}</h2>
                 <p className="mt-5 text-[1.0625rem] font-medium leading-relaxed text-ink text-pretty">
                   {category.summary}
@@ -78,13 +79,15 @@ export default function InventoryPage() {
               <div className={`lg:col-span-7 ${i % 2 === 1 ? "lg:order-1" : ""}`}>
                 {category.image && (
                   <div className="group relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-card">
-                    <Image
-                      src={category.image}
-                      alt={category.imageAlt ?? category.name}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 58vw"
-                      className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.03]"
-                    />
+                    <ParallaxMedia distance={18}>
+                      <Image
+                        src={category.image}
+                        alt={category.imageAlt ?? category.name}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 58vw"
+                        className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
+                      />
+                    </ParallaxMedia>
                   </div>
                 )}
               </div>
@@ -100,28 +103,32 @@ export default function InventoryPage() {
         <div className="shell band">
           <Reveal>
             <SectionHead
-              index="10"
               eyebrow="Inventory schedule"
               heading="The full list, as it stands in the catalogue."
               standfirst="Reproduced line for line so it can be checked against the source document. Nothing here has been rounded, restated or added to."
             />
           </Reveal>
 
-          <Reveal delay={80} className="mt-14">
-            <dl className="grid gap-x-16 md:grid-cols-2">
-              {inventorySchedule.map((row) => (
-                <div
-                  key={row.item}
-                  className="flex items-baseline justify-between gap-6 border-b border-steel-200 py-4"
-                >
+          {/*
+            The schedule arrives a line at a time rather than as a block — it
+            is a list being read down, and revealing it that way is the one
+            place on the page where the motion matches how the content is
+            actually consumed. The stagger is capped at eight steps: past that
+            the last rows are waiting on an animation the reader has already
+            scrolled to, which reads as lag rather than sequence.
+          */}
+          <dl className="mt-14 grid gap-x-16 md:grid-cols-2">
+            {inventorySchedule.map((row, i) => (
+              <Reveal key={row.item} delay={Math.min(i, 8) * 45}>
+                <div className="schedule-row flex items-baseline justify-between gap-6 border-b border-steel-200 py-4">
                   <dt className="text-[0.9375rem] text-steel-700">{row.item}</dt>
-                  <dd className="shrink-0 text-right text-[0.9375rem] font-medium text-ink tabular-nums">
+                  <dd className="schedule-row__qty shrink-0 text-right text-[0.9375rem] font-medium text-ink tabular-nums">
                     {row.quantity}
                   </dd>
                 </div>
-              ))}
-            </dl>
-          </Reveal>
+              </Reveal>
+            ))}
+          </dl>
 
           <Reveal delay={120} className="mt-14 max-w-3xl">
             <p className="text-sm leading-relaxed text-steel-600">
@@ -141,7 +148,6 @@ export default function InventoryPage() {
       <section className="shell band">
         <Reveal>
           <SectionHead
-            index="11"
             eyebrow="Service lines"
             heading="What we are contracted for."
             standfirst="The eight lines carried on the front of the company catalogue."
@@ -151,9 +157,8 @@ export default function InventoryPage() {
 
         <Reveal delay={60}>
           <ul className="mt-14 grid gap-x-8 sm:grid-cols-2 lg:grid-cols-4">
-            {serviceLines.map((line, i) => (
+            {serviceLines.map((line) => (
               <li key={line} className="border-t border-steel-200 py-7">
-                <p className="eyebrow text-accent">{String(i + 1).padStart(2, "0")}</p>
                 <p className="mt-4 text-lg font-medium leading-snug text-ink">{line}</p>
               </li>
             ))}

@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Masthead, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
+import { ParallaxMedia } from "@/components/site/motion/ParallaxMedia";
+import { CountUp } from "@/components/site/motion/CountUp";
 import { ArrowLink, Eyebrow, Pill, SectionHead } from "@/components/site/Primitives";
 import { approach, company, credibility } from "@/content/company";
 import { chapters, legacyIntro } from "@/content/legacy";
@@ -20,7 +22,6 @@ export default function LegacyPage() {
   return (
     <>
       <Masthead
-        index="03"
         eyebrow={legacyIntro.eyebrow}
         heading={legacyIntro.heading}
         standfirst={legacyIntro.body[0]}
@@ -33,21 +34,21 @@ export default function LegacyPage() {
               <div>
                 <dt className="sr-only">Established</dt>
                 <dd className="text-[1.75rem] leading-none tracking-[-0.03em] text-ink tabular-nums">
-                  {company.established}
+                  <CountUp value={String(company.established)} />
                 </dd>
                 <p className="mt-2.5 text-sm text-steel-600">Established</p>
               </div>
               <div>
                 <dt className="sr-only">Years in operation</dt>
                 <dd className="text-[1.75rem] leading-none tracking-[-0.03em] text-ink tabular-nums">
-                  48
+                  <CountUp value="48" />
                 </dd>
                 <p className="mt-2.5 text-sm text-steel-600">Years in operation</p>
               </div>
               <div>
                 <dt className="sr-only">In-house personnel</dt>
                 <dd className="text-[1.75rem] leading-none tracking-[-0.03em] text-ink tabular-nums">
-                  460
+                  <CountUp value="460" />
                 </dd>
                 <p className="mt-2.5 text-sm text-steel-600">In-house personnel</p>
               </div>
@@ -62,7 +63,6 @@ export default function LegacyPage() {
       <section className="shell">
         <Reveal>
           <SectionHead
-            index="04"
             eyebrow="The evolution"
             heading="Six lines of work, in the catalogue's own terms."
             standfirst="Only two things are dated in the sources: the founding, and the individual projects. So this reads as capability rather than as a timeline of years we cannot evidence."
@@ -76,7 +76,7 @@ export default function LegacyPage() {
               <Reveal key={chapter.index} delay={(i % 2) * 60}>
                 <article className="grid items-center gap-10 border-t border-steel-100 py-14 lg:grid-cols-12 lg:gap-16 lg:py-20">
                   <div className={`lg:col-span-6 ${i % 2 === 1 ? "lg:order-2" : ""}`}>
-                    <Eyebrow index={chapter.index}>Line of work</Eyebrow>
+                    <Eyebrow>Line of work</Eyebrow>
                     <h3 className="t-heading mt-6 text-ink text-balance">{chapter.title}</h3>
                     <p className="mt-6 text-[1.0625rem] leading-relaxed text-steel-700 text-pretty">
                       {chapter.body}
@@ -110,13 +110,15 @@ export default function LegacyPage() {
 
                   <div className={`lg:col-span-6 ${i % 2 === 1 ? "lg:order-1" : ""}`}>
                     <div className="group relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-card">
-                      <Image
-                        src={chapter.image}
-                        alt={chapter.imageAlt}
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                        className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.03]"
-                      />
+                      <ParallaxMedia distance={16}>
+                        <Image
+                          src={chapter.image}
+                          alt={chapter.imageAlt}
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 50vw"
+                          className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
+                        />
+                      </ParallaxMedia>
                     </div>
                   </div>
                 </article>
@@ -133,7 +135,6 @@ export default function LegacyPage() {
         <div className="shell band">
           <Reveal>
             <SectionHead
-              index="05"
               eyebrow="How we work"
               heading="Four things that have not changed."
             />
@@ -143,7 +144,6 @@ export default function LegacyPage() {
             {approach.map((item, i) => (
               <Reveal key={item.index} delay={i * 70}>
                 <div className="border-t border-steel-300 pt-7">
-                  <p className="eyebrow text-accent">{item.index}</p>
                   <h3 className="mt-5 text-lg font-medium leading-snug text-ink">{item.title}</h3>
                   <p className="mt-4 text-sm leading-relaxed text-steel-600 text-pretty">
                     {item.body}
@@ -162,17 +162,19 @@ export default function LegacyPage() {
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           <Reveal className="lg:col-span-7">
             <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-card">
-              <Image
-                src={credibility.image}
-                alt={credibility.imageAlt}
-                fill
-                sizes="(max-width: 1024px) 100vw, 58vw"
-                className="media-in object-cover"
-              />
+              <ParallaxMedia distance={16}>
+                <Image
+                  src={credibility.image}
+                  alt={credibility.imageAlt}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 58vw"
+                  className="media-in object-cover"
+                />
+              </ParallaxMedia>
             </div>
           </Reveal>
           <Reveal delay={90} className="lg:col-span-5">
-            <Eyebrow index="06">{credibility.eyebrow}</Eyebrow>
+            <Eyebrow>{credibility.eyebrow}</Eyebrow>
             <h2 className="t-display-l mt-7 text-ink text-balance">{credibility.statement}</h2>
             <p className="mt-7 text-[1.0625rem] leading-relaxed text-steel-700 text-pretty">
               {credibility.detail}

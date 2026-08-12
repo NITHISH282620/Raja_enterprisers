@@ -20,7 +20,6 @@ export const metadata: Metadata = {
 export default function HomePage() {
   // Extract specific categories for the bento grid
   const structures = categories.find((c) => c.slug === "structures")!;
-  const flooring = categories.find((c) => c.slug === "flooring-platforms")!;
   const stalls = categories.find((c) => c.slug === "stalls-interiors")!;
   const staging = categories.find((c) => c.slug === "stage-seating")!;
   const catering = categories.find((c) => c.slug === "catering")!;
@@ -40,7 +39,7 @@ export default function HomePage() {
       <section className="shell band-tight">
         <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
           <Reveal className="lg:col-span-7">
-            <Eyebrow index="02">Who we are</Eyebrow>
+            <Eyebrow>Who we are</Eyebrow>
             <p className="t-display-l mt-5 text-ink text-balance">
               {company.positioning}
             </p>
@@ -72,7 +71,6 @@ export default function HomePage() {
       <section id="capabilities" className="shell band-tight">
         <Reveal>
           <SectionHead
-            index="03"
             eyebrow="Capabilities"
             heading="Precision execution at scale."
             standfirst="Every quantity below is held as owned stock, not hired in. These are the figures from the catalogue's inventory schedule, unrounded."
@@ -125,7 +123,7 @@ export default function HomePage() {
           {/* Inventory schedule extract */}
           <Reveal delay={80} className="lg:col-span-4">
             <div className="card flex h-full min-h-[400px] flex-col p-8 lg:min-h-[560px] lg:p-11">
-              <Eyebrow index={flooring.index}>Held in stock</Eyebrow>
+              <Eyebrow>Held in stock</Eyebrow>
               <h3 className="t-heading mt-5 text-ink md:text-3xl lg:text-4xl">The inventory schedule</h3>
 
               <dl className="mt-9 flex-1 divide-y divide-steel-200">
@@ -156,7 +154,7 @@ export default function HomePage() {
           <Reveal delay={0}>
             <Link
               href="/home3/inventory#stalls-interiors"
-              className="card group relative flex min-h-[360px] flex-col overflow-hidden lg:min-h-[440px]"
+              className="capability-card card group relative flex min-h-[360px] flex-col overflow-hidden lg:min-h-[440px]"
             >
               <div className="relative flex-1 overflow-hidden">
                 <Image
@@ -164,11 +162,11 @@ export default function HomePage() {
                   alt={stalls.imageAlt!}
                   fill
                   sizes="(max-width: 1024px) 100vw, 25vw"
-                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
+                  className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
                 />
               </div>
               <div className="p-7 transform transition-transform duration-[800ms] ease-[var(--ease-out-quart)] group-hover:-translate-y-1">
-                <Eyebrow index="01">FABRICATION</Eyebrow>
+                <Eyebrow>FABRICATION</Eyebrow>
                 <h3 className="mt-4 text-xl font-medium text-ink transition-colors group-hover:text-accent lg:text-2xl">
                   {stalls.name}
                 </h3>
@@ -181,7 +179,7 @@ export default function HomePage() {
           <Reveal delay={70}>
             <Link
               href="/home3/inventory#stage-seating"
-              className="card group relative flex min-h-[360px] flex-col overflow-hidden lg:min-h-[440px]"
+              className="capability-card card group relative flex min-h-[360px] flex-col overflow-hidden lg:min-h-[440px]"
             >
               <div className="relative flex-1 overflow-hidden">
                 <Image
@@ -189,11 +187,11 @@ export default function HomePage() {
                   alt={staging.imageAlt!}
                   fill
                   sizes="(max-width: 1024px) 100vw, 25vw"
-                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
+                  className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
                 />
               </div>
               <div className="p-7 transform transition-transform duration-[800ms] ease-[var(--ease-out-quart)] group-hover:-translate-y-1">
-                <Eyebrow index="02">AUDIENCE</Eyebrow>
+                <Eyebrow>AUDIENCE</Eyebrow>
                 <h3 className="mt-4 text-xl font-medium text-ink transition-colors group-hover:text-accent lg:text-2xl">
                   {staging.name}
                 </h3>
@@ -206,7 +204,7 @@ export default function HomePage() {
           <Reveal delay={140}>
             <Link
               href="/home3/inventory#structures"
-              className="card group relative flex min-h-[360px] flex-col overflow-hidden lg:min-h-[440px]"
+              className="capability-card card group relative flex min-h-[360px] flex-col overflow-hidden lg:min-h-[440px]"
             >
               <div className="relative flex-1 overflow-hidden">
                 <Image
@@ -214,11 +212,11 @@ export default function HomePage() {
                   alt={structures.imageAlt!}
                   fill
                   sizes="(max-width: 1024px) 100vw, 25vw"
-                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
+                  className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
                 />
               </div>
               <div className="p-7 transform transition-transform duration-[800ms] ease-[var(--ease-out-quart)] group-hover:-translate-y-1">
-                <Eyebrow index="03">INFRASTRUCTURE</Eyebrow>
+                <Eyebrow>INFRASTRUCTURE</Eyebrow>
                 <h3 className="mt-4 text-xl font-medium text-ink transition-colors group-hover:text-accent lg:text-2xl">
                   {structures.name}
                 </h3>
@@ -231,7 +229,7 @@ export default function HomePage() {
           <Reveal delay={210}>
             <Link
               href="/home3/inventory#catering"
-              className="card group relative flex min-h-[360px] flex-col overflow-hidden lg:min-h-[440px]"
+              className="capability-card card group relative flex min-h-[360px] flex-col overflow-hidden lg:min-h-[440px]"
             >
               <div className="relative flex-1 overflow-hidden">
                 <Image
@@ -239,11 +237,11 @@ export default function HomePage() {
                   alt={catering.imageAlt!}
                   fill
                   sizes="(max-width: 1024px) 100vw, 25vw"
-                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
+                  className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
                 />
               </div>
               <div className="p-7 transform transition-transform duration-[800ms] ease-[var(--ease-out-quart)] group-hover:-translate-y-1">
-                <Eyebrow index="04">SERVICES</Eyebrow>
+                <Eyebrow>SERVICES</Eyebrow>
                 <h3 className="mt-4 text-xl font-medium text-ink transition-colors group-hover:text-accent lg:text-2xl">
                   Catering & Event Support
                 </h3>
@@ -261,7 +259,7 @@ export default function HomePage() {
         <div className="shell band-tight">
           <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
             <Reveal className="lg:col-span-5">
-              <Eyebrow index="04">{credibility.eyebrow}</Eyebrow>
+              <Eyebrow>{credibility.eyebrow}</Eyebrow>
               <h2 className="t-display-l mt-5 text-ink text-balance">{credibility.statement}</h2>
               <p className="mt-5 text-[1.0625rem] leading-relaxed text-steel-700 text-pretty">
                 {credibility.detail}
@@ -292,7 +290,6 @@ export default function HomePage() {
       <section className="shell band-tight">
         <Reveal>
           <SectionHead
-            index="05"
             eyebrow="Selected work"
             heading="Notable events."
             standfirst="Government programmes, state ceremonies and national exhibitions, each drawn from the company catalogue."
@@ -316,7 +313,6 @@ export default function HomePage() {
         <div className="shell band-tight">
           <Reveal>
             <SectionHead
-              index="06"
               eyebrow="Since 1977"
               heading="Forty-eight years of putting structures on open ground."
               standfirst="Raja Enterprises owns what it deploys — the stock, the crew and the vehicles that move them. That is the whole argument, and it is the reason the work below holds to fixed dates."
@@ -328,7 +324,6 @@ export default function HomePage() {
             {approach.map((item, i) => (
               <Reveal key={item.index} delay={i * 70}>
                 <div className="border-t border-steel-200 pt-8">
-                  <p className="eyebrow text-accent">{item.index}</p>
                   <h3 className="mt-5 text-xl font-medium leading-snug text-ink">{item.title}</h3>
                   <p className="mt-4 text-sm leading-relaxed text-steel-600 text-pretty md:text-base">
                     {item.body}

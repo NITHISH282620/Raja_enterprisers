@@ -10,13 +10,11 @@ import { Button, Eyebrow, Rule } from "./Primitives";
  * stops five interior pages from reading as five different websites.
  */
 export function Masthead({
-  index,
   eyebrow,
   heading,
   standfirst,
   aside,
 }: {
-  index: string;
   eyebrow: string;
   heading: ReactNode;
   standfirst?: ReactNode;
@@ -26,7 +24,7 @@ export function Masthead({
   return (
     <section className="shell pt-32 pb-14 md:pt-44 md:pb-20">
       <Reveal>
-        <Eyebrow index={index}>{eyebrow}</Eyebrow>
+        <Eyebrow>{eyebrow}</Eyebrow>
       </Reveal>
 
       <div className="mt-8 grid gap-10 lg:grid-cols-12 lg:gap-16">

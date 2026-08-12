@@ -22,7 +22,6 @@ export default function LocationsPage() {
   return (
     <>
       <Masthead
-        index="04"
         eyebrow="Locations"
         heading="One office. Work wherever the ground is."
         standfirst="Raja Enterprises runs from a single Bengaluru office. There is no branch network, and this page does not claim one — what it maps instead is where work has actually been delivered."
@@ -59,7 +58,7 @@ export default function LocationsPage() {
         <Reveal>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-5">
-              <Eyebrow index="01">{office.label}</Eyebrow>
+              <Eyebrow>{office.label}</Eyebrow>
               <h2 className="t-display-l mt-7 text-ink">{office.city}</h2>
               <address className="mt-8 space-y-1.5 text-[1.0625rem] not-italic leading-relaxed text-steel-700">
                 {office.addressLines.map((line) => (
@@ -113,7 +112,7 @@ export default function LocationsPage() {
                   className="pointer-events-none absolute inset-0 opacity-[0.5] [background-image:linear-gradient(var(--color-steel-100)_1px,transparent_1px),linear-gradient(90deg,var(--color-steel-100)_1px,transparent_1px)] [background-size:52px_52px]"
                 />
                 <div className="relative">
-                  <Eyebrow index="—">Operating base</Eyebrow>
+                  <Eyebrow>Operating base</Eyebrow>
                   <p className="t-heading mt-6 max-w-md text-ink text-balance">
                     Everything ships from one yard, on twenty owned vehicles.
                   </p>
@@ -151,7 +150,6 @@ export default function LocationsPage() {
       <section className="shell band">
         <Reveal>
           <SectionHead
-            index="02"
             eyebrow="Delivered in"
             heading="Where the structures have actually gone up."
             standfirst="Each city below is backed by a project in the portfolio. Nothing on this page is a market we would merely like to serve."

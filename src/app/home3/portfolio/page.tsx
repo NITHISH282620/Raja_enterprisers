@@ -18,7 +18,6 @@ export default function PortfolioPage() {
   return (
     <>
       <Masthead
-        index="02"
         eyebrow="Portfolio"
         heading="Executed work."
         standfirst="Every project below appears in the company catalogue or on the company's own site. Where a date or a location is not established by either, it is left out rather than guessed at."
@@ -59,7 +58,7 @@ export default function PortfolioPage() {
               <ProjectCard project={featuredProject} size="lg" priority />
             </div>
             <div className="lg:col-span-5 lg:pt-6">
-              <Eyebrow index="—">The strongest thing on this page</Eyebrow>
+              <Eyebrow>The strongest thing on this page</Eyebrow>
               <p className="t-heading mt-6 text-ink text-balance">
                 Ground infrastructure for programmes inaugurated by the Hon&rsquo;ble Prime
                 Minister of India.
@@ -78,7 +77,6 @@ export default function PortfolioPage() {
       <section className="shell band">
         <Reveal>
           <SectionHead
-            index="03"
             eyebrow="All work"
             heading="Government, cultural, exhibition and corporate."
             standfirst="Grouped by nothing but chronology of evidence — the catalogue does not organise its project pages, so neither do we."
@@ -98,7 +96,7 @@ export default function PortfolioPage() {
       <section className="border-t border-steel-100 bg-card">
         <div className="shell band">
           <Reveal className="max-w-3xl">
-            <Eyebrow index="04">For the owner</Eyebrow>
+            <Eyebrow>For the owner</Eyebrow>
             <h2 className="t-display-l mt-7 text-ink text-balance">
               What is missing from this page.
             </h2>

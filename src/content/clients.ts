@@ -15,6 +15,9 @@ export type Client = {
   name: string;
   /** Short identifier used for logo filename lookup. */
   slug: string;
+  /** Path to a verified, client-supplied logo file. Absent until one exists —
+   *  the strip falls back to a wordmark rather than inventing a mark. */
+  logo?: string;
   /** Determines visual weight in the marquee strip. */
   tier: "government" | "corporate" | "media" | "institution";
   /** The descriptive event context (e.g. 'Government programme', 'National exhibition') */

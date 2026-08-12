@@ -10,7 +10,7 @@ export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const rafRef = useRef<number>(0);
 
-  const tick = useCallback(() => {
+  const tick = useCallback(function tick() {
     const node = sectionRef.current;
     if (!node) return;
 

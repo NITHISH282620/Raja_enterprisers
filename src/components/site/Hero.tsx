@@ -54,7 +54,7 @@ export function Hero() {
           fill
           priority
           sizes="100vw"
-          className="hidden object-cover object-[58%_center] md:block"
+          className="hero-plate-in hidden object-cover object-[58%_center] md:block"
         />
         <Image
           src="/media/raja/hero-vidhana-soudha-portrait.jpg"
@@ -62,11 +62,11 @@ export function Hero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center md:hidden"
+          className="hero-plate-in object-cover object-center md:hidden"
         />
         {/* Grade: Gentle vignette for text legibility without washing out the image */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.15)_100%)]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#dfe7ee]/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#dfe7ee]/45 via-transparent to-transparent" />
       </div>
 
       {/* ---------------------------------------------------------------- */}
@@ -75,12 +75,15 @@ export function Hero() {
       <HeroParallax />
 
       {/* ---------------------------------------------------------------- */}
-      {/* 3 · Legibility wash. Strong under the copy column, gone by the    */}
-      {/*     time it reaches the structure on the right.                   */}
+      {/* 3 · Legibility wash. Sits under the copy column only, and clears  */}
+      {/*     early — the photograph is the evidence, so it stays readable  */}
+      {/*     as a photograph rather than becoming a pale ground. Peaks at  */}
+      {/*     80% rather than fully opaque paper; the headline is near-black */}
+      {/*     over a bright sky, which carries the contrast on its own.     */}
       {/* ---------------------------------------------------------------- */}
       <div
         aria-hidden
-        className="absolute inset-0 z-20 bg-[linear-gradient(100deg,var(--color-paper)_0%,color-mix(in_srgb,var(--color-paper)_90%,transparent)_30%,color-mix(in_srgb,var(--color-paper)_45%,transparent)_50%,transparent_70%)]"
+        className="absolute inset-0 z-20 bg-[linear-gradient(100deg,color-mix(in_srgb,var(--color-paper)_84%,transparent)_0%,color-mix(in_srgb,var(--color-paper)_58%,transparent)_24%,color-mix(in_srgb,var(--color-paper)_20%,transparent)_44%,transparent_62%)]"
       />
       {/*
         Phones only. Below 768px the photograph fills the full width, so
@@ -88,7 +91,7 @@ export function Hero() {
       */}
       <div
         aria-hidden
-        className="absolute inset-0 z-20 bg-[linear-gradient(to_bottom,var(--color-paper)_0%,color-mix(in_srgb,var(--color-paper)_60%,transparent)_40%,color-mix(in_srgb,var(--color-paper)_10%,transparent)_68%,transparent_100%)] md:hidden"
+        className="absolute inset-0 z-20 bg-[linear-gradient(to_bottom,color-mix(in_srgb,var(--color-paper)_72%,transparent)_0%,color-mix(in_srgb,var(--color-paper)_38%,transparent)_36%,color-mix(in_srgb,var(--color-paper)_6%,transparent)_62%,transparent_100%)] md:hidden"
       />
       <div
         aria-hidden

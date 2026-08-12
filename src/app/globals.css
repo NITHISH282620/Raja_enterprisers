@@ -12,7 +12,13 @@
   --color-graphite: #16191c;
   --color-steel-900: #2a3037;
   --color-steel-700: #454d56;
+  /* 600 and 400 interpolate the ramp. Both were already in use across the
+     home3 components while undefined here, which meant `text-steel-600` and
+     `border-steel-400` generated no rule at all and those elements silently
+     inherited whatever colour was above them. */
+  --color-steel-600: #58606a;
   --color-steel-500: #6b747d;
+  --color-steel-400: #838c95;
   --color-steel-300: #9aa4ad;
   --color-steel-200: #c1ced6;
   --color-steel-100: #dfe5e9;
@@ -294,6 +300,41 @@
   .hero-entrance--3 { animation-delay: 0.55s; }
   .hero-entrance--4 { animation-delay: 0.72s; }
   .hero-entrance--5 { animation-delay: 0.88s; }
+
+  /* The photograph settles out of a slow push-in as the page loads, so the
+     hero resolves into place instead of snapping. Runs on the <Image> itself
+     rather than its wrapper — the wrapper carries the scroll parallax
+     transform, and two animations cannot share one transform channel. */
+  .hero-plate-in {
+    animation: heroPlateIn 1.7s var(--ease-out-quart) both;
+  }
+
+  /* Fade-only, deliberately. The header is centred with a translate utility
+     at md and up; animating transform here would overwrite it and knock the
+     bar off-centre for the length of the animation. */
+  .nav-entrance {
+    animation: navEntrance 0.8s var(--ease-out-quart) 0.1s both;
+  }
+}
+
+@keyframes heroPlateIn {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes navEntrance {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes heroReveal {
@@ -367,11 +408,17 @@
     transform: none !important;
   }
 
-  /* Hero entrance plays instantly */
-  .hero-entrance {
+  /* Hero entrance, plate push-in and header fade all arrive already resolved */
+  .hero-entrance,
+  .hero-plate-in,
+  .nav-entrance {
     opacity: 1 !important;
-    transform: none !important;
     animation: none !important;
+  }
+
+  .hero-entrance,
+  .hero-plate-in {
+    transform: none !important;
   }
 
   /* Geometric overlays are static */

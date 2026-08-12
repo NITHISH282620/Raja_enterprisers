@@ -23,7 +23,7 @@ export function Home2Projects() {
               Flawless execution for high-stakes government and corporate gatherings.
             </p>
           </div>
-          <Link href="/work" className="text-brand text-xs font-medium flex items-center gap-2 hover:gap-3 transition-all mt-6 md:mt-0">
+          <Link href="#portfolio" className="text-brand text-xs font-medium flex items-center gap-2 hover:gap-3 transition-all mt-6 md:mt-0">
             View All Portfolio <span className="text-steel-400 font-normal lowercase tracking-normal">arrow_forward</span>
           </Link>
         </div>

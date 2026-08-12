@@ -319,7 +319,7 @@ function CategoryPanel({
           </div>
 
           <Link
-            href="/contact"
+            href="/home1/contact"
             className="t-label mt-auto inline-flex w-fit items-center gap-3 border border-ink px-7 py-4 pt-8 transition-colors duration-200 hover:bg-ink hover:text-paper"
           >
             Enquire about {category.name.toLowerCase()} &rarr;

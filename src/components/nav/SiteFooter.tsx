@@ -19,7 +19,7 @@ export function SiteFooter() {
             Got a project in mind?
           </h2>
           <Link
-            href="/contact"
+            href="/home1/contact"
             className="t-label group inline-flex items-center gap-3 border border-ink px-8 py-5 transition-colors duration-200 hover:bg-ink hover:text-paper"
           >
             Let&rsquo;s talk
@@ -86,17 +86,17 @@ export function SiteFooter() {
             <div className="t-label text-steel-500">Company</div>
             <ul className="mt-4 flex flex-col gap-1">
               <li>
-                <Link href="/work" className="t-body text-steel-700 hover:text-brand">
+                <Link href="/home1/work" className="t-body text-steel-700 hover:text-brand">
                   Work
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="t-body text-steel-700 hover:text-brand">
+                <Link href="/home1/about" className="t-body text-steel-700 hover:text-brand">
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="t-body text-steel-700 hover:text-brand">
+                <Link href="/home1/contact" className="t-body text-steel-700 hover:text-brand">
                   Contact
                 </Link>
               </li>

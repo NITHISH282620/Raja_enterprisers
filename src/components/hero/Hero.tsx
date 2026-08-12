@@ -63,7 +63,7 @@ export function Hero() {
 
         <div className="mt-12 flex flex-wrap items-center gap-4">
           <Link
-            href="/capabilities"
+            href="/home1/capabilities"
             className="t-label group inline-flex items-center gap-3 bg-paper px-8 py-5 text-ink transition-colors duration-200 hover:bg-brand hover:text-paper"
           >
             View capabilities
@@ -72,7 +72,7 @@ export function Hero() {
             </span>
           </Link>
           <Link
-            href="/work"
+            href="/home1/work"
             className="t-label inline-flex items-center gap-3 border border-steel-500 px-8 py-5 text-paper transition-colors duration-200 hover:border-paper"
           >
             Our work

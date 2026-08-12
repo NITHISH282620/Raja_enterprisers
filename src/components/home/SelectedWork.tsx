@@ -22,7 +22,7 @@ export function SelectedWork() {
               We have actually executed this.
             </h2>
           </div>
-          <Link href="/work" className="t-label group inline-flex items-center gap-2 text-brand">
+          <Link href="/home1/work" className="t-label group inline-flex items-center gap-2 text-brand">
             All work
             <span className="transition-transform duration-200 group-hover:translate-x-1">
               &rarr;

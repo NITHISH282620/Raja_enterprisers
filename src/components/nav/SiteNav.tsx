@@ -15,10 +15,10 @@ import { company } from "@/content/home1/company";
  */
 
 const links = [
-  { href: "/work", index: "01", label: "Work" },
-  { href: "/capabilities", index: "02", label: "Capabilities" },
-  { href: "/about", index: "03", label: "About" },
-  { href: "/contact", index: "04", label: "Contact" },
+  { href: "/home1/work", index: "01", label: "Work" },
+  { href: "/home1/capabilities", index: "02", label: "Capabilities" },
+  { href: "/home1/about", index: "03", label: "About" },
+  { href: "/home1/contact", index: "04", label: "Contact" },
 ];
 
 export function SiteNav() {
@@ -37,7 +37,7 @@ export function SiteNav() {
 
   // The homepage hero is dark, so the rail sits transparent over it and only
   // takes its paper background once the user scrolls past.
-  const overHero = pathname === "/" && !collapsed && !menuOpen;
+  const overHero = pathname === "/home1" && !collapsed && !menuOpen;
 
   return (
     <>
@@ -66,7 +66,7 @@ export function SiteNav() {
         )}
 
         <div className="shell relative flex h-full items-center justify-between">
-          <Link href="/" aria-label={`${company.name} — home`}>
+          <Link href="/home1" aria-label={`${company.name} — home`}>
             <Image
               src="/media/brand/raja-logo.png"
               alt={company.name}
@@ -124,7 +124,7 @@ export function SiteNav() {
             })}
 
             <Link
-              href="/contact"
+              href="/home1/contact"
               className={`t-label border px-5 py-3 transition-colors duration-200 ${
                 overHero
                   ? "border-steel-500 text-paper hover:bg-paper hover:text-ink"

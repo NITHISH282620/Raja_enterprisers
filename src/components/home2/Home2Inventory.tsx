@@ -116,7 +116,7 @@ export function Home2Inventory() {
               <p className="text-steel-600 text-sm mb-8">
                 State-of-the-art audiovisual setups designed to command attention and deliver clear communication in environments of any scale.
               </p>
-              <Link href="/work" className="text-[#0a66c2] text-xs font-medium flex items-center gap-2 hover:gap-3 transition-all">
+              <Link href="#portfolio" className="text-[#0a66c2] text-xs font-medium flex items-center gap-2 hover:gap-3 transition-all">
                 View Inventory Details <span className="text-steel-400 font-normal lowercase tracking-normal">arrow_forward</span>
               </Link>
             </div>

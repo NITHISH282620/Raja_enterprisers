@@ -145,7 +145,7 @@ export default function InventoryPage() {
             eyebrow="Service lines"
             heading="What we are contracted for."
             standfirst="The eight lines carried on the front of the company catalogue."
-            action={{ href: "/portfolio", label: "See them executed" }}
+            action={{ href: "/home3/portfolio", label: "See them executed" }}
           />
         </Reveal>
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Route } from "next";
 import type { ReactNode } from "react";
 
 /**
@@ -39,7 +40,7 @@ export function SectionHead({
   eyebrow: string;
   heading: ReactNode;
   standfirst?: ReactNode;
-  action?: { href: string; label: string };
+  action?: { href: Route; label: string };
   align?: "left" | "center";
 }) {
   const centered = align === "center";
@@ -77,7 +78,7 @@ export function ArrowLink({
   children,
   className = "",
 }: {
-  href: string;
+  href: Route;
   children: ReactNode;
   className?: string;
 }) {
@@ -103,7 +104,7 @@ export function Button({
   children,
   variant = "primary",
 }: {
-  href: string;
+  href: Route;
   children: ReactNode;
   variant?: "primary" | "secondary";
 }) {

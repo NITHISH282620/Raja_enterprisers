@@ -231,7 +231,7 @@ export default function HomePage() {
             eyebrow="Selected work"
             heading="Notable events."
             standfirst="Government programmes, state ceremonies and national exhibitions, each drawn from the company catalogue."
-            action={{ href: "/portfolio", label: "View all work" }}
+            action={{ href: "/home3/portfolio", label: "View all work" }}
           />
         </Reveal>
 
@@ -258,7 +258,7 @@ export default function HomePage() {
               eyebrow="Since 1977"
               heading="Forty-eight years of putting structures on open ground."
               standfirst="Raja Enterprises owns what it deploys — the stock, the crew and the vehicles that move them. That is the whole argument, and it is the reason the work below holds to fixed dates."
-              action={{ href: "/legacy", label: "Read the legacy" }}
+              action={{ href: "/home3/legacy", label: "Read the legacy" }}
             />
           </Reveal>
 

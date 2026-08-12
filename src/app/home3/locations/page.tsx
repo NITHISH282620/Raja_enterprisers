@@ -155,7 +155,7 @@ export default function LocationsPage() {
             eyebrow="Delivered in"
             heading="Where the structures have actually gone up."
             standfirst="Each city below is backed by a project in the portfolio. Nothing on this page is a market we would merely like to serve."
-            action={{ href: "/portfolio", label: "See the projects" }}
+            action={{ href: "/home3/portfolio", label: "See the projects" }}
           />
         </Reveal>
 

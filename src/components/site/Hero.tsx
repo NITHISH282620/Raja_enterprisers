@@ -45,7 +45,7 @@ export function Hero() {
       <div aria-hidden className="absolute inset-0 hero-image-layer">
         {/* Landscape plate — hidden on phones, which get the portrait crop. */}
         <Image
-          src="/media/raja/hero-vidhana-soudha.jpg"
+          src="/media/raja/home.1.png"
           alt=""
           fill
           priority

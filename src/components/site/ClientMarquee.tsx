@@ -184,14 +184,6 @@ export function ClientMarquee() {
         </div>
       </div>
 
-      {/* Marquee row 2 — reverse direction */}
-      <div className="marquee-container mt-3">
-        <div className="marquee-track marquee-track--reverse" aria-label="Client logos scrolling reverse">
-          {[...strip].reverse().map((client, i) => (
-            <ClientLogo key={`${client.slug}-rev-${i}`} client={client} />
-          ))}
-        </div>
-      </div>
     </section>
   );
 }

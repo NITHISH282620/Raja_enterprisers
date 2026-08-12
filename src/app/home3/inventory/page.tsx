@@ -83,7 +83,7 @@ export default function InventoryPage() {
                       alt={category.imageAlt ?? category.name}
                       fill
                       sizes="(max-width: 1024px) 100vw, 58vw"
-                      className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.03]"
+                      className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.03]"
                     />
                   </div>
                 )}

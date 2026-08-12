@@ -42,10 +42,16 @@ export function Hero() {
       {/* ---------------------------------------------------------------- */}
       {/* 1 · The photograph. Raja-owned, native 5808x3872.                 */}
       {/* ---------------------------------------------------------------- */}
-      <div 
-        aria-hidden 
-        className="absolute inset-0 hero-image-layer will-change-transform"
-        style={{ transform: 'scale(1.05) translateY(calc(var(--parallax) * 30px))' }}
+      {/*
+        The plate is oversized 20% top and bottom so it has somewhere to travel.
+        At 92svh that is ~165px of slack each way, which comfortably covers the
+        150px of drift below without ever exposing an edge inside the section's
+        overflow-hidden.
+      */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 -inset-y-[20%] hero-image-layer will-change-transform"
+        style={{ transform: 'scale(1.05) translateY(calc(var(--parallax) * 150px))' }}
       >
         {/* Landscape plate — hidden on phones, which get the portrait crop. */}
         <Image
@@ -64,9 +70,10 @@ export function Hero() {
           sizes="100vw"
           className="hero-plate-in object-cover object-center md:hidden"
         />
-        {/* Grade: Gentle vignette for text legibility without washing out the image */}
+        {/* Grade: Gentle vignette for text legibility without washing out the image.
+            Rides with the plate — the fade to page ground does not, and lives
+            anchored to the section further down, or it would drift off-screen. */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.15)_100%)]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#dfe7ee]/45 via-transparent to-transparent" />
       </div>
 
       {/* ---------------------------------------------------------------- */}
@@ -95,7 +102,7 @@ export function Hero() {
       />
       <div
         aria-hidden
-        className="absolute inset-x-0 bottom-0 z-20 h-28 bg-[linear-gradient(to_bottom,transparent,var(--color-paper))]"
+        className="absolute inset-x-0 bottom-0 z-20 h-56 bg-[linear-gradient(to_bottom,transparent,color-mix(in_srgb,var(--color-paper)_55%,transparent)_45%,var(--color-paper))]"
       />
 
       <div 

@@ -39,7 +39,7 @@ export function ProjectCard({
                 ? "(max-width: 1024px) 100vw, 60vw"
                 : "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
             }
-            className="object-cover transition-transform duration-[1200ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.04]"
+            className="media-in object-cover transition-transform duration-[1200ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.04]"
           />
         ) : (
           <div className="absolute inset-0 grid place-items-center">

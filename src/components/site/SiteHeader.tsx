@@ -45,7 +45,7 @@ export function SiteHeader() {
           : "top-6 border-white/70 bg-white py-4 shadow-[0_10px_36px_rgb(6,60,91,0.14)] md:rounded-full md:px-8"
       } rounded-2xl px-4`}
     >
-      <div className="shell flex items-center justify-between gap-6">
+      <div className="nav-inner-in shell flex items-center justify-between gap-6">
         <Link href="/home3" aria-label="Raja Enterprises — home" className="shrink-0">
           <Image
             src="/media/brand/raja-logo.png"

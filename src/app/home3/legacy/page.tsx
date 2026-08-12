@@ -115,7 +115,7 @@ export default function LegacyPage() {
                         alt={chapter.imageAlt}
                         fill
                         sizes="(max-width: 1024px) 100vw, 50vw"
-                        className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.03]"
+                        className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.03]"
                       />
                     </div>
                   </div>
@@ -167,7 +167,7 @@ export default function LegacyPage() {
                 alt={credibility.imageAlt}
                 fill
                 sizes="(max-width: 1024px) 100vw, 58vw"
-                className="object-cover"
+                className="media-in object-cover"
               />
             </div>
           </Reveal>

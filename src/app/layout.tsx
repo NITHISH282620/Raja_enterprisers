@@ -1,10 +1,29 @@
 import type { Metadata } from "next";
-import { Jost, IBM_Plex_Mono } from "next/font/google";
+import { Inter, Cormorant_Garamond, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const jost = Jost({
+/**
+ * Font stack — premium serif + modern sans pairing.
+ *
+ * Cormorant Garamond for display headlines: elegant, high-contrast serif
+ * that reads as "established" and "prestigious" — exactly right for a
+ * company founded in 1977 that builds for state ceremonies.
+ *
+ * Inter for body and UI: clean, highly legible, contemporary. The contrast
+ * between the two sets makes the headlines authoritative and the body
+ * effortlessly readable.
+ */
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-jost",
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -24,7 +43,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${jost.variable} ${plexMono.variable}`}>
+    <html lang="en" className={`${cormorant.variable} ${inter.variable} ${plexMono.variable}`}>
       <body className="antialiased">
         {children}
       </body>

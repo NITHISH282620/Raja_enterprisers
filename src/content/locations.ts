@@ -27,6 +27,7 @@ export const deliveredIn = [
       { city: "Haveri", note: "86th Kannada Sahitya Sammelana" },
       { city: "Belagavi", note: "Vishwa Kannada Sammelana 2011" },
       { city: "Shivamogga", note: "Airport inauguration" },
+      { city: "Male Mahadeshwara Hills", note: "Karnataka Government Cabinet Meeting" },
     ],
   },
   {
@@ -41,6 +42,10 @@ export const deliveredIn = [
         note: "Jawaharlal Nehru Indoor Stadium — scope of work pending owner confirmation",
       },
     ],
+  },
+  {
+    state: "Uttarakhand",
+    places: [{ city: "Uttarakhand", note: "Global Investors Summit 2023 — Destination Uttarakhand" }],
   },
 ] as const;
 

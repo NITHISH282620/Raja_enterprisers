@@ -11,16 +11,16 @@
 export const company = {
   name: "Raja Enterprises",
   established: 1977, // BR p.3, WEB
-  city: "Bengaluru", // BR p.3
+  city: "Bengaluru", // BR p.3 — head office; public-facing copy says "across India"
   sisterConcern: "Sharada Caterers", // BR p.15
 
-  /** BR p.3 — the company's own description of what it is. */
+  /** BR p.3 — the company's own description of what it is, reframed for pan-India reach. */
   positioning:
-    "A turnkey event management and infrastructure provider. We strive to keep your cost low while keeping our performance high.",
+    "A turnkey event management and infrastructure provider, delivering large-scale events across India. We strive to keep your cost low while keeping our performance high.",
 
   /** WEB — the live site's framing of reach. */
   reach:
-    "Experts in organising government programmes, trade fairs, exhibitions, conferences, roadshows and business forums across India.",
+    "Experts in organising government programmes, trade fairs, exhibitions, conferences, roadshows and business forums across India — from Karnataka and Tamil Nadu to Delhi, Uttarakhand and beyond.",
 
   contact: {
     // BR p.2, p.52.
@@ -39,7 +39,7 @@ export const hero = {
   lines: ["Engineered", "Luxury for", "Infrastructure."],
   /** Built only from documented inventory and the 1977 founding date. */
   subcopy:
-    "Imported German hangers, staging, stalls, flooring and power — deployed across India by 460 in-house personnel. Established 1977.",
+    "Imported German hangers, staging, stalls, flooring and power — deployed across India by 460 in-house personnel. Headquartered in Bengaluru. Established 1977.",
 } as const;
 
 /**

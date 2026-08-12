@@ -28,8 +28,8 @@ export function SiteFooter() {
               className="h-12 w-auto"
             />
             <p className="mt-6 max-w-xs text-sm leading-relaxed text-steel-600">
-              Turnkey event management and infrastructure, from Bengaluru, since{" "}
-              {company.established}.
+              Turnkey event management and infrastructure, deployed across India since{" "}
+              {company.established}. Headquartered in Bengaluru.
             </p>
             <address className="mt-6 space-y-1 text-sm not-italic leading-relaxed text-steel-600">
               {contact.addressLines.map((line) => (
@@ -105,7 +105,7 @@ export function SiteFooter() {
           <p className="eyebrow">
             © {new Date().getFullYear()} {company.name}
           </p>
-          <p className="eyebrow">Bengaluru · India</p>
+          <p className="eyebrow">Headquartered in Bengaluru · Deployed Across India</p>
         </div>
       </div>
     </footer>

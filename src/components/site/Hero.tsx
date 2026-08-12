@@ -1,50 +1,35 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { company, hero } from "@/content/company";
 import { Button } from "./Primitives";
+import { HeroParallax } from "./HeroParallax";
 
 /**
  * The hero.
  *
  * Composition follows the signed-off board (raja_1.jpeg): copy left over a
- * light-to-clear wash, architectural mass right. What changed is the substance
- * behind it — the plate is now a real Raja photograph rather than an empty
- * gradient, so the structure the camera flies through is standing in front of
- * the Vidhana Soudha rather than floating in white.
+ * light-to-clear wash, architectural mass right. The photograph is the star —
+ * the Vidhana Soudha hanger at full weight — and a CSS-driven geometric
+ * parallax replaces the former Three.js canvas.
+ *
+ * This removes all canvas–text overlap issues: the parallax layer is z-indexed
+ * behind the copy, and the geometric elements are deliberately kept to the
+ * right half and lower third where no text sits.
  *
  * Layer order, back to front:
- *   1. HMS4180-1, graded         — the factual evidence
- *   2. atmospheric separation    — sits the 3D into the plate's depth
- *   3. procedural hanger (WebGL) — the same portal-frame type in the photograph
- *   4. legibility wash + copy    — always painted, never waits for the canvas
- *
- * The copy is deliberately outside the canvas's control: it renders at full
- * opacity on first paint. A reviewer must never watch an empty frame.
+ *   1. HMS4180-1, graded         — the factual evidence (parallax scroll)
+ *   2. geometric structural grid — CSS shapes that give a 3D engineering feel
+ *   3. legibility wash + copy    — always painted, never waits for any canvas
  */
-const HeroHangerCanvas = dynamic(
-  () => import("@/components/three/HeroHangerCanvas").then((m) => m.HeroHangerCanvas),
-  { ssr: false },
-);
 
 export function Hero() {
-  // The canvas mounts only after the photograph has had a chance to paint, so a
-  // slow connection sees a real hero rather than a blank plate.
-  const [canvasReady, setCanvasReady] = useState(false);
-
-  useEffect(() => {
-    const t = window.setTimeout(() => setCanvasReady(true), 120);
-    return () => window.clearTimeout(t);
-  }, []);
-
   return (
     <section className="relative isolate min-h-[92svh] w-full overflow-hidden bg-[#dfe7ee]">
       {/* ---------------------------------------------------------------- */}
       {/* 1 · The photograph. Raja-owned, native 5808x3872.                 */}
       {/* ---------------------------------------------------------------- */}
-      <div aria-hidden className="absolute inset-0">
+      <div aria-hidden className="absolute inset-0 hero-image-layer">
         {/* Landscape plate — hidden on phones, which get the portrait crop. */}
         <Image
           src="/media/raja/hero-vidhana-soudha.jpg"
@@ -72,27 +57,25 @@ export function Hero() {
       </div>
 
       {/* ---------------------------------------------------------------- */}
-      {/* 2–3 · Atmospheric separation + the procedural structure.          */}
+      {/* 2 · Geometric parallax layer — CSS motion-based "3D" structure.   */}
       {/* ---------------------------------------------------------------- */}
-      {canvasReady && <HeroHangerCanvas />}
+      <HeroParallax />
 
       {/* ---------------------------------------------------------------- */}
-      {/* 4 · Legibility wash. Strong under the copy column, gone by the    */}
+      {/* 3 · Legibility wash. Strong under the copy column, gone by the    */}
       {/*     time it reaches the structure on the right.                   */}
       {/* ---------------------------------------------------------------- */}
       <div
         aria-hidden
-        className="absolute inset-0 z-20 bg-[linear-gradient(100deg,var(--color-paper)_0%,color-mix(in_srgb,var(--color-paper)_88%,transparent)_28%,color-mix(in_srgb,var(--color-paper)_40%,transparent)_50%,transparent_70%)]"
+        className="absolute inset-0 z-20 bg-[linear-gradient(100deg,var(--color-paper)_0%,color-mix(in_srgb,var(--color-paper)_90%,transparent)_30%,color-mix(in_srgb,var(--color-paper)_45%,transparent)_50%,transparent_70%)]"
       />
       {/*
-        Phones only. Below 768px the structure fills the full width and sits
-        directly behind the type, so the veil runs vertically instead. Kept off
-        tablets deliberately — stacking it on the horizontal wash there washed
-        the photograph out to near-white.
+        Phones only. Below 768px the photograph fills the full width, so
+        the veil runs vertically instead. Kept off tablets deliberately.
       */}
       <div
         aria-hidden
-        className="absolute inset-0 z-20 bg-[linear-gradient(to_bottom,var(--color-paper)_0%,color-mix(in_srgb,var(--color-paper)_78%,transparent)_40%,color-mix(in_srgb,var(--color-paper)_18%,transparent)_68%,transparent_100%)] md:hidden"
+        className="absolute inset-0 z-20 bg-[linear-gradient(to_bottom,var(--color-paper)_0%,color-mix(in_srgb,var(--color-paper)_82%,transparent)_40%,color-mix(in_srgb,var(--color-paper)_22%,transparent)_68%,transparent_100%)] md:hidden"
       />
       <div
         aria-hidden
@@ -101,15 +84,14 @@ export function Hero() {
 
       <div className="shell relative z-30 flex min-h-[92svh] flex-col justify-center pt-32 pb-20">
         <div className="max-w-2xl">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 hero-entrance hero-entrance--1">
             <span className="eyebrow rounded-sm border border-steel-400/70 bg-paper/50 px-3 py-1.5 text-ink backdrop-blur-sm">
               Est. {company.established}
             </span>
-            <span aria-hidden className="h-px w-12 bg-steel-400/70" />
-            <span className="eyebrow hidden text-steel-600 sm:inline">Bengaluru · India</span>
+            <span aria-hidden className="h-px w-16 bg-steel-400/50" />
           </div>
 
-          <h1 className="t-display-xl mt-9 text-ink">
+          <h1 className="t-display-xl mt-9 text-ink hero-entrance hero-entrance--2">
             <span className="block">{hero.lines[0]}</span>
             <span className="block">
               <span className="font-medium italic text-accent">Luxury</span> for
@@ -117,11 +99,11 @@ export function Hero() {
             <span className="block">{hero.lines[2]}</span>
           </h1>
 
-          <p className="mt-9 max-w-xl text-lg leading-relaxed text-steel-700 text-pretty md:text-xl">
+          <p className="mt-9 max-w-xl text-lg leading-relaxed text-steel-700 text-pretty md:text-xl hero-entrance hero-entrance--3">
             {hero.subcopy}
           </p>
 
-          <div className="mt-11 flex flex-wrap items-center gap-3">
+          <div className="mt-11 flex flex-wrap items-center gap-3 hero-entrance hero-entrance--4">
             <Button href="/home3/inventory">View capabilities</Button>
             <Button href="/home3/legacy" variant="secondary">
               Our legacy
@@ -129,7 +111,7 @@ export function Hero() {
           </div>
 
           {/* What the plate actually is. Quiet, but it turns decoration into evidence. */}
-          <p className="mt-12 max-w-md text-[0.8125rem] leading-relaxed text-steel-600">
+          <p className="mt-12 max-w-md text-[0.8125rem] leading-relaxed text-steel-600 hero-entrance hero-entrance--5">
             <span className="font-medium text-steel-700">Above:</span> Raja clear-span hanger at
             the Vidhana Soudha, Bengaluru — 134th Ambedkar Jayanti, April 2025.
           </p>

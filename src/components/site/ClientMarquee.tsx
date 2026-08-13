@@ -23,9 +23,19 @@ import { clients, type Client } from "@/content/clients";
  * wordmark to mark with no change here.
  */
 
-/** Uniform cap height for any supplied mark, so a row of mixed files still
- *  reads as one line rather than as assets of assorted sizes. */
-const LOGO_HEIGHT = 28;
+/**
+ * Uniform cap height for any supplied mark.
+ *
+ * 40px, not the 28 this started at. These are detailed institutional emblems —
+ * the Karnataka seal alone carries two lions, a shield and a ribbon of text —
+ * and below about 36px they collapse into grey mud. The wordmarks beside them
+ * set the baseline; the marks have to be legible at the same optical weight.
+ *
+ * `width` is only a hint for the optimiser's aspect calculation; the rendered
+ * ratio comes from each file, since the row mixes 4:1 wordmark logos with
+ * square seals.
+ */
+const LOGO_HEIGHT = 40;
 
 function ClientMark({ client }: { client: Client }) {
   return (
@@ -36,7 +46,13 @@ function ClientMark({ client }: { client: Client }) {
           alt={client.name}
           height={LOGO_HEIGHT}
           width={LOGO_HEIGHT * 4}
-          className="h-7 w-auto object-contain opacity-55 grayscale transition-[opacity,filter] duration-500 ease-[var(--ease-out-quart)] group-hover:opacity-100 group-hover:grayscale-0"
+          /* No greyscale. The convention is to desaturate a logo wall for
+             consistency, but that assumes a full set of marks. Five of sixteen
+             organisations have one, so the row is mixed, and a desaturated
+             emblem next to a solid wordmark reads as a smudge rather than as
+             restraint. In colour at 85% they sit at the same optical weight as
+             the type — which is also how Raja shows them on its own site. */
+          className="h-10 w-auto object-contain opacity-85 transition-opacity duration-500 ease-[var(--ease-out-quart)] group-hover:opacity-100"
         />
       ) : (
         <span className="whitespace-nowrap text-[0.8125rem] font-medium uppercase tracking-[0.14em] text-steel-500 transition-colors duration-500 ease-[var(--ease-out-quart)] group-hover:text-brand">

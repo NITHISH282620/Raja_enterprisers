@@ -31,6 +31,7 @@ export const clients: Client[] = [
   {
     name: "Government of India",
     slug: "govt-india",
+    logo: "/media/clients/government-of-india.png",
     tier: "government",
     categoryLabel: "National programme",
     evidence: "PWD Programme, Dedication to the Nation, airport inaugurations",
@@ -38,6 +39,7 @@ export const clients: Client[] = [
   {
     name: "Government of Karnataka",
     slug: "govt-karnataka",
+    logo: "/media/clients/government-of-karnataka.png",
     tier: "government",
     categoryLabel: "Government programme",
     evidence: "Karnataka swearing-in, cabinet meetings, Ambedkar Jayanti",
@@ -84,6 +86,7 @@ export const clients: Client[] = [
   {
     name: "Public TV",
     slug: "public-tv",
+    logo: "/media/clients/public-tv.png",
     tier: "media",
     categoryLabel: "Media partner",
     evidence: "Client-supplied — Kannada news channel coverage & event partnerships",
@@ -94,6 +97,28 @@ export const clients: Client[] = [
     tier: "media",
     categoryLabel: "Media partner",
     evidence: "Client-supplied — media & content partnership",
+  },
+
+  // ── From the owner's 27-row event list ────────────────────────────
+  // Both appear on that list *and* carry a logo Raja already publishes on
+  // rajaenterprises.co, which is the strongest evidence available short of a
+  // signed contract: the company put the mark on its own site.
+  {
+    name: "Collegedunia",
+    slug: "collegedunia",
+    logo: "/media/clients/collegedunia.png",
+    tier: "corporate",
+    categoryLabel: "Education fair",
+    evidence: "Owner event list — Collegedunia Education Fair; logo published on rajaenterprises.co",
+  },
+  {
+    name: "MM Hills",
+    slug: "mm-hills",
+    logo: "/media/clients/mm-hills.png",
+    tier: "institution",
+    categoryLabel: "Temple authority",
+    evidence:
+      "Owner event list — Sri Malai Mahadeshwara Swamy, MM Hills; logo published on rajaenterprises.co",
   },
 
   // ── Institutions ──────────────────────────────────────────────────

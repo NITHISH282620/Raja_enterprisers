@@ -776,3 +776,224 @@
     transform: translateX(0);
   }
 }
+
+/* ===========================================================================
+   /home4 — design tokens
+   ---------------------------------------------------------------------------
+   Everything here is namespaced `h4-` or scoped under `.home4`. home1, home2
+   and home3 share this stylesheet and must render byte-identically after this
+   block lands, so nothing above is edited and no shared token is redefined.
+
+   Three ideas carry the system:
+     · Two display sizes only. Hierarchy comes from scale-jump and whitespace,
+       not from six heading levels each with its own weight.
+     · Three image ratios only, and corners are 0 on full-bleed. Rounded
+       rectangles everywhere is a consumer-app tell; an infrastructure company
+       has straight edges.
+     · One spine. A hairline at the left gutter runs the length of the page so
+       the sections read as one composition rather than a stack of panels.
+=========================================================================== */
+
+@layer components {
+  /* ---- Layout ---------------------------------------------------------- */
+  .h4-shell {
+    width: 100%;
+    max-width: 1600px;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 5rem);
+  }
+
+  /* Reading measure inside the shell. Full-bleed imagery escapes it. */
+  .h4-content {
+    max-width: 1280px;
+  }
+
+  .h4-band {
+    padding-block: clamp(6rem, 10vw, 11rem);
+  }
+
+  .h4-band-tight {
+    padding-block: clamp(4rem, 6vw, 7rem);
+  }
+
+  .h4-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 4rem);
+  }
+
+  /* ---- Type -------------------------------------------------------------
+     Instrument Serif for the two display sizes, Inter for everything read in
+     sentences, Plex Mono for anything that behaves like an instrument label.  */
+  .h4-display-1 {
+    font-family: var(--font-display-alt), ui-serif, Georgia, serif;
+    font-size: clamp(3.25rem, 7vw, 6.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+  }
+
+  .h4-display-2 {
+    font-family: var(--font-display-alt), ui-serif, Georgia, serif;
+    font-size: clamp(2.25rem, 4vw, 3.5rem);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+  }
+
+  .h4-heading {
+    font-size: 1.5rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+  }
+
+  .h4-lead {
+    font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+    line-height: 1.6;
+  }
+
+  .h4-body {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  .h4-caption {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  /* The instrument label. Mono, small, wide-tracked — used for EST. 1977,
+     CLIENT, YEAR, LOCATION and section kickers, and nowhere else. */
+  .h4-label {
+    font-family: var(--font-plex-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    line-height: 1.4;
+  }
+
+  /* ---- Figures ----------------------------------------------------------
+     Tabular so a counting number cannot change width mid-animation. */
+  .h4-figure {
+    font-family: var(--font-display-alt), ui-serif, Georgia, serif;
+    font-size: clamp(2.75rem, 5vw, 4.25rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- Surfaces ---------------------------------------------------------- */
+  .h4-frame {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-card);
+    border-radius: 4px;
+  }
+
+  .h4-frame-bleed {
+    border-radius: 0;
+  }
+
+  .h4-rule {
+    border: 0;
+    border-top: 1px solid var(--color-steel-200);
+  }
+
+  /* ---- The spine --------------------------------------------------------
+     A single hairline at the left gutter tying the middle of the page
+     together. Hidden below lg, where there is no gutter to hang it in. */
+  .h4-spine {
+    position: relative;
+  }
+
+  @media (min-width: 1024px) {
+    .h4-spine::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      /* Half the gutter, so the spine runs *beside* the content rather than
+         under its first character. At the full gutter it sat exactly on the
+         text's left edge and read as a rendering fault. */
+      left: calc(clamp(1.25rem, 4vw, 5rem) / 2);
+      width: 1px;
+      background-color: var(--color-steel-100);
+      pointer-events: none;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   /home4 — motion
+   Same grammar as the rest of the site: quartic ease-out, short distances, one
+   gesture per element. The only new idea is the line mask, which the hero
+   headline needs and nothing else uses.
+--------------------------------------------------------------------------- */
+@layer utilities {
+  /* Opening push-in on the hero plate, then a standing camera that never
+     settles — the frame stays alive without ever calling attention to itself. */
+  .h4-plate-in {
+    animation:
+      h4PlateIn 1.8s var(--ease-out-quart) both,
+      h4Camera 36s ease-in-out 1.8s infinite;
+  }
+
+  /* Headline lines rise out of their own overflow box. */
+  .h4-line-in {
+    animation: h4LineIn 1.05s var(--ease-out-quart) both;
+  }
+
+  /* Everything else in the hero: short rise, staggered behind the headline. */
+  .h4-rise {
+    animation: h4Rise 0.85s var(--ease-out-quart) both;
+  }
+  .h4-rise--1 { animation-delay: 0.1s; }
+  .h4-rise--3 { animation-delay: 0.52s; }
+  .h4-rise--4 { animation-delay: 0.64s; }
+  .h4-rise--5 { animation-delay: 0.78s; }
+
+  .h4-scroll-cue {
+    transform-origin: top;
+    animation: h4ScrollCue 2.6s var(--ease-in-out-quart) infinite;
+  }
+}
+
+@keyframes h4PlateIn {
+  from { opacity: 0; transform: scale(1.08); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes h4Camera {
+  0%   { translate: 0 0; }
+  50%  { translate: -0.7% -0.5%; }
+  100% { translate: 0 0; }
+}
+
+@keyframes h4LineIn {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes h4Rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes h4ScrollCue {
+  0%, 100% { transform: scaleY(0.3); opacity: 0.35; }
+  50%      { transform: scaleY(1);   opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .h4-plate-in,
+  .h4-line-in,
+  .h4-rise,
+  .h4-scroll-cue {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    translate: none !important;
+  }
+}

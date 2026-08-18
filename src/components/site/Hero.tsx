@@ -120,19 +120,7 @@ export function Hero() {
       },
     });
 
-    // 3. Text Exit Animation on scroll
-    gsap.to(elements, {
-      y: -120,
-      opacity: 0,
-      stagger: 0.05,
-      ease: "none",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: 1,
-      },
-    });
+
 
     return () => {
       ScrollTrigger.getAll().forEach((st) => st.kill());

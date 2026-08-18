@@ -141,28 +141,39 @@ export default function HomePage() {
 
           {/* Inventory schedule */}
           <Reveal delay={80} className="md:col-span-2 lg:col-span-1 h-full">
-            <div className="card flex h-full flex-col bg-[#f4f5f6] border border-steel-100 p-8 lg:px-10 lg:py-12 rounded-3xl lg:mt-8">
-              <Eyebrow>Held in stock</Eyebrow>
-              <h3 className="t-heading mt-4 text-ink text-2xl lg:text-3xl">The inventory schedule</h3>
+            <Link href="/home3/inventory" className="card group relative flex h-full flex-col bg-[#f8f9fa] border border-steel-200 rounded-[2rem] overflow-hidden transition-all duration-500 hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] hover:-translate-y-1">
+              
+              {/* Top area to match Card 1 & 2 image height */}
+              <div className="relative w-full aspect-[4/3] bg-[#e5e7e8] flex flex-col justify-center p-8 lg:p-10 transition-colors duration-500 group-hover:bg-[#dfe4e8]">
+                <h4 className="text-ink text-[1.5rem] font-medium mb-4 leading-tight">100% Owned Inventory</h4>
+                <p className="text-steel-600 text-[0.9375rem] leading-relaxed font-medium text-pretty">
+                  Raja Enterprises completely owns its entire inventory line. This eliminates reliance on third-party sub-rentals, giving us total control over deployment timelines, structural quality, and massive scale for any event across India.
+                </p>
+              </div>
 
-              <dl className="mt-8 flex-1 divide-y divide-steel-200">
-                {headlineStock.map((row) => (
-                  <div key={row.item} className="flex items-center justify-between gap-4 py-4">
-                    <dt className="text-[0.9375rem] font-medium leading-relaxed text-steel-600">{row.item}</dt>
-                    <dd className="shrink-0 text-right text-lg font-bold text-ink tabular-nums">
-                      {row.figure}
-                      <span className="ml-2 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-steel-500">
-                        {row.unit}
-                      </span>
-                    </dd>
-                  </div>
-                ))}
-              </dl>
+              <div className="flex flex-col flex-1 px-8 py-8 lg:px-10 lg:py-10 text-left">
+                <p className="text-[0.65rem] font-bold tracking-[0.16em] text-steel-500 uppercase flex items-center">
+                  <span className="text-ink mr-3 font-bold text-sm">03</span>
+                  <span className="w-8 h-px bg-steel-300 mr-3 transition-all duration-500 group-hover:w-12"></span>
+                  HELD IN STOCK
+                </p>
+                <h3 className="t-heading mt-5 text-ink text-[1.75rem] font-medium leading-tight group-hover:text-accent transition-colors">The inventory schedule</h3>
 
-              <ArrowLink href="/home3/inventory" className="mt-8 text-xs font-bold tracking-[0.16em] uppercase text-accent">
-                Full schedule
-              </ArrowLink>
-            </div>
+                <dl className="mt-6 flex-1 divide-y divide-steel-200">
+                  {headlineStock.map((row) => (
+                    <div key={row.item} className="flex items-center justify-between gap-2 py-3">
+                      <dt className="text-[0.85rem] font-medium text-steel-600 truncate mr-2">{row.item}</dt>
+                      <dd className="shrink-0 text-right text-[1.05rem] font-bold text-ink tabular-nums whitespace-nowrap">
+                        {row.figure}
+                        <span className="ml-1.5 text-[0.55rem] font-bold uppercase tracking-[0.14em] text-steel-500">
+                          {row.unit}
+                        </span>
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </Link>
           </Reveal>
         </div>
 

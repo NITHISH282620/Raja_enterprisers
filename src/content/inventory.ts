@@ -63,10 +63,10 @@ export const categories: Category[] = [
       { item: "Wooden Floor Platform", quantity: "10 Lakh Sft" },
       { item: "Brand New Synthetic Carpet", quantity: "As per requirements" },
     ],
-    image: "/media/raja/inventory/wooden-floor-3d.jpg",
+    image: "/media/raja/inventory/wooden-floor-3d-new.jpg",
     imageAlt:
       "Carpeted banner avenue at the 107th Indian Science Congress, University of Agricultural Sciences, Bengaluru.",
-    media: { kind: "3d", asset: "flooring" },
+    media: { kind: "photo" },
     weight: "major",
   },
   {
@@ -82,9 +82,9 @@ export const categories: Category[] = [
       { item: "Maxima Stalls", quantity: "5,000 Sqmtr" },
       { item: "LED Fascia for Stalls", quantity: "Contemporary" },
     ],
-    image: "/media/raja/inventory/octonorm-stalls-3d.jpg",
+    image: "/media/raja/inventory/octonorm-stalls-3d-new.jpg",
     imageAlt: "Octonorm stall bays fitted out for exhibitors at the 107th Indian Science Congress.",
-    media: { kind: "3d", asset: "stalls" },
+    media: { kind: "photo" },
     weight: "major",
   },
   {
@@ -101,7 +101,7 @@ export const categories: Category[] = [
       { item: "Cushion Chairs with Covers", quantity: "5,000 Nos." },
       { item: "Iron Barricading", quantity: "10,000 Nos. (1 Lakh RFT)" },
     ],
-    image: "/media/raja/stage-dais.jpg",
+    image: "/media/raja/inventory/stage-seating-3d.jpg",
     imageAlt: "Dais and stage backdrop built for a state ceremony at the Vidhana Soudha.",
     media: { kind: "photo" },
     weight: "major",
@@ -166,7 +166,7 @@ export const categories: Category[] = [
     detail:
       "Inventory at this scale only counts if it reaches the ground on schedule. Transport runs on owned goods vehicles rather than hired capacity, so mobilisation is not contingent on third-party availability at peak season.",
     stock: [{ item: "Own Goods Vehicles", quantity: "20 Nos." }],
-    image: "/media/catalogue/hanger-dining.jpg",
+    image: "/media/raja/inventory/logistics-fleet-3d.jpg",
     imageAlt: "Long banquet rows laid out under a hanger, showing the scale of a single deployment.",
     media: { kind: "photo" },
     weight: "standard",

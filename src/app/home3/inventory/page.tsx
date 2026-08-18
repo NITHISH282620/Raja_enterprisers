@@ -92,7 +92,7 @@ export default function InventoryPage() {
                           fill
                           sizes="100vw"
                           quality={100}
-                          className={`media-in transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035] ${category.image.includes("-3d.jpg") ? "object-contain bg-[#e5e7e8]" : "object-cover"}`}
+                          className={`media-in transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] ${category.image.includes("-3d.jpg") ? "object-contain mix-blend-multiply p-4 sm:p-6 lg:p-8 animate-[float_6s_ease-in-out_infinite]" : "object-cover group-hover:scale-[1.035]"}`}
                         />
                       </ParallaxMedia>
                     </div>

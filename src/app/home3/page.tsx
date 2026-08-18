@@ -304,6 +304,34 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ------------------------------------------------------------------ */}
+      {/* Notable Events Snippet                                              */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="border-t border-steel-100 bg-paper">
+        <div className="shell band">
+          <Reveal>
+            <SectionHead
+              eyebrow="Notable Events"
+              heading="Executed work."
+              standfirst="Recent large-format deployments, from state ceremonies to national exhibitions."
+              action={{ href: "/home3/portfolio", label: "See the full portfolio" }}
+            />
+          </Reveal>
+
+          <div className="mt-14 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+            {homepageProjects.map((project, i) => (
+              <Reveal key={project.slug} delay={i * 80} className="h-full">
+                <ProjectCard project={project} />
+              </Reveal>
+            ))}
+          </div>
+          
+          <Reveal delay={200} className="mt-12 flex justify-center lg:hidden">
+             <ArrowLink href="/home3/portfolio">See the full portfolio</ArrowLink>
+          </Reveal>
+        </div>
+      </section>
+
       <CTABand />
     </>
   );

@@ -48,7 +48,7 @@ export const categories: Category[] = [
     image: "/media/raja/inventory/german-hanger-3d.jpg",
     imageAlt:
       "Interior of a Raja clear-span hanger at the Vidhana Soudha, looking up into the roof structure.",
-    media: { kind: "3d", asset: "hanger" },
+    media: { kind: "photo" }, // Changed from 3d asset to photo to use the enclosed hanger image
     weight: "flagship",
   },
   {

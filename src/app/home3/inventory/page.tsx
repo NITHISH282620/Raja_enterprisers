@@ -92,7 +92,7 @@ export default function InventoryPage() {
                           fill
                           sizes="100vw"
                           quality={100}
-                          className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
+                          className={`media-in transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035] ${category.image.includes("-3d.jpg") ? "object-contain bg-[#e5e7e8]" : "object-cover"}`}
                         />
                       </ParallaxMedia>
                     </div>

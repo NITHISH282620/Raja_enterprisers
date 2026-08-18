@@ -142,7 +142,7 @@ export function Hero() {
   return (
     <section 
       ref={sectionRef} 
-      className="relative isolate min-h-[92svh] w-full overflow-hidden bg-[#dfe7ee]"
+      className="relative isolate min-h-[100vh] w-full overflow-hidden bg-[#dfe7ee]"
     >
       {/* Background Image Container */}
       <div className="absolute inset-0 z-0 h-full w-full overflow-hidden pointer-events-none">
@@ -178,7 +178,7 @@ export function Hero() {
         />
       </div>
 
-      <div className="shell relative z-30 flex min-h-[92svh] flex-col justify-center pt-32 pb-20">
+      <div className="shell relative z-30 flex min-h-[100vh] flex-col justify-center pt-32 pb-20">
         <div className="max-w-2xl perspective-[1000px]">
           <div className="overflow-hidden pb-3">
             <h1 ref={title1Ref} className="t-display-l font-medium uppercase tracking-wide text-ink will-change-transform origin-bottom">

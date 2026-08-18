@@ -35,7 +35,7 @@ import { clients, type Client } from "@/content/clients";
  * ratio comes from each file, since the row mixes 4:1 wordmark logos with
  * square seals.
  */
-const LOGO_HEIGHT = 40;
+const LOGO_HEIGHT = 64;
 
 function ClientMark({ client }: { client: Client }) {
   return (
@@ -52,7 +52,7 @@ function ClientMark({ client }: { client: Client }) {
              emblem next to a solid wordmark reads as a smudge rather than as
              restraint. In colour at 85% they sit at the same optical weight as
              the type — which is also how Raja shows them on its own site. */
-          className="h-10 w-auto object-contain opacity-85 transition-opacity duration-500 ease-[var(--ease-out-quart)] group-hover:opacity-100"
+          className="h-16 md:h-20 w-auto object-contain opacity-85 transition-opacity duration-500 ease-[var(--ease-out-quart)] group-hover:opacity-100"
         />
       ) : (
         <span className="whitespace-nowrap text-[0.8125rem] font-medium uppercase tracking-[0.14em] text-steel-500 transition-colors duration-500 ease-[var(--ease-out-quart)] group-hover:text-brand">

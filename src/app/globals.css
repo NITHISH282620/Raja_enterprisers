@@ -733,7 +733,7 @@
 
 .marquee-track {
   display: flex;
-  gap: 2rem;
+  gap: clamp(6rem, 12vw, 16rem);
   width: max-content;
   /*
     ~25px/sec, measured rather than guessed. The duration is fixed but the

@@ -92,16 +92,16 @@ export function SiteHeader() {
       }`}
     >
       <div
-        className={`relative overflow-hidden rounded-2xl px-5 transition-[background-color,box-shadow,padding] duration-500 ease-[var(--ease-out-quart)] md:rounded-full md:px-8 ${
-          paper ? "bg-paper ring-1 ring-brand/10" : "bg-brand"
+        className={`relative overflow-hidden rounded-full px-5 transition-[background-color,box-shadow,padding] duration-500 ease-[var(--ease-out-quart)] md:rounded-full md:px-8 ${
+          paper ? "bg-white/80 backdrop-blur-xl ring-1 ring-brand/10" : "bg-brand/85 backdrop-blur-xl"
         } ${
           grounded
             ? paper
-              ? "py-2.5 shadow-[0_10px_30px_rgb(6,60,91,0.14)]"
-              : "py-2.5 shadow-[0_10px_30px_rgb(6,60,91,0.28)]"
+              ? "py-2 shadow-[0_10px_30px_rgb(6,60,91,0.14)] md:py-2.5"
+              : "py-2 shadow-[0_10px_30px_rgb(6,60,91,0.28)] md:py-2.5"
             : paper
-              ? "py-4 shadow-[0_14px_40px_rgb(6,60,91,0.10)]"
-              : "py-4 shadow-[0_14px_40px_rgb(6,60,91,0.22)]"
+              ? "py-3 shadow-[0_14px_40px_rgb(6,60,91,0.10)] md:py-3.5"
+              : "py-3 shadow-[0_14px_40px_rgb(6,60,91,0.22)] md:py-3.5"
         }`}
       >
         <div className="flex items-center justify-between gap-6">
@@ -210,8 +210,8 @@ export function SiteHeader() {
       <div
         id="mobile-nav"
         hidden={!open}
-        className={`mt-2 overflow-hidden rounded-2xl px-5 pb-4 transition-colors duration-500 lg:hidden ${
-          paper ? "bg-paper ring-1 ring-brand/10" : "bg-brand"
+        className={`mt-2 overflow-hidden rounded-3xl px-5 pb-4 transition-colors duration-500 lg:hidden shadow-2xl ${
+          paper ? "bg-white/80 backdrop-blur-xl ring-1 ring-brand/10" : "bg-brand/85 backdrop-blur-xl"
         }`}
       >
         <ul className="flex flex-col">

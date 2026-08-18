@@ -9,6 +9,8 @@
  * none are claimed here. See company.openQuestions.
  */
 
+import type { AssetKind } from "./home1/inventory";
+
 export type Category = {
   index: string;
   slug: string;
@@ -23,6 +25,12 @@ export type Category = {
   stock: { item: string; quantity: string; ownershipStatus?: "owned" | "in-house" | "partner-provided" | "hired" | "unclear" | "owner-confirmation-required" }[];
   image?: string;
   imageAlt?: string;
+  /**
+   * The rendered 3D model, shared with home1's catalogue rig, for every
+   * category worth modelling. People and food are left as photography —
+   * modelling them produces the uncanny look the brief forbids.
+   */
+  media: { kind: "3d"; asset: AssetKind } | { kind: "photo" };
   /** Bento weight on the homepage grid. */
   weight: "flagship" | "major" | "standard";
 };
@@ -37,9 +45,10 @@ export const categories: Category[] = [
     detail:
       "Clear-span aluminium hangers imported for large-format deployment. Column-free interiors take staging, seating and services without breaking sightlines, and the shell is weatherproof enough to hold a full day's programme on open ground. This is the single largest holding in the inventory and the reason a field can become a venue.",
     stock: [{ item: "Imported German Hanger", quantity: "5 Lakh Sft" }],
-    image: "/media/raja/hanger-interior-2025.jpg",
+    image: "/media/raja/inventory/german-hanger-3d.jpg",
     imageAlt:
       "Interior of a Raja clear-span hanger at the Vidhana Soudha, looking up into the roof structure.",
+    media: { kind: "3d", asset: "hanger" },
     weight: "flagship",
   },
   {
@@ -54,9 +63,10 @@ export const categories: Category[] = [
       { item: "Wooden Floor Platform", quantity: "10 Lakh Sft" },
       { item: "Brand New Synthetic Carpet", quantity: "As per requirements" },
     ],
-    image: "/media/raja/isc-avenue.jpg",
+    image: "/media/raja/inventory/wooden-floor-3d.jpg",
     imageAlt:
       "Carpeted banner avenue at the 107th Indian Science Congress, University of Agricultural Sciences, Bengaluru.",
+    media: { kind: "3d", asset: "flooring" },
     weight: "major",
   },
   {
@@ -72,8 +82,9 @@ export const categories: Category[] = [
       { item: "Maxima Stalls", quantity: "5,000 Sqmtr" },
       { item: "LED Fascia for Stalls", quantity: "Contemporary" },
     ],
-    image: "/media/raja/octonorm-stalls.jpg",
+    image: "/media/raja/inventory/octonorm-stalls-3d.jpg",
     imageAlt: "Octonorm stall bays fitted out for exhibitors at the 107th Indian Science Congress.",
+    media: { kind: "3d", asset: "stalls" },
     weight: "major",
   },
   {
@@ -92,6 +103,7 @@ export const categories: Category[] = [
     ],
     image: "/media/raja/stage-dais.jpg",
     imageAlt: "Dais and stage backdrop built for a state ceremony at the Vidhana Soudha.",
+    media: { kind: "photo" },
     weight: "major",
   },
   {
@@ -109,6 +121,7 @@ export const categories: Category[] = [
     ],
     image: "/media/catalogue/hanger-arena.jpg",
     imageAlt: "Enclosed hanger over a sports ground with tiered seating and general lighting.",
+    media: { kind: "photo" },
     weight: "standard",
   },
   {
@@ -122,6 +135,7 @@ export const categories: Category[] = [
     stock: [{ item: "General Lightings", quantity: "As per requirements" }],
     image: "/media/catalogue/hanger-lounge.jpg",
     imageAlt: "Lit hanger interior at dusk, arranged with lounge seating.",
+    media: { kind: "photo" },
     weight: "standard",
   },
   {
@@ -140,6 +154,7 @@ export const categories: Category[] = [
     ],
     image: "/media/catalogue/state-gathering.jpg",
     imageAlt: "Several thousand seated attendees under a Raja Enterprises hanger.",
+    media: { kind: "photo" },
     weight: "standard",
   },
   {
@@ -153,6 +168,7 @@ export const categories: Category[] = [
     stock: [{ item: "Own Goods Vehicles", quantity: "20 Nos." }],
     image: "/media/catalogue/hanger-dining.jpg",
     imageAlt: "Long banquet rows laid out under a hanger, showing the scale of a single deployment.",
+    media: { kind: "photo" },
     weight: "standard",
   },
   {
@@ -166,6 +182,7 @@ export const categories: Category[] = [
     stock: [{ item: "Sharada Caterers", quantity: "Sister concern" }],
     image: "/media/raja/catering-service.jpg",
     imageAlt: "Catering service laid out by sister concern Sharada Caterers at a state ceremony.",
+    media: { kind: "photo" },
     weight: "standard",
   },
 ];

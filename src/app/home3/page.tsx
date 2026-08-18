@@ -6,6 +6,7 @@ import { Reveal } from "@/components/site/Reveal";
 import { CTABand } from "@/components/site/PageShell";
 import { ProjectCard } from "@/components/site/ProjectCard";
 import { ClientMarquee } from "@/components/site/ClientMarquee";
+import { AssetStage } from "@/components/three/AssetStage";
 import { ArrowLink, Eyebrow, Rule, SectionHead } from "@/components/site/Primitives";
 import { approach, company, credibility, keyFigures } from "@/content/company";
 import { categories, headlineStock } from "@/content/inventory";
@@ -22,6 +23,7 @@ export default function HomePage() {
   const structures = categories.find((c) => c.slug === "structures")!;
   const stalls = categories.find((c) => c.slug === "stalls-interiors")!;
   const staging = categories.find((c) => c.slug === "stage-seating")!;
+  const flooring = categories.find((c) => c.slug === "flooring-platforms")!;
   const catering = categories.find((c) => c.slug === "catering")!;
 
   return (
@@ -66,73 +68,90 @@ export default function HomePage() {
       </section>
 
       {/* ------------------------------------------------------------------ */}
-      {/* Precision Execution at Scale — capability bento                    */}
+      {/* Precision Execution at Scale — capability pop-out grid             */}
       {/* ------------------------------------------------------------------ */}
-      <section id="capabilities" className="shell band-tight">
+      <section id="capabilities" className="shell band-tight pb-24 overflow-visible">
         <Reveal>
-          <SectionHead
-            eyebrow="Capabilities"
-            heading="Precision execution at scale."
-            standfirst="Every quantity below is held as owned stock, not hired in. These are the figures from the catalogue's inventory schedule, unrounded."
-            align="center"
-          />
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="t-display-l text-ink">Precision Execution at Scale.</h2>
+            <p className="mt-5 text-[1.0625rem] leading-relaxed text-steel-600 text-balance">
+              Experts in organizing government programs, trade fairs, exhibitions, conferences, roadshows, and business forums across India. Our approach treats every project with architectural rigor.
+            </p>
+          </div>
         </Reveal>
 
-        {/* Top Tier: Flagship + Inventory Schedule */}
-        <div className="mt-14 grid gap-5 lg:grid-cols-12">
-          {/* Flagship — structures */}
-          <Reveal className="lg:col-span-8">
+        {/* Top Tier: 3 Cards */}
+        <div className="mt-28 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          
+          {/* Flagship — German Hangers */}
+          <Reveal className="h-full">
             <Link
               href="/home3/inventory#structures"
-              className="card group relative flex h-full min-h-[400px] flex-col justify-end overflow-hidden p-8 lg:min-h-[560px] lg:p-12"
+              className="capability-card card group relative flex h-full flex-col bg-[#f8f9fa] border border-steel-200 rounded-[2rem] overflow-hidden transition-all duration-500 hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] hover:-translate-y-1"
             >
-              <div className="absolute inset-0">
+              <div className="relative w-full aspect-[4/3] bg-[#e5e7e8] flex items-center justify-center p-6 lg:p-10">
                 <Image
-                  src={structures.image!}
-                  alt={structures.imageAlt!}
+                  src="/media/raja/inventory/german-hanger-3d.jpg"
+                  alt="Premium Röder German Hanger Structure"
                   fill
-                  sizes="(max-width: 1024px) 100vw, 66vw"
-                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-105"
-                />
-                <div
-                  aria-hidden
-                  className="absolute inset-0 bg-[linear-gradient(to_top,rgba(10,12,14,0.85)_0%,rgba(10,12,14,0.4)_40%,rgba(10,12,14,0.05)_75%)]"
+                  priority
+                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.05] mix-blend-multiply contrast-[1.05]"
                 />
               </div>
 
-              <div className="relative transform transition-transform duration-[800ms] ease-[var(--ease-out-quart)] group-hover:-translate-y-2">
-                <p className="eyebrow text-white/75">
-                  <span className="text-white">01</span>
-                  <span aria-hidden className="mx-3 inline-block h-px w-6 align-middle bg-white/40 transition-all duration-700 group-hover:w-10" />
+              <div className="flex flex-col flex-1 px-8 py-8 lg:px-10 lg:py-10 text-left">
+                <p className="text-[0.65rem] font-bold tracking-[0.16em] text-steel-500 uppercase flex items-center">
+                  <span className="text-ink mr-3 font-bold text-sm">01</span>
+                  <span className="w-8 h-px bg-steel-300 mr-3 transition-all duration-500 group-hover:w-12"></span>
                   OWNED INVENTORY
                 </p>
-                <h3 className="t-heading mt-5 max-w-xl text-white md:text-3xl lg:text-4xl">Turnkey Event Infrastructure</h3>
-                <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/80 md:text-base">
+                <h3 className="t-heading mt-5 text-ink text-[1.75rem] font-medium leading-tight group-hover:text-accent transition-colors">Turnkey Event Infrastructure</h3>
+                <p className="mt-4 text-[0.9375rem] leading-relaxed text-steel-600 font-medium text-pretty">
                   {structures.detail}
                 </p>
-                <p className="mt-8 text-4xl leading-none tracking-[-0.03em] text-white tabular-nums md:text-5xl lg:text-6xl">
-                  5
-                  <span className="ml-3 text-[0.3em] font-medium uppercase tracking-[0.16em] text-white/70">
-                    Lakh Sft in stock
-                  </span>
-                </p>
+                <div className="mt-8 flex items-baseline">
+                  <span className="text-[3.5rem] leading-none tracking-[-0.03em] text-ink font-light">5</span>
+                  <span className="ml-3 text-[0.8rem] font-bold tracking-[0.16em] text-steel-500 uppercase">LAKH SFT IN STOCK</span>
+                </div>
               </div>
             </Link>
           </Reveal>
 
-          {/* Inventory schedule extract */}
-          <Reveal delay={80} className="lg:col-span-4">
-            <div className="card flex h-full min-h-[400px] flex-col p-8 lg:min-h-[560px] lg:p-11">
-              <Eyebrow>Held in stock</Eyebrow>
-              <h3 className="t-heading mt-5 text-ink md:text-3xl lg:text-4xl">The inventory schedule</h3>
+          {/* Authentic Röder */}
+          <Reveal delay={40} className="h-full">
+            <div className="card group relative flex h-full flex-col bg-[#f8f9fa] border border-steel-200 rounded-[2rem] overflow-hidden transition-all duration-500 hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] hover:-translate-y-1">
+              <div className="relative w-full aspect-[4/3] bg-[#e5e7e8] flex items-center justify-center p-6 lg:p-10">
+                 <div className="absolute inset-x-0 bottom-0 top-0 mix-blend-multiply opacity-90 transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.05]">
+                   <AssetStage kind="hanger" className="w-full h-full scale-[1.1] origin-bottom" lazy={false} />
+                 </div>
+              </div>
+              <div className="flex flex-col flex-1 px-8 py-8 lg:px-10 lg:py-10 text-left relative z-10">
+                <p className="text-[0.65rem] font-bold tracking-[0.16em] text-steel-500 uppercase flex items-center">
+                  <span className="text-ink mr-3 font-bold text-sm">02</span>
+                  <span className="w-8 h-px bg-steel-300 mr-3 transition-all duration-500 group-hover:w-12"></span>
+                  GLOBAL STANDARDS
+                </p>
+                <h3 className="t-heading mt-5 text-ink text-[1.75rem] font-medium leading-tight group-hover:text-accent transition-colors">Authentic Röder Tents</h3>
+                <p className="mt-4 text-[0.9375rem] leading-relaxed text-steel-600 font-medium text-pretty">
+                  Imported specifically to ensure the highest global standards for wind resistance, structural integrity, and premium aesthetic finish.
+                </p>
+              </div>
+            </div>
+          </Reveal>
 
-              <dl className="mt-9 flex-1 divide-y divide-steel-200">
+          {/* Inventory schedule */}
+          <Reveal delay={80} className="md:col-span-2 lg:col-span-1 h-full">
+            <div className="card flex h-full flex-col bg-[#f4f5f6] border border-steel-100 p-8 lg:px-10 lg:py-12 rounded-3xl lg:mt-8">
+              <Eyebrow>Held in stock</Eyebrow>
+              <h3 className="t-heading mt-4 text-ink text-2xl lg:text-3xl">The inventory schedule</h3>
+
+              <dl className="mt-8 flex-1 divide-y divide-steel-200">
                 {headlineStock.map((row) => (
-                  <div key={row.item} className="flex items-baseline justify-between gap-4 py-4">
-                    <dt className="text-sm leading-relaxed text-steel-600 md:text-base">{row.item}</dt>
-                    <dd className="shrink-0 text-right text-lg font-medium text-ink tabular-nums md:text-xl">
+                  <div key={row.item} className="flex items-center justify-between gap-4 py-4">
+                    <dt className="text-[0.9375rem] font-medium leading-relaxed text-steel-600">{row.item}</dt>
+                    <dd className="shrink-0 text-right text-lg font-bold text-ink tabular-nums">
                       {row.figure}
-                      <span className="ml-2 text-[0.6rem] font-medium uppercase tracking-[0.14em] text-steel-500">
+                      <span className="ml-2 text-[0.6rem] font-bold uppercase tracking-[0.14em] text-steel-500">
                         {row.unit}
                       </span>
                     </dd>
@@ -140,169 +159,119 @@ export default function HomePage() {
                 ))}
               </dl>
 
-              <ArrowLink href="/home3/inventory" className="mt-8">
+              <ArrowLink href="/home3/inventory" className="mt-8 text-xs font-bold tracking-[0.16em] uppercase text-accent">
                 Full schedule
               </ArrowLink>
             </div>
           </Reveal>
         </div>
 
-        {/* Bottom Tier: 4-Card Capability Grid */}
-        <div className="mt-5 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        {/* Bottom Tier: 4 Cards */}
+        <div className="mt-20 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           
-          {/* Card 01: Fabrication */}
+          {/* Card 01: Wooden Floor */}
           <Reveal delay={0}>
             <Link
-              href="/home3/inventory#stalls-interiors"
-              className="capability-card card group relative flex min-h-[360px] flex-col overflow-hidden lg:min-h-[440px]"
+              href="/home3/inventory#wooden-floors"
+              className="capability-card card group relative flex h-full flex-col bg-[#f8f9fa] border border-steel-200 rounded-[2rem] overflow-hidden transition-all duration-500 hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] hover:-translate-y-1"
             >
-              <div className="relative flex-1 overflow-hidden">
+              <div className="relative w-full aspect-[4/3] bg-[#e5e7e8] flex items-center justify-center p-6">
                 <Image
-                  src={stalls.image!}
-                  alt={stalls.imageAlt!}
+                  src="/media/raja/inventory/wooden-floor-3d.jpg"
+                  alt="Wooden Floor Platforms"
                   fill
-                  sizes="(max-width: 1024px) 100vw, 25vw"
-                  className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
+                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.05] mix-blend-multiply contrast-[1.05]"
                 />
               </div>
-              <div className="p-7 transform transition-transform duration-[800ms] ease-[var(--ease-out-quart)] group-hover:-translate-y-1">
-                <Eyebrow>FABRICATION</Eyebrow>
-                <h3 className="mt-4 text-xl font-medium text-ink transition-colors group-hover:text-accent lg:text-2xl">
-                  {stalls.name}
+              <div className="flex flex-col flex-1 px-8 py-8 text-left">
+                <p className="text-[0.65rem] font-bold tracking-[0.16em] text-steel-500 uppercase flex items-center">
+                  <span className="w-6 h-px bg-steel-300 mr-3 transition-all duration-500 group-hover:w-10"></span>
+                  10 LAKH SFT
+                </p>
+                <h3 className="t-heading mt-3 text-ink text-xl font-medium group-hover:text-accent transition-colors">
+                  Wooden Floor Platforms
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-steel-600">{stalls.summary}</p>
               </div>
             </Link>
           </Reveal>
 
-          {/* Card 02: Audience */}
+          {/* Card 02: Octonorm Stalls */}
           <Reveal delay={70}>
             <Link
-              href="/home3/inventory#stage-seating"
-              className="capability-card card group relative flex min-h-[360px] flex-col overflow-hidden lg:min-h-[440px]"
+              href="/home3/inventory#octonorm-stalls"
+              className="capability-card card group relative flex h-full flex-col bg-[#f8f9fa] border border-steel-200 rounded-[2rem] overflow-hidden transition-all duration-500 hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] hover:-translate-y-1"
             >
-              <div className="relative flex-1 overflow-hidden">
+              <div className="relative w-full aspect-[4/3] bg-[#e5e7e8] flex items-center justify-center p-6">
                 <Image
-                  src={staging.image!}
-                  alt={staging.imageAlt!}
+                  src="/media/raja/inventory/octonorm-stalls-3d.jpg"
+                  alt="Octonorm & Maxima Stalls"
                   fill
-                  sizes="(max-width: 1024px) 100vw, 25vw"
-                  className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
+                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.05] mix-blend-multiply contrast-[1.05]"
                 />
               </div>
-              <div className="p-7 transform transition-transform duration-[800ms] ease-[var(--ease-out-quart)] group-hover:-translate-y-1">
-                <Eyebrow>AUDIENCE</Eyebrow>
-                <h3 className="mt-4 text-xl font-medium text-ink transition-colors group-hover:text-accent lg:text-2xl">
-                  {staging.name}
+              <div className="flex flex-col flex-1 px-8 py-8 text-left">
+                <p className="text-[0.65rem] font-bold tracking-[0.16em] text-steel-500 uppercase flex items-center">
+                  <span className="w-6 h-px bg-steel-300 mr-3 transition-all duration-500 group-hover:w-10"></span>
+                  15,000 SQMTR
+                </p>
+                <h3 className="t-heading mt-3 text-ink text-xl font-medium group-hover:text-accent transition-colors">
+                  Octonorm & Maxima Stalls
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-steel-600">{staging.summary}</p>
               </div>
             </Link>
           </Reveal>
 
-          {/* Card 03: Infrastructure */}
+          {/* Card 03: Lighting & AV */}
           <Reveal delay={140}>
             <Link
-              href="/home3/inventory#structures"
-              className="capability-card card group relative flex min-h-[360px] flex-col overflow-hidden lg:min-h-[440px]"
+              href="/home3/inventory#lighting-av"
+              className="capability-card card group relative flex h-full flex-col bg-[#f8f9fa] border border-steel-200 rounded-[2rem] overflow-hidden transition-all duration-500 hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] hover:-translate-y-1"
             >
-              <div className="relative flex-1 overflow-hidden">
+              <div className="relative w-full aspect-[4/3] bg-[#e5e7e8] flex items-center justify-center p-6">
                 <Image
-                  src={structures.image!}
-                  alt={structures.imageAlt!}
+                  src="/media/catalogue/hanger-lounge.jpg"
+                  alt="Lighting & AV Solutions"
                   fill
-                  sizes="(max-width: 1024px) 100vw, 25vw"
-                  className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
+                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.05] mix-blend-multiply contrast-[1.05]"
                 />
               </div>
-              <div className="p-7 transform transition-transform duration-[800ms] ease-[var(--ease-out-quart)] group-hover:-translate-y-1">
-                <Eyebrow>INFRASTRUCTURE</Eyebrow>
-                <h3 className="mt-4 text-xl font-medium text-ink transition-colors group-hover:text-accent lg:text-2xl">
-                  {structures.name}
+              <div className="flex flex-col flex-1 px-8 py-8 text-left">
+                <p className="text-[0.65rem] font-bold tracking-[0.16em] text-steel-500 uppercase flex items-center">
+                  <span className="w-6 h-px bg-steel-300 mr-3 transition-all duration-500 group-hover:w-10"></span>
+                  TURNKEY AV
+                </p>
+                <h3 className="t-heading mt-3 text-ink text-xl font-medium group-hover:text-accent transition-colors">
+                  Lighting & AV Solutions
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-steel-600">{structures.summary}</p>
               </div>
             </Link>
           </Reveal>
 
-          {/* Card 04: Services */}
+          {/* Card 04: AC */}
           <Reveal delay={210}>
             <Link
-              href="/home3/inventory#catering"
-              className="capability-card card group relative flex min-h-[360px] flex-col overflow-hidden lg:min-h-[440px]"
+              href="/home3/inventory#air-conditioning"
+              className="capability-card card group relative flex h-full flex-col bg-[#f8f9fa] border border-steel-200 rounded-[2rem] overflow-hidden transition-all duration-500 hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] hover:-translate-y-1"
             >
-              <div className="relative flex-1 overflow-hidden">
+              <div className="relative w-full aspect-[4/3] bg-[#e5e7e8] flex items-center justify-center p-6">
                 <Image
-                  src={catering.image!}
-                  alt={catering.imageAlt!}
+                  src="/media/catalogue/hanger-arena.jpg"
+                  alt="Industrial AC Unit"
                   fill
-                  sizes="(max-width: 1024px) 100vw, 25vw"
-                  className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
+                  className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.05] mix-blend-multiply contrast-[1.05]"
                 />
               </div>
-              <div className="p-7 transform transition-transform duration-[800ms] ease-[var(--ease-out-quart)] group-hover:-translate-y-1">
-                <Eyebrow>SERVICES</Eyebrow>
-                <h3 className="mt-4 text-xl font-medium text-ink transition-colors group-hover:text-accent lg:text-2xl">
-                  Catering & Event Support
+              <div className="flex flex-col flex-1 px-8 py-8 text-left">
+                <p className="text-[0.65rem] font-bold tracking-[0.16em] text-steel-500 uppercase flex items-center">
+                  <span className="w-6 h-px bg-steel-300 mr-3 transition-all duration-500 group-hover:w-10"></span>
+                  3,000 TONS
+                </p>
+                <h3 className="t-heading mt-3 text-ink text-xl font-medium group-hover:text-accent transition-colors">
+                  Air-conditioning
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-steel-600">{catering.summary}</p>
               </div>
             </Link>
           </Reveal>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------------ */}
-      {/* Credibility band                                                    */}
-      {/* ------------------------------------------------------------------ */}
-      <section className="border-y border-steel-100 bg-card">
-        <div className="shell band-tight">
-          <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
-            <Reveal className="lg:col-span-5">
-              <Eyebrow>{credibility.eyebrow}</Eyebrow>
-              <h2 className="t-display-l mt-5 text-ink text-balance">{credibility.statement}</h2>
-              <p className="mt-5 text-[1.0625rem] leading-relaxed text-steel-700 text-pretty">
-                {credibility.detail}
-              </p>
-              <ArrowLink href="/home3/portfolio" className="mt-7">
-                See the executed work
-              </ArrowLink>
-            </Reveal>
-
-            <Reveal delay={100} className="lg:col-span-7">
-              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl bg-steel-100">
-                <Image
-                  src={credibility.image}
-                  alt={credibility.imageAlt}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 58vw"
-                  className="object-cover"
-                />
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------------ */}
-      {/* Selected work                                                       */}
-      {/* ------------------------------------------------------------------ */}
-      <section className="shell band-tight">
-        <Reveal>
-          <SectionHead
-            eyebrow="Selected work"
-            heading="Notable events."
-            standfirst="Government programmes, state ceremonies and national exhibitions, each drawn from the company catalogue."
-            action={{ href: "/home3/portfolio", label: "View all work" }}
-          />
-        </Reveal>
-
-        <div className="mt-14 grid gap-x-6 gap-y-12 md:grid-cols-3">
-          {homepageProjects.map((project, i) => (
-            <Reveal key={project.slug} delay={i * 80}>
-              <ProjectCard project={project} />
-            </Reveal>
-          ))}
         </div>
       </section>
 

@@ -25,16 +25,19 @@ import { subscribeScroll } from "@/lib/scrollDriver";
  */
 const links = [
   { label: "HOME", href: "/home3" },
-  { label: "ABOUT", href: "/home3/legacy" },
-  { label: "SERVICES", href: "/home3/inventory" },
-  { label: "LOCATIONS", href: "/home3/locations" },
-  { label: "GALLERY", href: "/home3/portfolio" },
+  { label: "INVENTORY", href: "/home3/inventory" },
+  { label: "NOTABLE EVENTS", href: "/home3/portfolio" },
+  { label: "ABOUT US", href: "/home3/legacy" },
+  { label: "CONTACT", href: "/home3/contact" },
 ] as const;
+
+type Skin = "navy" | "paper";
 
 export function SiteHeader() {
   const pathname = usePathname();
   const [compact, setCompact] = useState(false);
   const [open, setOpen] = useState(false);
+  const [skin, setSkin] = useState<Skin>("navy");
   const railRef = useRef<HTMLDivElement>(null);
 
   /**
@@ -80,6 +83,7 @@ export function SiteHeader() {
   }, [open]);
 
   const grounded = compact || open;
+  const paper = skin === "paper";
 
   return (
     <header
@@ -88,10 +92,16 @@ export function SiteHeader() {
       }`}
     >
       <div
-        className={`relative overflow-hidden rounded-2xl bg-brand px-5 transition-all duration-500 ease-[var(--ease-out-quart)] md:rounded-full md:px-8 ${
+        className={`relative overflow-hidden rounded-2xl px-5 transition-[background-color,box-shadow,padding] duration-500 ease-[var(--ease-out-quart)] md:rounded-full md:px-8 ${
+          paper ? "bg-paper ring-1 ring-brand/10" : "bg-brand"
+        } ${
           grounded
-            ? "py-2.5 shadow-[0_10px_30px_rgb(6,60,91,0.28)]"
-            : "py-4 shadow-[0_14px_40px_rgb(6,60,91,0.22)]"
+            ? paper
+              ? "py-2.5 shadow-[0_10px_30px_rgb(6,60,91,0.14)]"
+              : "py-2.5 shadow-[0_10px_30px_rgb(6,60,91,0.28)]"
+            : paper
+              ? "py-4 shadow-[0_14px_40px_rgb(6,60,91,0.10)]"
+              : "py-4 shadow-[0_14px_40px_rgb(6,60,91,0.22)]"
         }`}
       >
         <div className="flex items-center justify-between gap-6">
@@ -106,12 +116,12 @@ export function SiteHeader() {
               width={140}
               height={80}
               priority
-              /* The mark is a single dark navy, which would disappear into the
-                 capsule. Knocking it out to paper is one filter rather than a
-                 second asset to keep in sync. */
-              className={`w-auto brightness-0 invert transition-[height] duration-500 ease-[var(--ease-out-quart)] ${
-                grounded ? "h-8" : "h-10"
-              }`}
+              /* The mark is a single dark navy. On the navy capsule it is
+                 knocked out to paper with one filter; on the paper capsule it
+                 already reads, so the filter drops. */
+              className={`w-auto transition-[height] duration-500 ease-[var(--ease-out-quart)] ${
+                paper ? "" : "brightness-0 invert"
+              } ${grounded ? "h-8" : "h-10"}`}
             />
           </Link>
 
@@ -126,7 +136,13 @@ export function SiteHeader() {
                       aria-current={active ? "page" : undefined}
                       data-active={active ? "" : undefined}
                       className={`nav-link text-[0.8125rem] font-bold tracking-[0.08em] transition-colors duration-300 ${
-                        active ? "text-paper" : "text-paper/70 hover:text-paper"
+                        paper
+                          ? active
+                            ? "text-brand"
+                            : "text-brand/55 hover:text-brand"
+                          : active
+                            ? "text-paper"
+                            : "text-paper/70 hover:text-paper"
                       }`}
                     >
                       {item.label}
@@ -137,10 +153,14 @@ export function SiteHeader() {
             </ul>
           </nav>
 
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="flex shrink-0 items-center gap-3">
+            <ThemeToggle skin={skin} onChange={setSkin} />
+
             <Link
               href="/home3/contact"
-              className="cta-arrow hidden items-center gap-1.5 rounded-full bg-paper px-7 py-3 text-[0.8125rem] font-bold tracking-[0.08em] text-brand transition-colors duration-300 hover:bg-accent hover:text-paper md:inline-flex"
+              className={`cta-arrow hidden items-center gap-1.5 rounded-full px-7 py-3 text-[0.8125rem] font-bold tracking-[0.08em] transition-colors duration-300 hover:bg-accent hover:text-paper md:inline-flex ${
+                paper ? "bg-brand text-paper" : "bg-paper text-brand"
+              }`}
             >
               CONTACT
               <span aria-hidden className="cta-arrow__glyph">
@@ -158,14 +178,14 @@ export function SiteHeader() {
               <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
               <span aria-hidden className="relative block h-3.5 w-5">
                 <span
-                  className={`absolute left-0 block h-px w-full bg-paper transition-transform duration-300 ease-[var(--ease-out-quart)] ${
-                    open ? "top-1.5 rotate-45" : "top-0"
-                  }`}
+                  className={`absolute left-0 block h-px w-full transition-transform duration-300 ease-[var(--ease-out-quart)] ${
+                    paper ? "bg-brand" : "bg-paper"
+                  } ${open ? "top-1.5 rotate-45" : "top-0"}`}
                 />
                 <span
-                  className={`absolute left-0 block h-px w-full bg-paper transition-transform duration-300 ease-[var(--ease-out-quart)] ${
-                    open ? "top-1.5 -rotate-45" : "top-3"
-                  }`}
+                  className={`absolute left-0 block h-px w-full transition-transform duration-300 ease-[var(--ease-out-quart)] ${
+                    paper ? "bg-brand" : "bg-paper"
+                  } ${open ? "top-1.5 -rotate-45" : "top-3"}`}
                 />
               </span>
             </button>
@@ -180,7 +200,9 @@ export function SiteHeader() {
         <div
           ref={railRef}
           aria-hidden
-          className="scroll-rail absolute inset-x-0 bottom-0 h-[2px] origin-left bg-paper/45"
+          className={`scroll-rail absolute inset-x-0 bottom-0 h-[2px] origin-left transition-colors duration-500 ${
+            paper ? "bg-brand/40" : "bg-paper/45"
+          }`}
         />
       </div>
 
@@ -188,7 +210,9 @@ export function SiteHeader() {
       <div
         id="mobile-nav"
         hidden={!open}
-        className="mt-2 overflow-hidden rounded-2xl bg-brand px-5 pb-4 lg:hidden"
+        className={`mt-2 overflow-hidden rounded-2xl px-5 pb-4 transition-colors duration-500 lg:hidden ${
+          paper ? "bg-paper ring-1 ring-brand/10" : "bg-brand"
+        }`}
       >
         <ul className="flex flex-col">
           {navigation.map((item) => (
@@ -196,8 +220,10 @@ export function SiteHeader() {
               <Link
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className={`block border-b border-paper/15 py-4 text-lg font-medium transition-colors last:border-0 ${
-                  pathname === item.href ? "text-paper" : "text-paper/75 hover:text-paper"
+                className={`block border-b py-4 text-lg font-medium transition-colors last:border-0 ${
+                  paper
+                    ? `border-brand/10 ${pathname === item.href ? "text-brand" : "text-brand/65 hover:text-brand"}`
+                    : `border-paper/15 ${pathname === item.href ? "text-paper" : "text-paper/75 hover:text-paper"}`
                 }`}
               >
                 {item.label}
@@ -207,5 +233,28 @@ export function SiteHeader() {
         </ul>
       </div>
     </header>
+  );
+}
+
+/**
+ * Small switch for the client to preview the masthead in either skin while
+ * reviewing — navy (as approved) or white-and-blue. Purely visual state, not
+ * persisted: it resets to navy on reload so the default the client signed off
+ * on is always what a fresh visitor sees.
+ */
+function ThemeToggle({ skin, onChange }: { skin: Skin; onChange: (skin: Skin) => void }) {
+  const paper = skin === "paper";
+  return (
+    <button
+      type="button"
+      onClick={() => onChange(paper ? "navy" : "paper")}
+      aria-pressed={paper}
+      aria-label={`Preview masthead in ${paper ? "navy" : "white and blue"}`}
+      className={`relative flex h-9 w-9 items-center justify-center shrink-0 rounded-full transition-colors duration-300 ease-[var(--ease-out-quart)] hover:bg-black/10 dark:hover:bg-white/10`}
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={paper ? "text-brand" : "text-paper"}>
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </button>
   );
 }

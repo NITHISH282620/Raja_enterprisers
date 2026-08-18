@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Masthead, CTABand } from "@/components/site/PageShell";
 import { Reveal } from "@/components/site/Reveal";
+import { AssetStage } from "@/components/three/AssetStage";
 import { ParallaxMedia } from "@/components/site/motion/ParallaxMedia";
 import { CountUp } from "@/components/site/motion/CountUp";
 import { ArrowLink, Eyebrow, Rule, SectionHead } from "@/components/site/Primitives";
@@ -77,18 +78,24 @@ export default function InventoryPage() {
               </div>
 
               <div className={`lg:col-span-7 ${i % 2 === 1 ? "lg:order-1" : ""}`}>
-                {category.image && (
-                  <div className="group relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-card">
-                    <ParallaxMedia distance={18}>
-                      <Image
-                        src={category.image}
-                        alt={category.imageAlt ?? category.name}
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 58vw"
-                        className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
-                      />
-                    </ParallaxMedia>
+                {category.media.kind === "3d" ? (
+                  <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-card">
+                    <AssetStage kind={category.media.asset} className="h-full w-full" />
                   </div>
+                ) : (
+                  category.image && (
+                    <div className="group relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-card">
+                      <ParallaxMedia distance={18}>
+                        <Image
+                          src={category.image}
+                          alt={category.imageAlt ?? category.name}
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 58vw"
+                          className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
+                        />
+                      </ParallaxMedia>
+                    </div>
+                  )
                 )}
               </div>
             </div>

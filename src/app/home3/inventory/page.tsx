@@ -90,7 +90,8 @@ export default function InventoryPage() {
                           src={category.image}
                           alt={category.imageAlt ?? category.name}
                           fill
-                          sizes="(max-width: 1024px) 100vw, 58vw"
+                          sizes="100vw"
+                          quality={100}
                           className="media-in object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
                         />
                       </ParallaxMedia>

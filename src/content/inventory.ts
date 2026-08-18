@@ -119,7 +119,7 @@ export const categories: Category[] = [
       { item: "Generators", quantity: "As per requirements" },
       { item: "Different Sizes Lighting Cables", quantity: "As per requirements" },
     ],
-    image: "/media/catalogue/hanger-arena.jpg",
+    image: "/media/raja/inventory/ac-unit-3d.jpg",
     imageAlt: "Enclosed hanger over a sports ground with tiered seating and general lighting.",
     media: { kind: "photo" },
     weight: "standard",
@@ -133,7 +133,7 @@ export const categories: Category[] = [
     detail:
       "General lighting for structures, stall bays and circulation routes, distributed on cable runs sized to the site. The catalogue documents general lighting and LED stall fascia only — no audio-visual stock is listed, and none is claimed here.",
     stock: [{ item: "General Lightings", quantity: "As per requirements" }],
-    image: "/media/catalogue/hanger-lounge.jpg",
+    image: "/media/raja/inventory/lighting-av-multi-3d.jpg",
     imageAlt: "Lit hanger interior at dusk, arranged with lounge seating.",
     media: { kind: "photo" },
     weight: "standard",

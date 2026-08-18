@@ -64,8 +64,9 @@ export function CTABand({
   body?: string;
 }) {
   return (
-    <section className="border-t border-steel-100 bg-ink text-paper">
-      <div className="shell band">
+    <section className="relative overflow-hidden border-t border-steel-100 bg-ink text-paper">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-accent/20 via-ink to-ink opacity-40 pointer-events-none" />
+      <div className="shell band relative z-10">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-16">
           <Reveal className="lg:col-span-7">
             <p className="eyebrow text-steel-300">Enquiries</p>

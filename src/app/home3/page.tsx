@@ -229,7 +229,7 @@ export default function HomePage() {
             >
               <div className="relative w-full aspect-[4/3] bg-[#e5e7e8] flex items-center justify-center p-6">
                 <Image
-                  src="/media/catalogue/hanger-lounge.jpg"
+                  src="/media/raja/inventory/lighting-av-multi-3d.jpg"
                   alt="Lighting & AV Solutions"
                   fill
                   className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.05] mix-blend-multiply contrast-[1.05]"
@@ -255,7 +255,7 @@ export default function HomePage() {
             >
               <div className="relative w-full aspect-[4/3] bg-[#e5e7e8] flex items-center justify-center p-6">
                 <Image
-                  src="/media/catalogue/hanger-arena.jpg"
+                  src="/media/raja/inventory/ac-unit-3d.jpg"
                   alt="Industrial AC Unit"
                   fill
                   className="object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.05] mix-blend-multiply contrast-[1.05]"

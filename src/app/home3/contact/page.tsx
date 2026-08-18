@@ -109,7 +109,7 @@ export default function ContactPage() {
           {/* Enquiry form — presentational in this prototype               */}
           {/* ------------------------------------------------------------ */}
           <Reveal delay={90} className="lg:col-span-7">
-            <div className="card p-8 md:p-12">
+            <div className="card p-8 md:p-12 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-steel-100/50 rounded-3xl">
               <Eyebrow>Enquiry</Eyebrow>
               <h2 className="t-heading mt-6 text-ink">Start a conversation.</h2>
 
@@ -127,7 +127,7 @@ export default function ContactPage() {
                     id="requirement"
                     name="requirement"
                     defaultValue=""
-                    className="mt-3 w-full rounded-sm border border-steel-200 bg-paper px-4 py-3.5 text-[0.9375rem] text-ink transition-colors focus:border-accent focus:outline-none"
+                    className="mt-3 w-full rounded-xl border border-steel-200 bg-paper px-5 py-4 text-[0.9375rem] text-ink transition-all duration-300 focus:border-accent focus:ring-4 focus:ring-accent/10 focus:outline-none"
                   >
                     <option value="" disabled>
                       Select a service line
@@ -150,7 +150,7 @@ export default function ContactPage() {
                     name="message"
                     rows={5}
                     placeholder="Where the site is, when it runs, and roughly how many people it has to hold."
-                    className="mt-3 w-full resize-y rounded-sm border border-steel-200 bg-paper px-4 py-3.5 text-[0.9375rem] text-ink transition-colors placeholder:text-steel-300 focus:border-accent focus:outline-none"
+                    className="mt-3 w-full resize-y rounded-xl border border-steel-200 bg-paper px-5 py-4 text-[0.9375rem] text-ink transition-all duration-300 placeholder:text-steel-300 focus:border-accent focus:ring-4 focus:ring-accent/10 focus:outline-none"
                   />
                 </div>
 
@@ -158,7 +158,7 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     disabled
-                    className="inline-flex w-full items-center justify-center rounded-sm bg-accent px-6 py-4 text-sm font-medium text-white transition-colors disabled:cursor-not-allowed disabled:bg-steel-300 sm:w-auto"
+                    className="inline-flex w-full items-center justify-center rounded-xl bg-accent px-8 py-4 text-sm font-medium text-white transition-all duration-300 hover:bg-accent/90 disabled:cursor-not-allowed disabled:bg-steel-300 sm:w-auto shadow-lg shadow-accent/20"
                   >
                     Send enquiry
                   </button>
@@ -231,7 +231,7 @@ function Field({
         name={name}
         type={type}
         autoComplete={autoComplete}
-        className="mt-3 w-full rounded-sm border border-steel-200 bg-paper px-4 py-3.5 text-[0.9375rem] text-ink transition-colors focus:border-accent focus:outline-none"
+        className="mt-3 w-full rounded-xl border border-steel-200 bg-paper px-5 py-4 text-[0.9375rem] text-ink transition-all duration-300 focus:border-accent focus:ring-4 focus:ring-accent/10 focus:outline-none"
       />
     </div>
   );

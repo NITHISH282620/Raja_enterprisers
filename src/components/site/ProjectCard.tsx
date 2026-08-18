@@ -23,9 +23,9 @@ export function ProjectCard({
   const meta = [project.date, project.location].filter(Boolean) as string[];
 
   return (
-    <article className="group flex h-full flex-col">
+    <article className="group flex h-full flex-col transition-all duration-[600ms] ease-out hover:-translate-y-1">
       <div
-        className={`relative w-full overflow-hidden rounded-2xl bg-card ${
+        className={`relative w-full overflow-hidden rounded-2xl bg-card transition-shadow duration-[600ms] group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] ${
           size === "lg" ? "aspect-[16/10]" : "aspect-[4/3]"
         }`}
       >
@@ -41,7 +41,7 @@ export function ProjectCard({
                   ? "(max-width: 1024px) 100vw, 60vw"
                   : "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
               }
-              className="media-in object-cover transition-transform duration-[1200ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.035]"
+              className="media-in object-cover transition-transform duration-[1200ms] ease-[var(--ease-out-quart)] group-hover:scale-[1.08]"
             />
           </ParallaxMedia>
         ) : (

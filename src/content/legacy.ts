@@ -12,10 +12,10 @@
 
 export const legacyIntro = {
   eyebrow: "Established 1977",
-  heading: "Forty-eight years of putting structures on open ground.",
+  heading: "Generations Of Excellence In Quality Event Solutions",
   body: [
-    "Raja Enterprises was established in 1977 and is based in Bengaluru. The catalogue describes the company's primary activities as event management and infrastructure provision, conferences, corporate events, and organising and management — delivered as a complete turnkey service.",
-    "What that has come to mean in practice is a company that owns what it deploys. Hangers, platforms, stalls, staging, seating, barricading, power and climate are held as inventory; 460 in-house personnel erect and strike them; 20 owned goods vehicles move them. The work below is the record the catalogue evidences.",
+    "Founded in 1977 and headquartered in Bangalore, Raja Enterprises is one of South India's most trusted and experienced event infrastructure companies. In 1991, the company made a strategic transition into core event infrastructure and management, enabling streamlined operations and accelerated growth as a turnkey event solutions provider.",
+    "With over three decades of specialized experience in the events industry, we have earned a strong reputation for delivering seamless, large-scale solutions—ranging from intimate corporate gatherings to high-profile state ceremonies attended by the Hon'ble Prime Minister of India.",
   ],
 } as const;
 

@@ -66,7 +66,9 @@ function ClientMark({ client }: { client: Client }) {
 export function ClientMarquee() {
   // Two copies is all a -50% translate needs to loop seamlessly; a third was
   // tripling the DOM for no visual gain.
-  const strip = [...clients, ...clients];
+  const logoClients = clients.filter((c) => c.logo);
+  // Repeat enough times to ensure seamless scrolling on wide screens with fewer items
+  const strip = [...logoClients, ...logoClients, ...logoClients, ...logoClients, ...logoClients];
 
   return (
     <section className="overflow-hidden border-y border-steel-100 bg-card/30 py-16 md:py-20">

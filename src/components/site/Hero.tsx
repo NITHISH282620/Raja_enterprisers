@@ -159,8 +159,8 @@ export function Hero() {
             className="object-cover object-[58%_center] md:block hidden"
           />
           <Image
-            src="/media/raja/hero-vidhana-soudha-portrait.jpg"
-            alt="Raja Enterprises Portrait"
+            src="/media/raja/home.1.png"
+            alt="Raja Enterprises Stadium Mobile"
             fill
             priority
             sizes="100vw"
